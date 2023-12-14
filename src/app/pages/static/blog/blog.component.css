@@ -1,0 +1,12 @@
+.blogs-main h2{font-size: 1.8rem;}
+.postDateUser{margin-bottom: 20px;}
+.blogs-main .edgtf-post-text img{ max-width: 180px;}
+.blogs-main .edgtf-btn{background-color: #000000;
+    border-color: #000000;
+    color: #fff;padding: .9375rem 1.5625rem;display: inline-block;
+    margin: 0 .3125rem .3125rem 0; font-size: 1rem;}
+
+    @media only screen and (max-width: 600px) {
+        .edgtf-blog-holder{ border-bottom: 1px solid #ccc; padding-bottom: 40px;}
+        .blogs-main .edgtf-post-text img{ max-width: 80px;}
+    }

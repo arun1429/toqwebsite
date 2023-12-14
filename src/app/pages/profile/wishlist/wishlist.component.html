@@ -1,0 +1,56 @@
+<section class="container p-t-md">
+    <h1>Wish List</h1>
+    <ng-container>
+        <ng-container *ngIf="products.length !== 0; else noData">
+            <div class="grid">
+                <ng-container *ngFor="let p of products">
+                    <div class="card ">
+                        <div class="content center">
+                            <div>
+                                <div class="osimg">
+                                <img [src]="p.variantImg ? p.variantImg[0] : ''" class="imgs"
+                                    routerLink="/product-details/{{ p.productId }}"
+                                    [queryParams]="{ variantId: p.variantId }" />
+                                </div>
+                                <div class="product-name pointer" routerLink="/product-details/{{ p.productId }}"
+                                    [queryParams]="{ variantId: p.variantId }">{{ p.productName }}</div>
+                                <!-- <div>{{ p.variantName }}</div> -->
+                                <div class="fbox-c group-h" style="display: none;">
+                                    <div>MRP</div>
+                                    <s>Rs.{{ p.price?.toFixed(2) }}</s>
+                                    <div class="text-success">
+                                        {{ p.discountNumber || 0 }}
+                                        {{p.discountIn?.toLowerCase() === "percentage" ? "% OFF": "RS"}}
+                                    </div>
+                                </div>
+                                <div class="text-error">
+                                    <!-- Rs.{{ p.displayOfferPrice?.toFixed(2) || 0 }} -->
+                                    <span class="current_price">₹{{p?.displayOfferPrice.toFixed(2) || 0}}</span>&nbsp;
+                                    <span class="old_price" style="color: gray;   text-decoration: line-through;" >₹{{p?.price.toFixed(2) || 0}}</span>&nbsp;
+                                    <span  style="font-size: 14px; color: gray" >{{getDiscount(p?.displayOfferPrice,p?.price)}}  % Off </span>
+                                </div>
+                                <div class="group-h fbox-c m-t">
+                                    <button class="block remove" (click)="removeFromWishList(p._id)">
+                                        Remove
+                                    </button>
+                                    <button class="block move-cart" (click)="moveToCart(p)">
+                                        Move to cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+    </ng-container>
+</section>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
+<ng-template #noData>
+    <div class="blankslate center">
+        No Items In Your Wish List
+    </div>
+</ng-template>

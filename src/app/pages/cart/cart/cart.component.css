@@ -1,0 +1,11 @@
+.increase_class{
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    line-height: 30px;
+    padding: 0px;
+    margin-right: 10px;
+    margin-left: 10px;
+}

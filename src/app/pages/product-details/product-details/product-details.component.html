@@ -1,0 +1,329 @@
+<div class="breadcrumbs_area mt-45">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a routerLink="/">home</a></li>
+                        <li>Product Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--product details start-->
+<div class="product_details variable_product mt-45 mb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product-details-tab">
+                    <div id="img-1" class="zoomWrapper single-zoom">
+                        <a>
+                            <!-- <img id="zoom1" src="{{newImg}}"
+                                > -->
+                            <lib-ngx-image-zoom [thumbImage]=newImg [fullImage]=newImg></lib-ngx-image-zoom>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngFor="let image of productDetails?.variant[selectedVariantIndex]?.variantImg" style="display: inline;float: left; border: 1px solid grey; margin-top: 3px;cursor: pointer; margin-left: 2px;height: 75px;">
+                  <img [src]="image" (click)="setImg(image)" style="height:100%;width:100%">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product_d_right">
+                    <form>
+                        <h3><a href="#">{{productDetails?.productName}}</a></h3>
+                        <div class="product_desc">
+                            <p>{{variantName}} </p>
+                        </div>
+                        <div class="product_rating">
+                            <ul>
+                                <li *ngFor="let i of getReviewStar(variantRating)">
+                                    <a href="javascript:void(0)" class='deactiveClass' [class.activeClass]="i"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                </li>
+                                <li class="review"><a (click)="scrollDiv('myTab')"> (customer review ) </a></li>
+                            </ul> 
+                        </div>
+                        <div class="price_box">
+                            <span
+                                class="current_price">₹{{productDetails?.variant[selectedVariantIndex]?.displayOfferPrice}}</span>
+                                <span class="old_price ml-2">₹{{productDetails?.variant[selectedVariantIndex]?.price}}</span> 
+                                <span class="ml-2" style="font-size: 18px;" *ngIf="discountStatus">{{getDiscount(productDetails?.variant[selectedVariantIndex]?.displayOfferPrice,productDetails?.variant[selectedVariantIndex]?.price)}}
+                                <span *ngIf="discountStatus"> 
+                                    <span style="font-size: 18px;" *ngIf="statusOff">0&nbsp;</span>
+                                    % OFF
+                                </span>
+                                <span class="pcs" *ngIf="(productDetails?.variant[selectedVariantIndex]?.pcs >= 1)">({{productDetails?.variant[selectedVariantIndex]?.pcs}} Pcs)</span>
+                            </span>
+                            <br><br>
+                                <span *ngIf="productDetails?.gst"> GST @{{productDetails?.gst}}% Inclusive Price : ₹{{productDetails?.variant[selectedVariantIndex]?.offerPrice}} </span>
+                        </div>     
+                        <!-- <div class="product_desc">
+                            <p>{{productDetails?.description}} </p>
+                        </div> -->
+                        <div class="product_variant quantity">
+                            <label>quantity</label>
+                            <input min="1" max="100" value="{{selectedQuanity}}" type="number"
+                                (change)="increaseDecreaseProductNumber($event)">
+                                <button class="button" type="submit" style="background-color: orange;" (click)="buyNow(productDetails)">
+                                    Buy Now
+                                </button>
+                            <button class="button" type="submit" (click)="addToCart(productDetails)">
+                                add to cart
+                            </button>
+                        </div>
+                        <div class="gqoute">
+                            <button class="button" type="button" (click)="showCouponModal()">
+                                Get Quote for bulk 
+                           </button> 
+                        </div>
+                        <div class=" product_d_action">
+                            <ul>
+                                <li>
+                                    <!-- <a  *ngIf="productDetails?.wishListStatus!=true" (click)="addToWishList(productDetails)" title="Add to wishlist">
+                                        + Add to Wishlist 
+                                    </a> -->
+                                    <span class="cart_icon" *ngIf="productDetails?.wishListStatus!=true" (click)="addToWishList(productDetails)" title="Add to wishlist">
+                                        Add to Wishlist <i class="ion-heart"></i>
+                                    </span>
+                                    <span class="cart_icon_remove" *ngIf="productDetails?.wishListStatus===true" (click)="addToWishList(productDetails)" title="Remove wishlist">
+                                        Remove  Wishlist  <i class="ion-heart"></i>
+                                    </span>
+                                    <!-- <a *ngIf="productDetails?.wishListStatus===true" (click)="addToWishList(productDetails)" title="Add to wishlist">
+                                       <span style="color: green;"> + Add to Wishlist </span>
+                                    </a> -->
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+
+                    <div class="product_d_meta">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>Model :{{productDetails?.variant[selectedVariantIndex]?.sku?productDetails?.variant[selectedVariantIndex]?.sku:'N/A'}}</span>
+                                <span>Category: <a href="#">{{productDetails?.categoryName}}</a></span>
+                                <span>Sub Category: <a href="#">{{productDetails?.subCategoryName}}</a></span>
+                                <span>Brand: <a href="#">{{productDetails?.brand}}</a></span>
+                                <span>Vendor Name: <a href="#">{{productDetails?.vendorName}}</a></span>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class=" block">Choose Variant</label>
+                                    <select class="form-control shadow-none" [(ngModel)]="selectedVariantIndex"
+                                        (ngModelChange)="changeVariant($event,productDetails)">
+                                        <option *ngFor="let variant of productDetails?.variant; let i=index"
+                                            [value]="i">{{variant?.variantName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 product_variant quantity arrow" style="border-top: 1px solid #ebebeb;">
+                            <input min="1" class="mt-3 ml-0" [(ngModel)]="pincode" name="pincode" placeholder="Pincode"
+                                type="number">
+                            <button class="mt-3 button" type="button" (click)="checkPincode()">
+                                Check Pincode
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--product info start-->
+<div class="product_d_info mb-45">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="product_d_inner">
+                    <div class="product_info_button">
+                        <ul class="nav" id="myTab" role="tablist">
+                            <li>
+                                <a class="active" data-toggle="tab" href="#info" role="tab" aria-controls="info"
+                                    aria-selected="false">Description </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#sheet" role="tab" aria-controls="sheet"
+                                    aria-selected="false">Specification</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews"
+                                    aria-selected="false">Reviews ({{reviews.length}})</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="info" role="tabpanel">
+                            <div class="product_info_content" >
+                                <div innerHtml="{{productDetails?.shortDescription}}">
+                                    <!-- {{productDetails?.shortDescription}} -->
+                                </div>
+                                <div innerHtml="{{productDetails?.description}}">
+                                    <!-- {{productDetails?.description}} -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="sheet" role="tabpanel">
+                            <div class="product_d_table">
+                                <form>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td class="first_child">Variant Name</td>
+                                                <td>{{productDetails?.variant[selectedVariantIndex]?.variantName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Size</td>
+                                                <td>{{productDetails?.variant[selectedVariantIndex]?.size}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Colour</td>
+                                                <td>{{productDetails?.variant[selectedVariantIndex]?.color}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Material</td>
+                                                <td>{{productDetails?.variant[selectedVariantIndex]?.material}}</td>
+                                            </tr>
+                                            <tr
+                                            *ngFor="let attribute of productDetails?.variant[selectedVariantIndex]?.attributes">
+                                            <td class="first_child">
+                                                {{attribute?.name}}</td>
+                                            <td>{{attribute?.value}} <span *ngIf="attribute.unit!=' '">({{attribute?.unit}})</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="product_info_content">
+                                <!-- <p>{{productDetails?.shortDescription}}</p> -->
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="reviews" role="tabpanel">
+                            <div class="reviews_wrapper">
+                                <h2 *ngIf="productDetails?.totalReviews!==0">{{productDetails?.totalReviews}} review</h2>
+                                <div class="reviews_comment_box" *ngFor="let review of reviews">
+                                    <div class="comment_thmb">
+                                    </div>
+                                    <div class="comment_text">
+                                        <div class="reviews_meta">
+                                            <div class="product_rating">
+                                                <ul>
+                                                    <li *ngFor="let i of getReviewStar(review.rating)">
+
+                                                        <a href="#" class='deactiveClass' [class.activeClass]="i"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <p><strong>{{review?.userName}} </strong>- {{review?.createdAt | date}}</p>
+                                            <span>{{review?.review}} </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="comment_title">
+                                    <h2>Add a review </h2>
+                                    <p>Your email address will not be published. Required fields are marked </p>
+                                </div>
+                                <div class="product_rating_inactive mb-10">
+                                    <h3>Your rating</h3>
+                                    <ul>
+                                        <li *ngFor="let bb of ratingArray;let i=index">
+                                            <a (click)="selectRating(bb.rating,i)">
+                                                <i class="fa fa-star add-new-class{{i}} remove" aria-hidden="true">
+                                                </i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="product_review_form">
+                                    <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label for="review_comment">Your review </label>
+                                                <textarea name="comment" formControlName="review"
+                                                    id="review_comment"></textarea>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <label for="author">Name</label>
+                                                <input id="author" formControlName="userName" type="text">
+
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <label for="email">Email </label>
+                                                <input id="email" formControlName="userEmailId" type="text">
+                                            </div>
+                                        </div>
+                                        <button type="submit"
+                                            [ngClass]="{isDisabled: !reviewForm.valid || !ratingsByUser}"
+                                            [disabled]="!reviewForm.valid || !ratingsByUser">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--product info end-->
+
+<!-- Start Quote Modal -->
+<div class="modal fade" id="quoteModal" tabindex="-1" role="dialog" aria-labelledby="quoteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="quoteModalLabel">Quote Now</h5>
+                <button type="button" class="close" style="border: none; left: 91%;" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="quoteFormGroup">
+                    <div class="form-group">
+                        <label for="productName" class="col-form-label">Product Name:</label>
+                        <input type="text" class="form-control"
+                            value="{{productDetails?.variant[selectedVariantIndex]?.variantName}}" disabled
+                            id="productName">
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity" class="col-form-label">Quantity:</label>
+                        <input type="number" class="form-control" formControlName="quantity" id="quantity">
+                    </div>
+                    <div class="form-group">
+                        <label for="userName" class="col-form-label">User Name:</label>
+                        <input type="text" class="form-control" formControlName="fullName" id="userName">
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail" class="col-form-label">User Email:</label>
+                        <input type="text" class="form-control" formControlName="userEmailId" id="userEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile" class="col-form-label">Mobile No:</label>
+                        <input type="text" class="form-control" formControlName="mobileNo" id="mobile">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" [disabled]="!quoteFormGroup.valid"
+                    (click)="getQuote()">Get Quote</button>
+            </div>
+        </div>
+    </div>
+</div>
+<video  style="width: 600px; " loop muted autoplay oncanplay="this.play()" onloadedmetadata="this.muted = true" >
+    <source src="{{productDetails?.videoUrl}}" type="video/mp4">
+</video>
+<ngx-spinner bdColor="rgba(17, 16, 16, 0.781)" size="default" type="ball-spin-clockwise">
+    <p style="color: white">Please Wait. </p>
+</ngx-spinner>
+<!-- End Quote Modal -->

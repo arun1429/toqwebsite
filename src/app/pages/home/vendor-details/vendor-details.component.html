@@ -1,0 +1,57 @@
+<section class="slider_section slider_s_three" *ngIf="banners.length">
+    <owl-carousel-o [options]="bannerCarouselOption" class="slider_area">
+        <ng-container *ngFor="let banner of banners">
+            <ng-template carouselSlide [id]="banner._id">
+                <div class="single_slider d-flex align-items-center">
+                    <img class="img-fluid" src="{{banner.bannerImg}}" alt="{{banner?.title}}">
+                </div>
+            </ng-template>
+        </ng-container>
+    </owl-carousel-o>
+</section>
+<div class="shop_area shop_reverse mt-45 mb-50">
+    <div class="container">
+        <div class="row">
+            
+          
+            <div class="col-lg-12 col-md-12">
+                <div class="product-grid">
+                    <ng-container *ngFor="let product of products">
+                        
+                        <div class="product-grid-item"  *ngIf="product.stock!==0">
+                    
+                        <article class="single_product" >
+                            <figure>
+                                <div class="product_thumb">
+                                    <a class="primary_img" [routerLink]="['/product-details',product.productId]" [queryParams]="{ variantId: product.variantId}">
+                                        <div class="itemimgdiv">
+                                            <img src="{{product?.variantImg[0]}}" alt="" class="itemsimg">
+                                        </div>
+                                    </a>
+                                    <div class="quick_button">
+                                        <a (click)="addToCart(product)" title=" Add to Cart"> Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="product_content">
+                                    <div class="product_name">
+                                        <h4>
+                                            <a
+                                                [routerLink]="['/product-details',product.productId]" [queryParams]="{ variantId: product.variantId}">{{product?.productName}}</a>
+                                        </h4>
+                                    </div>
+                                    <div class="price_box">
+                                        <span class="current_price">₹{{product?.displayOfferPrice}}</span>&nbsp;
+                                        <span class="old_price">₹{{product?.price}}</span>&nbsp;
+                                        <span  style="font-size: 14px;" >{{getDiscount(product?.displayOfferPrice,product?.price)}}</span> % Off
+                                        <span class="pcs" *ngIf="(product?.pcs >= 1)">({{product?.pcs}} Pcs)</span>
+                                    </div>
+                                </div>
+                            </figure>
+                        </article>
+                    </div>
+                </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

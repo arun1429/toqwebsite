@@ -1,0 +1,117 @@
+<!--footer area start-->
+<footer class="footer_widgets footer_three">
+    <div class="footer_top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-8 col-sm-12">
+                    <div class="widgets_container contact_us">
+                        <h3>Contact Info</h3>
+                        <div class="footer_contact">
+                            <p><span>Address : </span> {{contactDetails?.shopAddress?contactDetails.shopAddress.address:'--'}}</p>
+                            <p>
+                                <span>Contact : </span>
+                                <a href="javascript:void(0)">
+                                    {{contactDetails?.mobileNo?contactDetails?.mobileNo:'--'}}
+                                </a>
+                            </p>
+                            <p>
+                                <span>Mobile No:</span>
+                                <a href="javascript:void(0)">
+                                    {{contactDetails?.mobileNo?contactDetails?.mobileNo:'--'}}
+                                </a>
+                            </p>
+                            <p>
+                                <span>Email:</span>
+                                <a href="javascript:void(0)"> {{contactDetails?.vendorEmailId?contactDetails?.vendorEmailId:'--'}}</a>
+                            </p>
+                        </div>
+                        <div class="footer_payment">
+                            <!-- <p>Payment Methods:</p> -->
+                            <img src="assets/img/icon/payment.png" alt="Payment Methods">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="widgets_container contact_us">
+                        <h3>Company Information</h3>
+                        <div class="footer_menu">
+                            <ul>
+                                <li>
+                                    <a [routerLink]="['/']" routerLinkActive="router-link-active">
+                                        Home
+                                    </a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="['/static/about-us']" routerLinkActive="router-link-active">
+                                        About Us
+                                    </a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="['/static/terms']" routerLinkActive="router-link-active">
+                                        Terms & Conditions
+                                    </a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="['/static/privacy-policy']" routerLinkActive="router-link-active">
+                                        Privacy Policy
+                                    </a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="['/static/faq']" routerLinkActive="router-link-active">
+                                        FAQ
+                                    </a>
+                                </li>
+                               
+                                <li>
+                                    <a [routerLink]="['/static/blogs']" routerLinkActive="router-link-active">
+                                        Blogs
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://play.google.com/store/apps/details?id=com.qboxus.dotoq" target=”_blank” >
+                                        Register on DoToq
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                   
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="widgets_container contact_us ">
+                        <h3>Contact Us</h3>
+                        <div class="contact_message form">
+                            <form id="contact-form" [formGroup]="contactUsForm" (ngSubmit)="contactUs()">
+                                <p>
+                                    <input name="name" placeholder="Name *" formControlName="name" type="text">
+                                </p>
+                                <p>
+                                    <input name="email" placeholder="Email *" formControlName="email" type="email">
+                                </p>
+                                <p>
+                                    <input name="query" placeholder="Enter Query *" formControlName="query" type="text">
+                                </p>
+                                <button type="submit" [disabled]="!contactUsForm.valid"> Send</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="footer_bottom">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6">
+                    <div class="copyright_area">
+                        <p>Copyright &copy; 2023 <a href="#">On Sell On</a> All Right Reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--footer area end-->

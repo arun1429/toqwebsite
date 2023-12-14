@@ -1,0 +1,197 @@
+<div class="breadcrumbs_area mt-45">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="index.html">home</a></li>
+                        <li>Shopping Cart</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="shopping_cart_area mt-45">
+    <div class="container">
+        <form action="#">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table_desc">
+                        <div class="cart_page table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="product_remove">Delete</th>
+                                        <th class="product_thumb">Image</th>
+                                        <th class="product_name">Product</th>
+                                        <th class="product-price">Price</th>
+                                        <th class="product_quantity">Quantity</th>
+                                        <th class="product_total">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let cart of carts">
+                                        <td class="product_remove"><a href="javascript:void(0)"
+                                                (click)="removeFromCart(cart._id)"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                        <td class="product_thumb"><a
+                                                [routerLink]="['/product-details',cart.productId]" [queryParams]="{variantId: cart.variantId}"><img
+                                                    src="{{cart?.variantImg[0]}}" alt=""></a></td>
+                                        <td class="product_name">
+                                            <a [routerLink]="['/product-details',cart.productId]" [queryParams]="{variantId: cart.variantId}">
+                                                <strong>{{cart?.productName}}</strong>
+                                                <p>{{cart?.brand}}</p>
+                                            </a>
+                                        </td>
+                                        <td class="product-price">₹{{cart?.displayOfferPrice}}</td>
+                                        <td class="product_quantity">
+                                           <span class="increase_class" (click)="increaseDecreaseQuantity(cart,-1,cart.selectQuantity)">-</span> {{cart?.selectQuantity}} <span (click)="increaseDecreaseQuantity(cart,1,cart.selectQuantity)" class="increase_class">+</span>
+                                        </td>
+                                        <td class="product_total">₹{{cart?.totalDiscountedPrice}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="cart_submit" *ngIf="!carts.length">
+                            <p class="text-center">No Cart Product Found.</p>
+                            <!-- <button type="submit">update cart</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--coupon code area start-->
+            <div class="coupon_area">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <!-- <div class="coupon_code left">
+                            <h3>Coupon</h3>
+                            <div class="coupon_inner">
+                                <p>
+                                    Enter your coupon code if you have one.
+                                    <a class="btn btn-link" style="display: inline; border-bottom: 0;" role="button"
+                                        (click)="showCouponModal()">See All</a>
+                                </p>
+                                <input placeholder="Coupon code" name="discountName" [(ngModel)]="discountName"
+                                    type="text">
+                                <button type="submit" (click)="applyPromocode()">Apply coupon</button>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="coupon_code right">
+                            <h3>Cart Totals</h3>
+                            <div class="coupon_inner">
+                                <div class="cart_subtotal">
+                                    <p>Subtotal</p>
+                                    <p class="cart_amount">₹{{ cartSum?.toFixed(2) }}</p>
+                                </div>
+                                <div class="cart_subtotal" *ngIf="appliedPromocode && appliedPromocode.discountName">
+                                    <p>Promo Discount</p>
+                                    <p class="cart_amount">
+                                        <small>({{appliedPromocode?.discountName}})</small>
+                                        -₹{{ totalDiscount?.toFixed(2) }}
+                                    </p>
+                                </div>
+                                <div class="cart_subtotal">
+                                    <p>Shipping</p>
+                                    <p class="cart_amount">
+                                        +₹{{ deliveryCharges?.toFixed(2) }}
+                                    </p>
+                                </div>
+                                <div *ngIf="Cgst>0"  class="cart_subtotal">
+                                    <p>CGST</p>
+                                    <p class="cart_amount">
+                                        ₹{{ Cgst.toFixed(2) }}
+                                    </p>
+                                </div>
+                                
+                                <div *ngIf="Igst>0" class="cart_subtotal">
+                                    <p>IGST</p>
+                                    <p class="cart_amount">
+                                        ₹{{ Igst.toFixed(2)}}
+                                    </p>
+                                </div>
+                                <!-- <div class="cart_subtotal">
+                                    <p>Convenience Fee</p>
+                                    <p class="cart_amount">
+                                        +₹{{ convenienceFee?.toFixed(2) }}
+                                    </p>
+                                </div> -->
+                                <a href="javascript:void(0)" *ngIf="appliedPromocode && appliedPromocode.discountName"
+                                    (click)="removePromocode()">Remove Promocode to apply another</a>
+
+                                <div class="cart_subtotal">
+                                    <p>Total</p>
+                                    <p class="cart_amount">₹{{ total?.toFixed(2) }}</p>
+                                </div>
+                                <div class="checkout_btn">
+                                    <a [routerLink]="['/userprofile/checkout']" routerLinkActive="router-link-active">Proceed to
+                                        Checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--coupon code area end-->
+        </form>
+    </div>
+</div>
+
+<!-- Coupen Modal -->
+<!-- <div class="modal fade" id="coupenModal" tabindex="-1" aria-labelledby="coupenModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="coupenModalLabel">All Coupons</h5>
+                <button type="button" style="border: none; left: 91%;" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="list-group" *ngIf="promocodes.length">
+                    <a (click)="selectCoupon(promocode)" class="list-group-item list-group-item-action"
+                        [ngClass]="{'active': appliedPromocode && appliedPromocode.discountId===promocode.discountId?true:false}"
+                        *ngFor="let promocode of promocodes">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Coupon Name: {{promocode?.discountName}}</h5>
+                            <small *ngIf="promocode?.days">Expire after {{promocode?.days}} days.</small>
+                            <small *ngIf="!promocode?.days">Expire tonight.</small>
+                        </div>
+                        <p class="mb-1"> <span *ngIf="promocode.discountIn==='ABSOLUTE'">Rs.</span>
+                            {{promocode?.discountNumber}} <span *ngIf="promocode.discountIn==='PERCENTAGE'">%</span>
+                        </p>
+                        <small>
+                            Valid From: {{promocode?.validFrom | date}} - Valid Upto: {{promocode?.validUpto | date}}
+                        </small>
+                    </a>
+                </div>
+                <p *ngIf="!promocodes.length"> No Promocode Found </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<section class="home-banner-area">
+    <div class="container">
+        <div class="row fullscreen d-flex align-items-center justify-content-between">
+            <div class="home-banner-content col-lg-7 col-md-7">
+                <h1>App That <br> Suits You Better</h1>
+                <p>Buy best products with best deals from a leading online store TOQ N KART aimed at providing
+                    exclusive products at rates that are never seen before.</p>
+                <div class="desc">
+                    <a href="#" target="_blank"><img src="assets/img/app-download.png" style="width: 200px;"></a>
+                </div>
+            </div>
+            <div class="banner-img col-lg-5 col-md-5">
+                <img class="img-fluid" src="assets/img/banner-img1.png" alt="">
+            </div>
+        </div>
+    </div>
+</section>

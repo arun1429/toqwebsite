@@ -1,0 +1,58 @@
+
+
+<!-- Blogs Area -->
+<section class="blogs-main archives section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title mb-0">
+                    <h1 class="mb-4">Blogs </h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-12" *ngFor="let blogdata of blogsData;">
+                <!-- Single Blog -->
+                <div class="edgtf-blog-holder mb-4" >
+                    <article class="post-10513 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized" 
+                    >
+                        <div class="edgtf-post-content">
+                            <h3 class="edgtf-post-title">
+                                <a [routerLink]="['/static/blog-detail',blogdata?.blogId]" title="" innerHTML="{{blogdata?.blogListTitle1}}"></a>
+                            </h3>
+                            <div class="edgtf-post-image">
+                                <img src="{{blogdata?.blogHeaderImg}}" alt="" style="width:100%">
+                            </div>
+
+                            <div class="edgtf-post-text">
+                                <div class="edgtf-post-text-inner">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <span class="opbox">{{blogdata?.blogCategory}}</span>
+                                            <p class="edgtf-post-title">
+                                                <a [routerLink]="['/static/blog-detail',blogdata?.blogId]" title="" innerHTML="{{blogdata?.blogListTitle2}}"></a>
+                                            </p>
+                                            <div class="postDateUser">
+                                                <span class="post-list__post-date"> {{blogdata?.updatedAt | date}}</span> 
+                                                            <span class="post-list__post-author" > By DoOn Sell On Dgtal</span>
+                                            </div>
+                                            <!-- <div class="edgtf-post-info-bottom-right">
+                                                <a [routerLink]="['/static/blog-detail',blogdata?.blogId]" target="_self" class="edgtf-btn edgtf-btn-large edgtf-btn-transparent edgtf-btn-bckg-hover edgtf-blog-btn-read-more"><span class="edgtf-btn-text">Read More</span></a></div>
+                                     -->
+                                       </div> 
+    
+                                        <div class="col-md-3"><img src="{{blogdata?.autherImage}}" alt="" style="width:100%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <!-- End Single Blog -->
+            </div>
+
+        </div>
+       	
+    </div>
+</section>
+<!--/ End Blogs Area -->

@@ -1,0 +1,130 @@
+
+
+<!-- Blogs Area -->
+<section class="blogs-main archives single section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title mb-0">
+                    <h1 class="mb-4">Blog Details </h1>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Single Blog -->
+                        <div class="blog_style2">
+                            <div class="container-grid">
+                                <div class="row-grid">
+                                    <div class="col-12 text-center blog-sec_space">
+                                        <div class="detailsBanner">
+                                            <img src="assets/img/blogs/blog1.jpg" alt="" style="width:100%">
+                                            <div class="bbText">
+                                                <div class="cation-text"><span>On Sell On BLOGS</span></div>
+                                                <div class="bbbText">The Official On Sell On</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-grid">
+                            <div class="row-grid align-items-center mb-4 mb-md-5">
+                            <div class="col-md-12 text-center">
+                            <h1 class="mb-4" innerHTML="{{blogsData?.blogTitle}}"></h1>
+                            <h5 class="mb-4" innerHTML="{{blogsData?.blogTitle2}}"></h5>
+                            
+                            <div class="single-header__meta">
+                                <time class="single-header__post-date">{{blogsData?.updatedAt }}</time>
+                                <span class="single-header__post-author">
+                                  <a href="">On Sell On</a>
+                                </span>
+                                
+                                <span class="single-header__post-categories">
+                                    <a class="single-header__post-category  single-header__post-category--open-science" href="">{{blogsData?.blogCategory}}</a>
+                                </span>
+                            </div>
+
+                           <div class="mt-4 mb-4"><img src="{{blogsData?.blogHeaderImg}}" alt="" style="width:100%"></div>
+
+                            <p class="font-weight-400" innerHTML="{{blogsData?.blogDetails}}"></p>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="container-grid">
+                            <div class="row-grid align-items-center flex-column-reverse flex-md-row text-center text-md-left mb-4 mb-md-5">
+                            <div class="col-md-7 mb-4 mb-md-0 pr-2">
+                            <h5 class="mb-3" >1. Steps First</h5>
+                            <p class="font-weight-400" innerHTML="{{blogsData?.blogDetails1}}"></p>
+                             </div>
+                            <div class="col-md-5"><img src="{{blogsData?.blogImg1}}" alt="" style="width:100%"></div>
+                            </div>
+                            </div>
+                            <div class="container-grid">
+                            <div class="row-grid align-items-center flex-column-reverse flex-md-row text-center text-md-left mb-4 mb-md-5">
+                            <div class="col-md-5 mb-4 mb-md-0"><img src="{{blogsData?.blogImg2}}" alt="" style="width:100%"></div>
+                            <div class="col-md-7 pl-2 ">
+                            <h5 class="mb-3">2. Steps Second</h5>
+                            <p class="font-weight-400" innerHTML="{{blogsData?.blogDetails2}}"></p>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="container-grid">
+                            <div class="row-grid align-items-center flex-column-reverse flex-md-row text-center text-md-left mb-4 mb-md-5">
+                            <div class="col-md-7 mb-4 mb-md-0 pr-2 ">
+                            <h5 class="mb-3">3. Steps Third</h5>
+                            <p class="font-weight-400" innerHTML="{{blogsData?.blogDetails3}}"></p>
+                              </div>
+                            <div class="col-md-5"><img src="{{blogsData?.blogImg3}}" alt="" style="width:100%"></div>
+                            </div>
+                            </div>
+                            <div class="container-grid">
+                            <div class="row-grid align-items-center flex-column-reverse flex-md-row text-center text-md-left mb-4 mb-md-5">
+                            <div class="col-md-5 mb-4 mb-md-0"><img src="{{blogsData?.blogImg4}}" alt="" style="width:100%"></div>
+                            <div class="col-md-7 pl-2">
+                            <h5 class="mb-3">4. Steps Forth</h5>
+                            <p class="font-weight-400" innerHTML="{{blogsData?.blogDetails4}}"></p>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="container-grid">
+                            <div class="row-grid align-items-center text-center text-md-left mb-4 mb-md-5">
+                            <div class="col-md-7 mb-4 mb-md-0 pl-2 ">
+                            <h5 class="mb-3">5. Steps Five</h5>
+                            <p class="font-weight-400" innerHTML="{{blogsData?.blogDetails5}}"></p>
+                            </div>
+                            <div class="col-md-5"><img src="{{blogsData?.blogImg5}}" alt="" style="width:100%"></div>
+                            </div>
+                            </div>
+                            <div class="container-grid">
+                            <div class="row-grid text-center">
+                            <div class="col-md-12">
+                            <p class="font-weight-400" innerHTML="{{blogsData?.blogDetails6}}"></p>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="blog_style2" >
+                                <div class="container-grid">
+                                <div class="row-grid align-items-center flex-column-reverse flex-md-row text-center text-md-left mb-4 mb-md-5">
+                                <div class="col-md-7 mb-4 mb-md-0 pr-2">
+                                <h5 class="mb-3" >About Auther</h5>
+                                <h5 class="mb-3" style="color: gray; margin-top: -15px;">{{blogsData?.autherName}}</h5>
+                                <p class="font-weight-400" innerHTML="{{blogsData?.autherDetails}}"></p>
+                                 </div>
+                                <div class="col-md-5"><img src="{{blogsData?.autherImage}}" alt="" style="width:100%"></div>
+                                </div>
+                                </div>
+                                </div>
+                            </div>
+
+                        <!-- End Single Blog -->
+                    </div>
+                    
+                </div>
+            </div>
+        </div>      
+    </div>
+</section>
+<!--/ End Blogs Area -->

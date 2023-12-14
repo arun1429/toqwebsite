@@ -1,0 +1,24 @@
+.detailsBanner{ position: relative; height: 220px; overflow: hidden;}
+.detailsBanner .bbText{ position:absolute; top:0; bottom: 0; width: 100%; height: 100%; left: 0; text-align: left; background: rgb(0 0 0 / 20%);
+    padding: 40px 0 0 40px;
+}
+.cation-text{font-weight: 400; letter-spacing: .0625rem; line-height: 1.4; font-size: 1rem; display: block;
+    margin-bottom: .9375rem; padding: 0; border: 0; color: #fff;}
+    .bbbText{font-size: 2rem; font-weight: 600; color: #fff;}
+
+
+    .single-header__meta a{ color:#000;}
+    .single-header__post-author::before {
+        content: " / ";
+        display: inline;
+        margin: 0 .625rem;
+      }
+      
+.single-header__post-categories::before {
+    content: " / ";
+  
+    display: inline;
+  
+    margin: 0 .625rem;
+  
+  }

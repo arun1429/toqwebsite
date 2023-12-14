@@ -1,0 +1,42 @@
+<div class="breadcrumbs_area mt-45">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a routerLink="/">home</a></li>
+                        <li>My account</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="customer_login mt-45">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 offset-3">
+                <div class="account_form login">
+                    <h2>login</h2>
+                    <form [formGroup]="loginForm">
+                        <p>
+                            <label>Email/Mobile <span>*</span></label>
+                            <input type="text" formControlName="loginId"  placeholder="Please Enter Email/Mobile">
+                        </p>
+                        <p>
+                            <label>Password <span>*</span></label>
+                            <input type="password" formControlName="password"  placeholder="Please Enter Password">
+                        </p>
+                        <div class="login_submit">
+                            <a [routerLink]="['/userprofile/register']" routerLinkActive="router-link-active" >Create New Account</a>
+                            <button type="submit" [disabled]="!loginForm.valid" (click)="login()">login</button>
+                            <button (click)="signInWithGoogle()">signin with google</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

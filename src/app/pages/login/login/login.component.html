@@ -1,0 +1,6 @@
+<ng-container *ngIf="step === 1">
+    <app-step-one (step1Data)="step1Result($event)" ></app-step-one>
+</ng-container>
+<ng-container *ngIf="step === 2">
+    <app-step-two [step1Data]="step1Data" ></app-step-two>
+</ng-container>
