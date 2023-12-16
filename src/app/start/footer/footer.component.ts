@@ -15,6 +15,7 @@ export class FooterComponent extends RootComponent implements OnInit {
   groups: any = [];
   contactUsForm: FormGroup;
   contactDetails: any;
+  socialDetails: any;
   shopName: string;
   constructor(public _AS: AlertService, private _SS: StartService, private _FB: FormBuilder, 
     private routes: ActivatedRoute,
@@ -23,8 +24,9 @@ export class FooterComponent extends RootComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.shopName = "Ambro"
+    this.shopName = "TOQ"
     this.getAllGroups();
+    this.getSocialDetails()
     this.getContactDetails();
     this.shopName  = localStorage.getItem("shopName")
     console.log("fotter shop"+localStorage.getItem("shopName"))
@@ -47,7 +49,16 @@ export class FooterComponent extends RootComponent implements OnInit {
       }
     )
   }
-
+  getSocialDetails() {
+    this._SS.getSocialMediaDetails(this.shopName).subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.socialDetails = data.data;
+        }
+      }
+    )
+  }
+  
   getAllGroups() {
     this._SS.getGroups().subscribe(
       data => {

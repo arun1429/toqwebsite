@@ -472,7 +472,7 @@ export class CheckoutComponent extends RootComponent implements OnInit {
       amount: Number(money.toFixed(0)) * Number(100),
       currency: "INR",
       buttontext: "Pay",
-      name: "On Sell On",
+      name: "Toq",
       "prefill.name": currentUser.fullName,
       "prefill.email": currentUser.emailId,
       "theme.color": "#F37254",

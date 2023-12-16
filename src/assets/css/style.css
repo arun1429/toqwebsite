@@ -6029,6 +6029,32 @@ textarea:-ms-input-placeholder {
     display: inline-block;
 }
 
+.footer_three .social {
+	margin-bottom: 10px;
+}
+.footer_three  .social li {
+	display: inline-block;
+	margin-right: 5px;
+	color: #bbb;
+	font-weight: 500;
+}
+.footer_three .social li:last-child{
+	margin:0;
+}
+.footer_three  .social a {
+	display: block;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	color: #fff;
+	border: 1px solid #fff;
+	border-radius: 30px;
+}
+.footer_three  .social li:hover a{
+	background:#fff;
+	border-color:transparent;
+}
 .footer_menu ul li {
     margin-bottom: 16px;
 }
@@ -6082,6 +6108,7 @@ textarea:-ms-input-placeholder {
 
 .footer_social ul li {
     display: inline-block;
+    flex-direction: row;
     margin-right: 12px;
 }
 
@@ -6215,7 +6242,9 @@ textarea:-ms-input-placeholder {
     background: #ebebeb;
     color: #363f4d;
 }
-
+.footer_three .footer_social ul li  {
+   
+}
 .footer_three .footer_social ul li a:hover {
     background: #000000;
     color: #ffffff;

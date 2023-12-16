@@ -7,7 +7,7 @@ import { UserService } from './_services';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'On Sell On';
+  title = 'Toq';
 
   constructor(private _US: UserService) { }
 

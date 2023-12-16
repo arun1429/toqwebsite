@@ -84,7 +84,7 @@ export class WalletComponent extends RootComponent implements OnInit {
       amount: Number(money) * Number(100),
       currency: "INR",
       buttontext: "Pay",
-      name: "On Sell On",
+      name: "Toq",
       "prefill.name": localStorage.getItem("fullName"),
       "prefill.email": localStorage.getItem("userEmailId"),
       "theme.color": "#F37254",

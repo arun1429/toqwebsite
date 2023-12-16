@@ -22,38 +22,29 @@
             <div class="col-lg-12">
                 <div class="small_product_list">
                     <div class="section_title">
-                        <h2>Trending Categories</h2>
+                        <h2>Categories</h2>
                     </div>
                     <!-- <div class="row"> -->
                          
                     <owl-carousel-o [options]="categoryCarouselOption"
                         class="product_carousel small_p_container  product_column321">
-                        <ng-container *ngFor="let group of groups">
-                            <ng-template carouselSlide [id]="group._id">
+                        <ng-container *ngFor="let category of categories">
+                            <ng-template carouselSlide [id]="category._id">
                                 <div class="product_items">
                                     <article class="single_product">
                                         <figure>
-                                        <!-- <div class="product_content">
-                                            <div class="product_name" style="margin-left: -20px; margin-top: -10px;">
-                                                <h4>
-                                                    <a [routerLink]="['/products',group.groupId]">
-                                                        {{group?.groupName}}
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                        </div> -->
                                             <div class="product_thumb" >
                                                 <div class="product_name" style="margin-bottom: 10px;" >
                                                     <h4>
-                                                        <a [routerLink]="['/products',group.groupId]">
-                                                            {{group?.groupName}}
+                                                        <a [routerLink]="['/products',category.categoryId]">
+                                                            {{category?.categoryName}}
                                                         </a>
                                                     </h4>
                                                 </div>
-                                                <a class="primary_img" [routerLink]="['/products',group.groupId]"><img
-                                                        src="{{group?.groupImg}}" alt=""></a>
+                                                <a class="primary_img" [routerLink]="['/products',category.categoryId]"><img
+                                                        src="{{category?.categoryImg}}" alt=""></a>
                                                 <div class="quick_button">
-                                                    <a [routerLink]="['/products',group.groupId]" data-toggle="modal"
+                                                    <a [routerLink]="['/products',category.categoryId]" data-toggle="modal"
                                                         data-target="#modal_box" title="quick view"> View Products</a>
                                                 </div>
                                             </div>
@@ -78,7 +69,7 @@
             <div class="col-12">
                 <div class="product_header">
                     <div class="section_title">
-                        <h2>Products On Sale</h2>
+                        <h2>Special offer products</h2>
                     </div>
                 </div>
             </div>
@@ -172,7 +163,7 @@
             <div class="col-lg-12">
                 <div class="product_three_left">
                     <div class="section_title">
-                        <h2>New Arrivals Products</h2>
+                        <h2>New Arrivals</h2>
                     </div>
                     <owl-carousel-o [options]="productCarouselOption" class="product_carousel" data-interval="false">
                         <ng-container *ngFor="let product of latestProducts">

@@ -15,7 +15,7 @@ declare var $: any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent extends RootComponent implements OnInit {
-
+  shopName: string;
   groupsData: any = [];
   carts: any = [];
   searchKey: string;
@@ -42,6 +42,8 @@ export class HeaderComponent extends RootComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.shopName = "TOQ"
+    this.shopName  = localStorage.getItem("shopName")
     this.getAllGroups();
     this._CS.emitCardData().subscribe(x => {
       if (x) {
@@ -175,7 +177,7 @@ export class HeaderComponent extends RootComponent implements OnInit {
   }
 
   getAllGroups() {
-    this._SS.getAllGroups().subscribe(
+    this._SS.getAllGroups(this.shopName).subscribe(
       (data: any) => {
         if (data.meta.status) {
           this.groupsData = data.data;

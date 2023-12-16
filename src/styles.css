@@ -26,6 +26,7 @@
     border: 1px solid #ebebeb;
     border-radius: 4px;
     background: #ffffff;
+    max-width: 350px;
     height: 310px;
 }
 

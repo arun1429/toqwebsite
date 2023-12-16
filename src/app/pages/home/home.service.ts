@@ -12,8 +12,8 @@ export class HomeService {
 
   constructor(private http: HttpClient) { }
 
-  getVendorGroups(shopName) {
-    const url = `${environment.apiUrl}categories/group/listvendor?shopName=`+shopName;
+  getVendorCategory(shopName) {
+    const url = `${environment.apiUrl}categories/category/listvendor?shopName=`+shopName;
     return this.http.get(url);
   }
   getVendorBanners(shopName) {

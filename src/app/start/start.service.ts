@@ -17,8 +17,8 @@ export class StartService {
     return this.http.get(url);
   }
 
-  getAllGroups() {
-    const url = `${environment.apiUrl}categories/listallcategory`;
+  getAllGroups(shopName) {
+    const url = `${environment.apiUrl}categories/listallcategoryforvendor?shopName=`+shopName;
     return this.http.get(url);
   }
 
@@ -50,5 +50,8 @@ export class StartService {
     const url = `${environment.apiUrl}vendor/vendordetailsforshop?shopName=`+shopName;
     return this.http.get(url);
   }
-
+  getSocialMediaDetails(shopName) {
+    const url = `${environment.apiUrl}vendor/socialmediaforshop?shopName=`+shopName;
+    return this.http.get(url);
+  }
 }

@@ -13,7 +13,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 export class HomeComponent extends RootComponent implements OnInit, AfterViewInit {
   shopName: string;
   products: any = [];
-  groups: any = [];
+  categories: any = [];
   stock: number = 0;
   discountStatus: boolean;
   statusOff: boolean;
@@ -114,10 +114,10 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
   }
 
   ngOnInit(): void {
-    this.shopName = "Ambro"
+    this.shopName = "TOQ"
     localStorage.setItem("shopName",this.shopName)
     this.getVendorBanners();
-    this.getVendorGroups();
+    this.getVendorCategory();
     this.getVendorBestProducts();
     this.getVendorLatestProducts();
     this.getVendorSalesProducts();
@@ -177,12 +177,12 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
     )
   }
 
-  getVendorGroups() {
+  getVendorCategory() {
     
-    this._PS.getVendorGroups(this.shopName).subscribe(
+    this._PS.getVendorCategory(this.shopName).subscribe(
       (data: any) => {
         if (data.meta.status) {
-          this.groups = data.data;
+          this.categories = data.data;
         } else {
           this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
         }
