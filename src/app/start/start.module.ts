@@ -6,6 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+
 // Shared Module
 import { SharedModule } from "../_shared/shared.module";
 
@@ -25,6 +26,10 @@ const routes: Routes = [
       {
         path: "userprofile/register",
         loadChildren: () => import("../pages/register/register.module").then(m => m.RegisterModule)
+      },
+      {
+        path: "userprofile/forgotpassword",
+        loadChildren: () => import("../pages/forgotpassword/forgotpassword.module").then(m => m.ForgotPasswordModule)
       },
       {
         path: "products",
@@ -53,6 +58,10 @@ const routes: Routes = [
       {
         path: "static",
         loadChildren: () => import("../pages/static/static.module").then(m => m.StaticModule)
+      },
+      {
+        path: "bestsellingproducts",
+        loadChildren: () => import("../pages/selling-products/selling-products.module").then(m => m.SellingProductsModule)
       }
     ]
   }

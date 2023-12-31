@@ -1,0 +1,22 @@
+
+.shop_area .single_product{padding: 6px;}
+.shop_area .itemimgdiv img{ width: 100%;}
+.itemimgdiv
+{
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+    background: #f9f9f9 !important;
+}
+.itemimgdiv img.itemsimg
+{
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    width: auto;
+    margin: 0;
+}

@@ -13,7 +13,8 @@ import { HttpErrorInterceptor, HttpHeadersInterceptor } from "./_interceptors/in
 // Shared Module
 import { SharedModule } from "./_shared/shared.module";
 
-
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
 
 
 const routes: Routes = [{
@@ -30,8 +31,8 @@ const routes: Routes = [{
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
-    SharedModule
-
+    SharedModule,
+    SocialLoginModule
   ],
   providers: [
     // {
@@ -47,6 +48,19 @@ const routes: Routes = [{
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
       multi: true
+    },{
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+            '273057408962-h8cnc3e8s9cbpg6h2la8c49qf9hjc4jl.apps.googleusercontent.com'
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig,
     }
 
     

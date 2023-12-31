@@ -65,7 +65,7 @@ export class CartComponent extends RootComponent implements OnInit {
               this.appliedPromocode = data.promoCodeName;
             }
             else {
-              this._route.navigate(['/']);
+           //   this._route.navigate(['/']);
               this.vendorId = undefined;
               this.carts = [];
               this.deliveryCharges = 0;

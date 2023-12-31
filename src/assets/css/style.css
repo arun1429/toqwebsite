@@ -3918,7 +3918,7 @@ textarea:-ms-input-placeholder {
 }
 
 .section_title {
-    margin-bottom: 20px;
+    margin-bottom: 9px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -3941,7 +3941,7 @@ textarea:-ms-input-placeholder {
 .product_name h4 {
     font-size: 14px;
     line-height: 18px;
-    margin-bottom: 9px;
+    margin-bottom: 6px;
     text-transform: capitalize;
     font-weight: 600;
     color: #000;
@@ -3976,7 +3976,7 @@ textarea:-ms-input-placeholder {
 
 .product_thumb {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .product_thumb a.secondary_img {
@@ -4177,7 +4177,7 @@ textarea:-ms-input-placeholder {
 .product_carousel .owl-nav {
     display: flex !important;
     position: absolute;
-    top: -41px;
+    top: -37px;
     right: 12px;
 }
 
@@ -4294,7 +4294,7 @@ textarea:-ms-input-placeholder {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 6px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -12268,6 +12268,11 @@ textarea:-ms-input-placeholder {
 .compare-table .table tbody tr td:last-child {
     border-right: 1px solid #eeeeee;
 }
+
+
+.single_product{ padding: 6px!important;}
+.single_product .itemimgdiv img{ width: 100%!important;}
+
 
 @media only screen and (max-width: 767px) {
     .compare-table .table tbody tr td {

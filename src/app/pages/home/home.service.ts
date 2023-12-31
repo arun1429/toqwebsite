@@ -21,7 +21,7 @@ export class HomeService {
     return this.http.get(url);
   }
   getVendorBestProducts(shopName) {
-    const url = `${environment.apiUrl}products/bestsellerbyvendor?shopName=`+shopName;
+    const url = `${environment.apiUrl}products/bestsellerbyvendor?shopName=`+shopName+'&requestCount=5';
     return this.http.get(url);
   }
   getProducts(shopName) {
@@ -30,11 +30,11 @@ export class HomeService {
   }
 
   getVendorLatestProducts(shopName){
-    const url = `${environment.apiUrl}products/latestarrivalbyvendor?shopName=`+shopName;
+    const url = `${environment.apiUrl}products/latestarrivalbyvendor?shopName=`+shopName+'&requestCount=5';
     return this.http.get(url);
   }
   getVendorSalesProducts(shopName){
-    const url = `${environment.apiUrl}products/salesproductsbyvendor?shopName=`+shopName;
+    const url = `${environment.apiUrl}products/salesproductsbyvendor?shopName=`+shopName+'&requestCount=5';
     return this.http.get(url);
   }
   

@@ -16,6 +16,7 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
   offerPrise: any;
   price: any;
   groupId: string;
+  categoryId: string;
   products: any = [];
   categories: any = [];
   selectedIndex: number = -1;
@@ -49,8 +50,8 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
   ngOnInit(): void {
     this.routes.params.subscribe(
       data => {
-        this.groupId = data.groupId;
-        this.getProductsByGroupId();
+        this.categoryId = data.categoryId;
+       this.getProductByCategoryIdHome(data.categoryId)
         this.getAllCategories();
       }
     ) 
@@ -137,6 +138,25 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
           this.products = data.data;
           this.selectedIndex = indexValue;
           this.getMaxPrice();
+        } else {
+          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+        }
+      }
+    )
+  }
+  getProductByCategoryIdHome(categoryId: string) {
+    let obj = {
+      id: categoryId
+    }
+    this._PS.getProductBycatIdSubCatId(obj).subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.products = data.data;
+          this.getMaxPrice();
+          if(this.products.size !=0){
+            this.groupId = this.products[0].groupId
+            this.getAllCategories()
+          }
         } else {
           this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
         }

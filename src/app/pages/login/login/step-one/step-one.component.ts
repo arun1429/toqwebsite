@@ -5,7 +5,8 @@ import { AlertService, UserService } from 'src/app/_services';
 import { RootComponent } from '../../../../_shared/components/root/root.component';
 import { LoginService } from "../../login.service";
 
-
+import { SocialAuthService } from "angularx-social-login";
+import { GoogleLoginProvider } from "angularx-social-login";
 interface User {
   mobileNo: string;
   loginType: string;
@@ -31,7 +32,8 @@ export class StepOneComponent extends RootComponent implements OnInit {
     public _AS: AlertService,
     private _LGS: LoginService,
     private _US: UserService,
-    private router: Router
+    private router: Router,
+    private authService: SocialAuthService
   ) {
     super(_AS);
   }
@@ -42,7 +44,7 @@ export class StepOneComponent extends RootComponent implements OnInit {
       password: ['', Validators.required]
     })
 
-    /*this.authService.authState.subscribe(res=>{
+    this.authService.authState.subscribe(res=>{
       let obj={
         loginType:'google',
         userName:res.firstName,
@@ -67,7 +69,7 @@ export class StepOneComponent extends RootComponent implements OnInit {
           this.afterLogin1(user);
         }
       })
-    })*/
+    })
   }
 
 
@@ -83,11 +85,11 @@ export class StepOneComponent extends RootComponent implements OnInit {
 
 
   signInWithGoogle(): void {
-    //this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
   }
 
   signOut(): void {
-    //this.authService.signOut();
+    this.authService.signOut();
   }
 
 
