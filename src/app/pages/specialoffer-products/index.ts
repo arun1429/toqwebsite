@@ -1,0 +1,1 @@
+export * from './specialoffer-products/specialoffer-products.component';

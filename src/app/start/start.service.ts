@@ -33,8 +33,8 @@ export class StartService {
     return this.http.post(url, {});
   }
 
-  contactUs(contactData: any) {
-    const url = `${environment.apiUrl}contactus`;
+  contactUs(contactData: any,shopName) {
+    const url = `${environment.apiUrl}contactus/addcontactquery?shopName=`+shopName;
     return this.http.post(url, contactData);
   }
 

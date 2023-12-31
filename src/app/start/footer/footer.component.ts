@@ -36,7 +36,7 @@ export class FooterComponent extends RootComponent implements OnInit {
     this.contactUsForm = this._FB.group({
       name: ['', Validators.required],
       email: ['', Validators.required],
-      query: ['', Validators.required]
+      description: ['', Validators.required]
     })
   }
 
@@ -71,7 +71,7 @@ export class FooterComponent extends RootComponent implements OnInit {
 
   contactUs() {
     if (this.contactUsForm.valid) {
-      this._SS.contactUs(this.contactUsForm.value).subscribe(
+      this._SS.contactUs(this.contactUsForm.value,this.shopName).subscribe(
         (data: any) => {
           if (data.meta.status) {
             this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
