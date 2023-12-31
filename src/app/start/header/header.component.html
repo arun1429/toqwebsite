@@ -1,32 +1,5 @@
 
-<!-- Preloader -->
-<!-- <div class="preloader">
-    <div class="preloader-inner">
-      <div class="single-loader one"></div>
-    </div>
-</div> -->
-<!-- End Preloader -->  
-<!-- Start Header -->
-<!--
-<div class="mobile-menu" *ngIf="visible">
-    <button class="mobile-arrow closeBtn" (click)="onClick()"><i class="fa fa-close"></i></button>
-    <ul class="nav menu">
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink=''>Home</a></li>
-        <li routerLinkActive="active"><a href="javascript: void(0);" (click)="onClickCall('about')">About Us</a></li>
-        <li routerLinkActive="active"><a  href="javascript: void(0);" (click)="onClickCall('services')" >Services</a></li>	
-        <li routerLinkActive="active"><a href="javascript: void(0);" (click)="onClickCall('portfolio')" >Our Work</a></li>
-        <li routerLinkActive="active"><a href="javascript: void(0);" (click)="onClickCall('blog')" >Blog</a></li>
-        <li routerLinkActive="active"><a href="javascript: void(0);" (click)="onClickCall('contact')" >Get In Touch</a></li>
-        <li routerLinkActive="active"><a href="javascript: void(0);" (click)="onClickCall('career')" >Work With Us</a></li>
-        <li routerLinkActive="active"><a href="javascript: void(0);" (click)="onClickCall('ourteams')" >Our Teams</a></li>
-        <li routerLinkActive="active"><a href="javascript: void(0);" (click)="onClickCall('web-story')" >Web Story</a></li>
-    </ul>
-</div>
--->
 <header id="header" class="header">
-    <!-- Topbar -->
-
-    <!--/ End Topbar -->
     <!-- Middle Bar -->
     <div class="middle-bar">
         
@@ -60,11 +33,11 @@
                             <li *ngFor="let groups of groupsData" class="dropdown mega-dropdown dropdown"><a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">{{groups?.groupName}} <span class="caret"></span> </a>
                     
                                 <!--  mega menu -->		
-                                <ul class="dropdown-menu mega-dropdown-menu row" *ngFor="let childgroups of groups?.category">
-                                    <li class="col-sm-3">
-                                        <a class="title-submenu dropdown-toggle" href="javascript:;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{childgroups?.categoryName}}<span class="caret"></span> </a> 
+                                <ul class="dropdown-menu mega-dropdown-menu row">
+                                    <li class="col-sm-3"  *ngFor="let childgroups of groups?.category">
+                                        <a class="title-submenu dropdown-toggle" [routerLink]="['/products',childgroups?.categoryId]"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{childgroups?.categoryName}}<span class="caret"></span> </a> 
                                         <ul class="subdrop3 dropdown-menu dropdown-menu-right"*ngFor="let innerchildgroups of childgroups?.subcategory">
-                                            <li> <a href="#">{{innerchildgroups?.subCategoryName}}</a></li>
+                                            <li> <a [routerLink]="['/products',innerchildgroups?.subCategoryId]">{{innerchildgroups?.subCategoryName}}</a></li>
                                         </ul>
                                     </li>
                                    
@@ -108,9 +81,9 @@
                                         <span>login</span></a>
                                     </div>
                                     <div class="hdprofile profilebtn"  *ngIf="isLoggedIn" >
-                                        <a [routerLink]="['/userprofile/account/']"
+                                        <a [routerLink]="['/profile/account/']"
                                         routerLinkActive="router-link-active">  <svg class="hdicons" focusable="false" viewBox="0 0 24 24" color="#5d5b5b" aria-hidden="true"><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"></path></svg>
-                                        <span>login</span></a>
+                                        <span> {{userName}} </span></a>
                                     </div>
                                     
                                 </li>
@@ -128,7 +101,7 @@
                                 </li>
                                 <li>
                                     <div class="hdprofile profilebtn" *ngIf="!isLoggedIn">
-                                        <span class="cartbadge">0</span>
+                                        <span class="cartbadge">{{carts.length}} </span>
                                         <a [routerLink]="['/userprofile/login/']"
                                         routerLinkActive="router-link-active">
                                             <svg class="hdicons" focusable="false" viewBox="0 0 24 24" color="#5d5b5b" aria-hidden="true"><path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h14v12zm-7-8c-1.66 0-3-1.34-3-3H7c0 2.76 2.24 5 5 5s5-2.24 5-5h-2c0 1.66-1.34 3-3 3z"></path></svg>
@@ -136,7 +109,7 @@
                                         </a>
                                     </div>
                                     <div class="hdprofile profilebtn" *ngIf="isLoggedIn">
-                                        <span class="cartbadge">0</span>
+                                        <span class="cartbadge">{{carts.length}} </span>
                                         <a [routerLink]="['/userprofile/cart']"
                                         routerLinkActive="router-link-active">
                                             <svg class="hdicons" focusable="false" viewBox="0 0 24 24" color="#5d5b5b" aria-hidden="true"><path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h14v12zm-7-8c-1.66 0-3-1.34-3-3H7c0 2.76 2.24 5 5 5s5-2.24 5-5h-2c0 1.66-1.34 3-3 3z"></path></svg>

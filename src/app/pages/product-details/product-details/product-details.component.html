@@ -28,8 +28,8 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-md-2" *ngFor="let image of productDetails?.variant[selectedVariantIndex]?.variantImg" style="display: inline;float: left; border: 1px solid grey; margin-top: 3px;cursor: pointer; margin-left: 2px;height: 75px;">
-                  <img [src]="image" (click)="setImg(image)" style="height:100%;width:100%">
+                <div class="col-md-2" *ngFor="let image of productDetails?.variant[selectedVariantIndex]?.variantImg" style="display: inline;float: left; border: 1px solid grey; margin-top: 3px;cursor: pointer; margin-left: 2px;height: 75px; width: 75px;margin-bottom: 15px; ">
+                  <img [src]="image" (click)="setImg(image)" style="height:100%;width:100%; object-fit: cover;"  >
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
@@ -75,11 +75,11 @@
                                 add to cart
                             </button>
                         </div>
-                        <div class="gqoute">
+                        <!-- <div class="gqoute">
                             <button class="button" type="button" (click)="showCouponModal()">
                                 Get Quote for bulk 
                            </button> 
-                        </div>
+                        </div> -->
                         <div class=" product_d_action">
                             <ul>
                                 <li>
@@ -134,9 +134,17 @@
         </div>
     </div>
 </div>
-
+<div class="single_slider d-flex align-items-center" style="margin-bottom: 60px;">
+                    
+<video *ngIf="productDetails?.videoUrl!=null" style="width: 1444px;align-self: center;" loop  autoplay oncanplay="this.play()" controls  class=" sliderBanDesk" >
+    <source src="{{productDetails?.videoUrl}}" type="video/mp4">
+</video>
+<video *ngIf="productDetails?.videoUrlMobile!=null" style="width: 600px;align-self: center;" loop  autoplay oncanplay="this.play()" controls class="sliderBanMobile" >
+    <source src="{{productDetails?.videoUrlMobile}}" type="video/mp4">
+</video>
+</div>
 <!--product info start-->
-<div class="product_d_info mb-45">
+<div class="product_d_info mb-45" >
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -320,9 +328,6 @@
         </div>
     </div>
 </div>
-<video  style="width: 600px; " loop muted autoplay oncanplay="this.play()" onloadedmetadata="this.muted = true" >
-    <source src="{{productDetails?.videoUrl}}" type="video/mp4">
-</video>
 <ngx-spinner bdColor="rgba(17, 16, 16, 0.781)" size="default" type="ball-spin-clockwise">
     <p style="color: white">Please Wait. </p>
 </ngx-spinner>

@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /
+
+allow: /
+
+Sitemap: https://toq.co.in/sitemap.xml

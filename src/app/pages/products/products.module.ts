@@ -7,7 +7,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 const routes: Routes = [{
-  path: ":groupId",
+  path: ":categoryId",
   component: ProductsComponent
 }]
 

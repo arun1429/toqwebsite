@@ -1,3 +1,66 @@
+.socialMedia h2{ text-align: center;}
+.grid {
+  max-width: 100vw;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: dense;
+  grid-auto-rows: minmax(calc((100vw - (3 * 10px)) / (4 * calc(16 / 9))), auto);
+  /*grid-template-rows: repeat(2, minmax(calc((100vw - (3 * 10px)) / (4 * calc(1 / 1))), auto)) repeat(2, minmax(calc((100vw - (3 * 10px)) / (4 * calc(16 / 9))), auto));*/
+  grid-gap: 10px;
+  margin: 10px;
+}
+.grid__item {
+  /*background-color: lightGrey;
+  padding: 20px;*/
+}
+.grid__item--lg {
+  grid-column: span 2;
+  grid-row: span 2;
+  /*background-color: grey;*/
+}
+.grid__item--right {
+  grid-column: 3 / span 2;
+}
+.grid__item--db {
+  grid-column: span 2;
+  background-color: lightBlue;
+}
+
+
+/*----*/
+.saleBtn{ background: #be935c; color:#fff; left: 10px; bottom: 10px; border-radius: 20px; padding: 4px 20px; 
+  position: absolute;}
+.small_p_container .product_name h4{ padding-left: 12px;}
+.single_product{padding: 6px; background: #fff; border: 1px solid #ccc;}
+.single_product:hover{border: 1px solid #ccc!important;}
+.product_thumb a{ display: block; position: relative;}
+.product_thumb .product_name{padding: 5px 0 0 0; margin-bottom: 0;}
+
+.prodSlider .product_name{ padding: 5px 0 0 5px;}
+.prodSlider .single_product{height: 265px;}
+.prodSlider .product_name h4 a{display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;}
+.prodSlider .product_thumb .itemsimg{width: 100%!important;}
+
+
+@media screen and (max-width: 500px) {
+.itemimgdiv{height: 147px!important;}
+.single_product{height: 224px;}
+.single_product1{height: 224px;padding: 6px;}
+
+.prodSlider .single_product{height: 220px;}
+.product_thumb{ margin-bottom: 4px;}
+.socialMedia h2{ font-size: 18px;}
+
+.product_area{margin-bottom: 10px!important;}
+.home_product_three{ margin-bottom: 10px!important;}
+.product_area{ margin-bottom: 10px!important; padding-bottom: 10px!important;}
+}
+
+
+
+
+
+
 .sliderBanDesk{display: block!important;}
 .sliderBanMobile{display: none!important;}
 @media screen and (max-width: 600px) {

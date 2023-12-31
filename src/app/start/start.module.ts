@@ -27,6 +27,10 @@ const routes: Routes = [
         loadChildren: () => import("../pages/register/register.module").then(m => m.RegisterModule)
       },
       {
+        path: "userprofile/forgotpassword",
+        loadChildren: () => import("../pages/forgotpassword/forgotpassword.module").then(m => m.ForgotPasswordModule)
+      },
+      {
         path: "products",
         loadChildren: () => import("../pages/products/products.module").then(m => m.ProductsModule)
       },
@@ -53,6 +57,15 @@ const routes: Routes = [
       {
         path: "static",
         loadChildren: () => import("../pages/static/static.module").then(m => m.StaticModule)
+      }, {
+        path: "newarrivalproducts",
+        loadChildren: () => import("../pages/newarrival-products/newarrival-products.module").then(m => m.NewarrivalProductsModule)
+      }, {
+        path: "specialofferproducts",
+        loadChildren: () => import("../pages/specialoffer-products/specialoffer-products.module").then(m => m.SpecialOfferProductsModule)
+      }, {
+        path: "bestsellingproducts",
+        loadChildren: () => import("../pages/selling-products/selling-products.module").then(m => m.SellingProductsModule)
       }
     ]
   }

@@ -81,7 +81,7 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
   categoryCarouselOption: OwlOptions = {
     autoplay: true,
     loop: true,
-    margin: 30,
+    margin: 20,
     nav: true,
     autoplaySpeed: 1000,
     autoplayTimeout: 10000,
