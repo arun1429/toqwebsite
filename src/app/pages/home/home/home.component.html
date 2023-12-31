@@ -200,27 +200,27 @@
 <!--product area end-->
 
 <!--SOCIAL-->
-<div class="product_area product_bg mb-45 socialMedia">
+<div class="product_area product_bg mb-45 socialMedia" *ngIf="brandAmbass.length != 0">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <h2>Follow us on Social Media</h2>
                 <div class="grid">
-                    <div class="grid__item grid__item--lg ">
-                        <img alt="" src="https://toqnkart.s3.ap-south-1.amazonaws.com/categoryImg-earrings2.jpeg319833.jpeg">
+                    <div class="grid__item grid__item--lg " *ngIf="brandAmbass.length > 0">
+                        <img alt="" src="{{brandAmbass?.[0].ambassadorImg}}">
                     </div>
-                    <div class="grid__item grid__item--sm"><img alt="" src="https://toqnkart.s3.ap-south-1.amazonaws.com/categoryImg-earrings2.jpeg319833.jpeg"></div>
-                    <div class="grid__item grid__item--sm"><img alt="" src="https://toqnkart.s3.ap-south-1.amazonaws.com/categoryImg-earrings2.jpeg319833.jpeg"></div>
-                    <div class="grid__item grid__item--sm"><img alt="" src="https://toqnkart.s3.ap-south-1.amazonaws.com/categoryImg-earrings2.jpeg319833.jpeg"></div>
-                    <div class="grid__item grid__item--sm"><img alt="" src="https://toqnkart.s3.ap-south-1.amazonaws.com/categoryImg-earrings2.jpeg319833.jpeg"></div>
+                    <div class="grid__item grid__item--sm" *ngIf="brandAmbass.length > 1"><img alt="" src="{{brandAmbass?.[1].ambassadorImg}}"></div>
+                    <div class="grid__item grid__item--sm" *ngIf="brandAmbass.length > 2"><img alt="" src="{{brandAmbass?.[2].ambassadorImg}}"></div>
+                    <div class="grid__item grid__item--sm" *ngIf="brandAmbass.length > 3"><img alt="" src="{{brandAmbass?.[3].ambassadorImg}}"></div>
+                    <div class="grid__item grid__item--sm" *ngIf="brandAmbass.length > 4"><img alt="" src="{{brandAmbass?.[4].ambassadorImg}}"></div>
                     
-                    <div class="grid__item grid__item--lg grid__item--right">
-                        <img alt="" src="https://toqnkart.s3.ap-south-1.amazonaws.com/categoryImg-earrings2.jpeg319833.jpeg">
+                    <div class="grid__item grid__item--lg grid__item--right" *ngIf="brandAmbass.length > 5">
+                        <img alt="" src="{{brandAmbass?.[5].ambassadorImg}}">
                     </div>
-                    <div class="grid__item grid__item--sm"><img alt="" src="https://toqnkart.s3.ap-south-1.amazonaws.com/categoryImg-earrings2.jpeg319833.jpeg"></div>
-                    <div class="grid__item grid__item--sm"><img alt="" src="https://toqnkart.s3.ap-south-1.amazonaws.com/categoryImg-earrings2.jpeg319833.jpeg"></div>
-                    <div class="grid__item grid__item--sm"><img alt="" src="https://toqnkart.s3.ap-south-1.amazonaws.com/categoryImg-earrings2.jpeg319833.jpeg"></div>
-                    <div class="grid__item grid__item--sm"><img alt="" src="https://toqnkart.s3.ap-south-1.amazonaws.com/categoryImg-earrings2.jpeg319833.jpeg"></div>
+                    <div class="grid__item grid__item--sm" *ngIf="brandAmbass.length > 6"><img alt="" src="{{brandAmbass?.[6].ambassadorImg}}"></div>
+                    <div class="grid__item grid__item--sm" *ngIf="brandAmbass.length > 7"><img alt="" src="{{brandAmbass?.[7].ambassadorImg}}"></div>
+                    <div class="grid__item grid__item--sm" *ngIf="brandAmbass.length > 8"><img alt="" src="{{brandAmbass?.[8].ambassadorImg}}"></div>
+                    <div class="grid__item grid__item--sm" *ngIf="brandAmbass.length > 9"><img alt="" src="{{brandAmbass?.[9].ambassadorImg}}"></div>
                 </div>
             </div>
         </div>

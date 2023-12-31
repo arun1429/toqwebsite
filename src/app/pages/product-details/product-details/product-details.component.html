@@ -136,10 +136,10 @@
 </div>
 <div class="single_slider d-flex align-items-center" style="margin-bottom: 60px;">
                     
-<video *ngIf="productDetails?.videoUrl!=null" style="width: 1444px;align-self: center;" loop  autoplay oncanplay="this.play()" controls  class=" sliderBanDesk" >
+<video *ngIf="productDetails?.videoUrl!=null" style="width: 1444px;align-self: center;"    controls  class=" sliderBanDesk" >
     <source src="{{productDetails?.videoUrl}}" type="video/mp4">
 </video>
-<video *ngIf="productDetails?.videoUrlMobile!=null" style="width: 600px;align-self: center;" loop  autoplay oncanplay="this.play()" controls class="sliderBanMobile" >
+<video *ngIf="productDetails?.videoUrlMobile!=null" style="width: 600px;align-self: center;"    controls class="sliderBanMobile" >
     <source src="{{productDetails?.videoUrlMobile}}" type="video/mp4">
 </video>
 </div>

@@ -18,6 +18,7 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
   discountStatus: boolean;
   statusOff: boolean;
   banners: any = [];
+  brandAmbass: any = [];
   bannerCarouselOption: OwlOptions = {
     animateOut: 'fadeOut',
     autoplay: true,
@@ -118,6 +119,7 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
     this.shopName = "TOQ"
     localStorage.setItem("shopName",this.shopName)
     this.getVendorBanners();
+    this.getVendorAmbass();
     this.getVendorCategory();
     this.getVendorBestProducts();
     this.getVendorLatestProducts();
@@ -132,6 +134,17 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
       (data: any) => {
         if (data.meta.status) {
           this.banners = data.data;
+        } else {
+          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+        }
+      }
+    )
+  }
+  getVendorAmbass() {
+    this._PS.getVendorBrandAmbassador(this.shopName).subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.brandAmbass = data.data;
         } else {
           this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
         }

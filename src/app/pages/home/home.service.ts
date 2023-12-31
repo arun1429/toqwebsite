@@ -16,6 +16,11 @@ export class HomeService {
     const url = `${environment.apiUrl}categories/category/listvendor?shopName=`+shopName;
     return this.http.get(url);
   }
+  getVendorBrandAmbassador(shopName) {
+    const url = `${environment.apiUrl}ambassador/listweb?shopName=`+shopName;
+    return this.http.get(url);
+  }
+  
   getVendorBanners(shopName) {
     const url = `${environment.apiUrl}banner/vendorbannerlist?shopName=`+shopName;
     return this.http.get(url);

@@ -56,12 +56,40 @@ const routes: Routes = [
         loadChildren: () => import("../pages/profile/profile.module").then(m => m.ProfileModule)
       },
       {
-        path: "static",
-        loadChildren: () => import("../pages/static/static.module").then(m => m.StaticModule)
-      },
-      {
         path: "bestsellingproducts",
         loadChildren: () => import("../pages/selling-products/selling-products.module").then(m => m.SellingProductsModule)
+      },
+      {
+        path: "about-us",
+        loadChildren: () => import("../pages/aboutus/aboutus.module").then(m => m.AboutusModule)
+      },
+      {
+        path: "delivery-information",
+        loadChildren: () => import("../pages/deliveryinfo/delivery.module").then(m => m.DeliveryModule)
+      },
+      {
+        path: "return-policy",
+        loadChildren: () => import("../pages/returnpolicy/returnpolicy.module").then(m => m.ReturnPolicyModule)
+      },
+      {
+        path: "terms-conditions",
+        loadChildren: () => import("../pages/terms/terms.module").then(m => m.TermsModule)
+      },
+      {
+        path: "privacy-policy",
+        loadChildren: () => import("../pages/privacypolicy/privacy.module").then(m => m.PrivacyModule)
+      },
+      {
+        path: "faq",
+        loadChildren: () => import("../pages/faq/faq.module").then(m => m.FaqModule)
+      },
+      {
+        path: "contact-us",
+        loadChildren: () => import("../pages/contactus/contactus.module").then(m => m.ContactUsModule)
+      },
+      {
+        path: "blogs",
+        loadChildren: () => import("../pages/blogs/blogs.module").then(m => m.BlogsModule)
       }
     ]
   }
