@@ -94,7 +94,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class=" block">Choose Variant</label>
+                                    <label class="text-bold block">Choose Variant</label>
                                     <select class="form-control shadow-none" [(ngModel)]="selectedVariantIndex"
                                         (ngModelChange)="changeVariant($event,productDetails)">
                                         <option *ngFor="let variant of productDetails?.variant; let i=index"
@@ -119,7 +119,7 @@
 </div>
 <div class="single_slider d-flex align-items-center" style="margin-bottom: 60px; justify-content: center;">
                     
-<video *ngIf="productDetails?.videoUrl!=null" style="width: 1444px;align-self: center;  justify-content: center;"    controls  class=" sliderBanDesk" >
+<video *ngIf="productDetails?.videoUrl!=null" style="width: 1180px;align-self: center;  justify-content: center;"    controls  class=" sliderBanDesk" >
     <source src="{{productDetails?.videoUrl}}" type="video/mp4">
 </video>
 <video *ngIf="productDetails?.videoUrlMobile!=null" style="width: 380px;align-self: center; justify-content: center;"    controls class="sliderBanMobile" >

@@ -25,3 +25,11 @@
     max-width: 350px;
     height: 280px;
 }
+
+@media screen and (max-width: 500px) {
+    .shop_area.shop_reverse.mt-45.mb-50{ margin-top: 10px!important;}
+    .shop_area .col-lg-3.col-md-3.col-12{ flex: 0 0 50%; max-width: 50%; padding-right: 7px; padding-left: 7px;}
+    .itemimgdiv{    height: 124px;}
+    .price_box span { font-size: 12px!important; }
+    .shop_wrapper .single_product{height: 265px; margin-bottom: 15px!important;}
+}

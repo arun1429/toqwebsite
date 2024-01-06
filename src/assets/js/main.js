@@ -1,4 +1,11 @@
 
+
+jQuery(document).on('click', '.mclose', function() {	
+    jQuery(this).parents(".navbar-collapse").removeClass('show');
+    
+});
+
+
 jQuery(document).on('click', '.mega-dropdown', function(e) {
 	e.stopPropagation()
 	

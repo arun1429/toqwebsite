@@ -8,10 +8,10 @@ export const environment = {
   // rzpKey: 'rzp_test_J2KJUVacMkgbHE', // rzp_test_J2KJUVacMkgbHE & rzp_test_hUubI1L3mlExbN
   // apiUrl: 'http://13.233.243.241/api/user/'
   // apiUrl: 'https://4be9811a5a56.ngrok.io/api/user/'
- // apiUrl: 'https://api.toqnkart.com/api/user/'
+   apiUrl: 'https://api.toqnkart.com/api/user/'
   
   
-  apiUrl: 'http://localhost:6020/api/user/'
+  //apiUrl: 'http://localhost:6020/api/user/'
 };
 
 /*

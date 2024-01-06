@@ -1,5 +1,7 @@
 .owl-nav {  margin: 0!important;}
 
+
+.price_box{}
 .socialMedia h2{ text-align: center;}
 .grid {
   max-width: 100vw;
@@ -60,7 +62,10 @@
 
 
 @media screen and (max-width: 500px) {
-.itemimgdiv{height: 147px!important;}
+
+
+
+.itemimgdiv{height: 124px!important;}
 .single_product{height: 224px;}
 .single_product1{height: 224px;padding: 6px;}
 
@@ -98,6 +103,13 @@
 .sliderBanDesk{display: none!important;}
 .sliderBanMobile{display: block!important;}
 }
+
+@media screen and (max-width: 480px) {
+  .price_box span {
+    font-size: 12px!important;
+  }
+}
+
 .itemimgdiv
 {
     height: 200px;
