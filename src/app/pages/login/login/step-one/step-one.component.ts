@@ -111,7 +111,6 @@ export class StepOneComponent extends RootComponent implements OnInit {
               profilePic: data.data.profilePic ? data.data.profilePic : 'https://res.cloudinary.com/appindia/image/upload/v1567572166/uploads/profile_d7wqbt.svg'
             };
             this.afterLogin(user);
-            // this.step1Data.emit({...this.loginForm.value,otp:data.otp});
             this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
           } else {
             this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });

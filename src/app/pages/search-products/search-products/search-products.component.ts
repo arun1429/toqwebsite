@@ -4,7 +4,8 @@ import { AlertService } from 'src/app/_services';
 import { RootComponent } from '../../../_shared/components/root/root.component';
 import { CartService } from '../../cart/cart.service';
 import { SearchProductsService } from "../search-products.service";
-
+import { MetakeywordsService } from '../../../_services/metakeywords.service';
+import { SEOService } from '../../../_services/seo.service';
 @Component({
   selector: 'app-search-products',
   templateUrl: './search-products.component.html',
@@ -22,7 +23,7 @@ export class SearchProductsComponent extends RootComponent implements OnInit {
     private routes: ActivatedRoute,
     public _AS: AlertService,
     private _SPS: SearchProductsService,
-    private _CS: CartService,
+    private _CS: CartService,private seoService: SEOService,private updateMetaTagSrv:MetakeywordsService,
     private router: Router) {
     super(_AS);
   }
@@ -37,6 +38,14 @@ export class SearchProductsComponent extends RootComponent implements OnInit {
       }
     )
     this.getDiscount(this.offerPrise,this.price)
+    this.updateMetaTagSrv.getSeoContent('Search').subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+        }
+      }
+    )
+    this.seoService.updateCanonicalUrl('https://toq.co.in/userprofile/search')
   }
 
   getAllSearchProducts() {
@@ -44,9 +53,8 @@ export class SearchProductsComponent extends RootComponent implements OnInit {
       (data: any) => {
         if (data.meta.status) {
           this.products = data.data;
-          this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
         } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          this.products = []
         }
       }
     )

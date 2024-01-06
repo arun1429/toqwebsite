@@ -37,15 +37,15 @@
                                                 (click)="removeFromCart(cart._id)"><i class="fa fa-trash-o"></i></a>
                                         </td>
                                         <td class="product_thumb"><a
-                                                [routerLink]="['/product-details',cart.productId]" [queryParams]="{variantId: cart.variantId}"><img
+                                                [routerLink]="['/product-details',cart.variantSlug]"><img
                                                     src="{{cart?.variantImg[0]}}" alt=""></a></td>
                                         <td class="product_name">
-                                            <a [routerLink]="['/product-details',cart.productId]" [queryParams]="{variantId: cart.variantId}">
+                                            <a [routerLink]="['/product-details',cart.variantSlug]">
                                                 <strong>{{cart?.productName}}</strong>
                                                 <p>{{cart?.brand}}</p>
                                             </a>
                                         </td>
-                                        <td class="product-price">₹{{cart?.displayOfferPrice}}</td>
+                                        <td class="product-price">₹{{cart?.offerPrice}}</td>
                                         <td class="product_quantity">
                                            <span class="increase_class" (click)="increaseDecreaseQuantity(cart,-1,cart.selectQuantity)">-</span> {{cart?.selectQuantity}} <span (click)="increaseDecreaseQuantity(cart,1,cart.selectQuantity)" class="increase_class">+</span>
                                         </td>

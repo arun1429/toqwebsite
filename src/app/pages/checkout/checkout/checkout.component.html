@@ -45,7 +45,7 @@
                                                 <div class="fbox group-h m-t-lg" style="font-size: 14px;">
                                                     <div class="" id="currentPrice{{ i }}">
                                                         Qty: {{ c.selectQuantity }} X Rs.{{
-                                                        c.displayOfferPrice?.toFixed(2) }}
+                                                        c.offerPrice?.toFixed(2) }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -479,13 +479,13 @@
             <div class="modal-body">
                 <div class="cart_item" *ngFor="let item of notDeliverableItems; let i = index">
                     <div class="cart_img">
-                        <a (click)="hideValidateModal()" [routerLink]="['/product-details',item.productId]">
+                        <a (click)="hideValidateModal()" [routerLink]="['/product-details',item.pvariantSlug]">
                             <img src="{{item?.variantImg[0]}}" alt="">
                         </a>
                     </div>
                     <div class="cart_info">
                         <a (click)="hideValidateModal()"
-                            [routerLink]="['/product-details',item.productId]">{{item?.productName}}</a>
+                            [routerLink]="['/product-details',item.variantSlug]">{{item?.productName}}</a>
                         <p>Qty: {{item?.selectQuantity}} X <span> ₹{{item?.offerPrice}} </span></p>
                         <p style="color: red;">Undeliverble on selected address</p>
                     </div>

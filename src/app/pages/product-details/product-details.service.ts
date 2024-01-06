@@ -13,6 +13,10 @@ export class ProductDetailsService {
     const url = `${environment.apiUrl}products/details?productId=${productId}&userId=${userId}`;
     return this.http.get(url);
   }
+  getProductDetailBySlug(variantSlug: string,userId:string='') {
+    const url = `${environment.apiUrl}products/detailsbyslug?variantSlug=${variantSlug}&userId=${userId}`;
+    return this.http.get(url);
+  }
 
   submitReview(reviewData: any) {
     const url = `${environment.apiUrl}review/add`;

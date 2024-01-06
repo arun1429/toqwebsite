@@ -7,23 +7,22 @@
                     <div class="widgets_container contact_us">
                         <h3>Contact Info</h3>
                         <div class="footer_contact">
-                            <p><span>Address : </span> {{contactDetails?.shopAddress?contactDetails.shopAddress.address:'--'}}</p>
                             <p>
-                                <span>Contact : </span>
+                                <a href="javascript:void(0)">
+                                    {{contactDetails?.mobileNo?contactDetails?.shopName:'--'}}
+                                </a>
+                            </p>
+                           
+                            <p>
                                 <a href="javascript:void(0)">
                                     {{contactDetails?.mobileNo?contactDetails?.mobileNo:'--'}}
                                 </a>
                             </p>
                             <p>
-                                <span>Mobile No:</span>
-                                <a href="javascript:void(0)">
-                                    {{contactDetails?.mobileNo?contactDetails?.mobileNo:'--'}}
+                                <a href="javascript:void(0)"> info@toq.co.in
                                 </a>
                             </p>
-                            <p>
-                                <span>Email:</span>
-                                <a href="javascript:void(0)"> {{contactDetails?.vendorEmailId?contactDetails?.vendorEmailId:'--'}}</a>
-                            </p>
+                            <p>{{contactDetails?.shopAddress?contactDetails.shopAddress.address:'--'}}</p>
                         </div>
                         <ul class="footer_social row" >
                             <li style=" margin-right: 10px; margin-left: 10px;"><a href="{{socialDetails?.twitterUrl}}" target="_blank"><i class="fa fa-twitter"></i></a></li>
@@ -75,11 +74,11 @@
                                         Blogs
                                     </a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="https://play.google.com/store/apps/details?id=com.qboxus.dotoq" target=”_blank” >
                                         Register on DoToq
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </div>

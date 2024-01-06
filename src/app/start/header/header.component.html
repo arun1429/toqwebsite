@@ -35,9 +35,9 @@
                                 <!--  mega menu -->		
                                 <ul class="dropdown-menu mega-dropdown-menu row">
                                     <li class="col-sm-3"  *ngFor="let childgroups of groups?.category">
-                                        <a class="title-submenu dropdown-toggle" [routerLink]="['/products',childgroups?.categoryId]"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{childgroups?.categoryName}}<span class="caret"></span> </a> 
+                                        <a class="title-submenu dropdown-toggle" [routerLink]="['/products',childgroups?.categorySlug]"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{childgroups?.categoryName}}<span class="caret"></span> </a> 
                                         <ul class="subdrop3 dropdown-menu dropdown-menu-right"*ngFor="let innerchildgroups of childgroups?.subcategory">
-                                            <li> <a [routerLink]="['/products',innerchildgroups?.subCategoryId]">{{innerchildgroups?.subCategoryName}}</a></li>
+                                            <li> <a [routerLink]="['/products',innerchildgroups?.subCategorySlug]">{{innerchildgroups?.subCategoryName}}</a></li>
                                         </ul>
                                     </li>
                                    

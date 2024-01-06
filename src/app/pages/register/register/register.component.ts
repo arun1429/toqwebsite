@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { AlertService } from 'src/app/_services';
 import { RootComponent } from 'src/app/_shared/components/root/root.component';
 import { RegisterService } from '../register.service';
-
+import { MetakeywordsService } from '../../../_services/metakeywords.service';
+import { SEOService } from '../../../_services/seo.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -31,6 +32,7 @@ export class RegisterComponent extends RootComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
 
   register() {

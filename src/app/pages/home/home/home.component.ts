@@ -5,6 +5,8 @@ import { HomeService } from "../home.service";
 import { Options } from '@angular-slider/ngx-slider';
 import { RootComponent } from '../../../_shared/components/root/root.component';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { MetakeywordsService } from '../../../_services/metakeywords.service';
+import { SEOService } from '../../../_services/seo.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -109,8 +111,8 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
     private cdr: ChangeDetectorRef,
     private zone: NgZone,
     public _AS: AlertService,
-    private _PS: HomeService,
-    private routes: ActivatedRoute,
+    private _PS: HomeService,private updateMetaTagSrv:MetakeywordsService,
+    private routes: ActivatedRoute,private seoService: SEOService,
     private router: Router) {
     super(_AS);
   }
@@ -124,6 +126,14 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
     this.getVendorBestProducts();
     this.getVendorLatestProducts();
     this.getVendorSalesProducts();
+    this.updateMetaTagSrv.getSeoContent('Home').subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+        }
+      }
+    )
+    this.seoService.updateCanonicalUrl('https://toq.co.in/')
   }
   ngAfterViewInit() {
     this.outOfStock();
@@ -135,7 +145,7 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
         if (data.meta.status) {
           this.banners = data.data;
         } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          this.banners =[]
         }
       }
     )
@@ -146,7 +156,7 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
         if (data.meta.status) {
           this.brandAmbass = data.data;
         } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          this.brandAmbass =[]
         }
       }
     )
@@ -185,7 +195,7 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
           this.products = data.data;
           console.log("this.products : "+JSON.stringify(this.products))
         } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          this.products = []
         }
       }
     )
@@ -198,7 +208,7 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
         if (data.meta.status) {
           this.categories = data.data;
         } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          this.categories = []
         }
       }
     )
@@ -210,7 +220,7 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
         if (data.meta.status) {
           this.latestProducts = data.data;
         } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          this.latestProducts =[]
         }
       }
     )
@@ -221,7 +231,7 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
         if (data.meta.status) {
           this.salesProducts = data.data;
         } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          this.salesProducts = []
         }
       }
     )

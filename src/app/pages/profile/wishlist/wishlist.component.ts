@@ -41,10 +41,8 @@ export class WishlistComponent extends RootComponent implements OnInit {
       (data: any) => {
         if (data.meta.status) {
           this.products = data.data;
-          // this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
         } else {
           this.products = [];
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
         }
       }
     )

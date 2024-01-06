@@ -1,5 +1,6 @@
 .product_details .col-md-2.ng-star-inserted{padding: 0;} 
 
+.saleBtn{ background: #dd1567; color:#fff;  border-radius: 20px; padding: 4px 15px;}
 
 .sliderBanDesk{display: block!important;}
 .sliderBanMobile{display: none!important;}
@@ -61,7 +62,17 @@
     line-height: 42px;
     text-transform: capitalize;
 }
-
+@media screen and (max-width: 600px) {
+  .product_variant.quantity button {
+    border: 0;
+    font-size: 12px;
+    margin-left: 5px;
+    background: #000000;
+    height: 42px;
+    line-height: 42px;
+    text-transform: capitalize;
+}
+  }
 .cart_icon{
   /* color: whitesmoke; */
   color: #000000;
@@ -89,6 +100,7 @@
   color:#cccccc;
 }
 .pcs {
-  color: tomato;
+  color: #dd1567;
+  margin-left: 10px;
   font-size: 20px;
 }

@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { AlertService } from 'src/app/_services';
 import { RootComponent } from 'src/app/_shared/components/root/root.component';
 import { ForgotPasswordService } from '../forgotpassword.service';
-
+import { MetakeywordsService } from '../../../_services/metakeywords.service';
+import { SEOService } from '../../../_services/seo.service';
 @Component({
   selector: 'app-forgotpassword',
   templateUrl: './forgotpassword.component.html',
@@ -19,7 +20,7 @@ export class ForgotPasswordComponent extends RootComponent implements OnInit {
     public _AS: AlertService,
     private _FB: FormBuilder,
     private _RS: ForgotPasswordService,
-    private router: Router
+    private router: Router,private updateMetaTagSrv:MetakeywordsService,private seoService: SEOService
   ) {
     super(_AS);
     this.forgotpasswordFormGroup = this._FB.group({
@@ -34,6 +35,14 @@ export class ForgotPasswordComponent extends RootComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.updateMetaTagSrv.getSeoContent('Forgot Password').subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+        }
+      }
+    )
+    this.seoService.updateCanonicalUrl('https://toq.co.in/forgot-password')
   }
 
   sendOtp() {

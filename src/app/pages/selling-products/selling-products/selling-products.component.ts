@@ -4,7 +4,8 @@ import { AlertService } from 'src/app/_services';
 import { RootComponent } from '../../../_shared/components/root/root.component';
 import { CartService } from '../../cart/cart.service';
 import { SellingProductsService } from "../selling-products.service";
-
+import { MetakeywordsService } from '../../../_services/metakeywords.service';
+import { SEOService } from '../../../_services/seo.service';
 @Component({
   selector: 'app-selling-products',
   templateUrl: './selling-products.component.html',
@@ -22,7 +23,7 @@ export class SellingProductsComponent extends RootComponent implements OnInit {
     private routes: ActivatedRoute,
     public _AS: AlertService,
     private _SPS: SellingProductsService,
-    private _CS: CartService,
+    private _CS: CartService,private seoService: SEOService,private updateMetaTagSrv:MetakeywordsService,
     private router: Router) {
     super(_AS);
   }
@@ -31,6 +32,14 @@ export class SellingProductsComponent extends RootComponent implements OnInit {
     this.shopName = "TOQ"
     this.shopName  = localStorage.getItem("shopName")
     this.getAllProducts(this.shopName);
+    this.updateMetaTagSrv.getSeoContent('Best Selling Products').subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+        }
+      }
+    )
+    this.seoService.updateCanonicalUrl('https://toq.co.in/bestsellingproducts')
   }
 
   getAllProducts(shopName) {
@@ -38,9 +47,9 @@ export class SellingProductsComponent extends RootComponent implements OnInit {
       (data: any) => {
         if (data.meta.status) {
           this.products = data.data;
-          this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
+        
         } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          this.products = []
         }
       }
     )

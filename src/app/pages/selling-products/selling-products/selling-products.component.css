@@ -20,3 +20,11 @@
     width: auto;
     margin: 0;
 }
+.single_product {
+    padding: 18px;
+    border: 1px solid #ebebeb;
+    border-radius: 4px;
+    background: #ffffff;
+    max-width: 350px;
+    height: 280px;
+}

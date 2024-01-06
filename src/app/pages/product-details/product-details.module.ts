@@ -9,7 +9,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 const routes: Routes = [{
-  path: ":productId",
+  path: ":variantSlug",
   component: ProductDetailsComponent
 }]
 

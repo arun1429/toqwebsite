@@ -7,6 +7,8 @@ import { RootComponent } from '../../../_shared/components/root/root.component';
 import { ProfileService } from '../../profile/profile.service';
 import { HomeService } from '../../home/home.service';
 import { ProductDetailsService } from "../product-details.service";
+import { MetakeywordsService } from '../../../_services/metakeywords.service';
+import { SEOService } from '../../../_services/seo.service';
 declare var $: any;
 
 @Component({
@@ -18,6 +20,7 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
 
   productDetails: any;
   productId: string;
+  variantSlug: string;
   ratingsByUser: number = 0;
   discountStatus = true;
   statusOff = true
@@ -54,7 +57,6 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
   offerPrise: any;
   price: any;
   discount: number;
-  selectedVariantId: any;
   variantId:string;
   userId: string;
   variantName: any;
@@ -66,7 +68,7 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
     private _PDS: ProductDetailsService,
     private _FB: FormBuilder,
     private _PFS: ProfileService,
-    private _HS: HomeService,
+    private _HS: HomeService,private seoService: SEOService,private updateMetaTagSrv:MetakeywordsService,
     private spinnerService: NgxSpinnerService,
     private router: Router) {
     super(_AS);
@@ -87,26 +89,59 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
   ngOnInit(): void {
     this.routes.params.subscribe(
       data => {
-        this.productId = data.productId;
-        if (this.productId) {
-          this.getProductDetails();
+        this.variantSlug = data.variantSlug;
+        if (this.variantSlug) {
+          this.getProductDetailsBySlug();
+          this.seoService.updateCanonicalUrl('https://toq.co.in/product-details/'+this.variantSlug)
         }
       }
     )
-
-    this.routes.queryParams.subscribe(res => {
-      if (res.hasOwnProperty('variantId')) {
-        this.selectedVariantId = res['variantId']
-      }
-      else {
-        this.selectedVariantId = ''
-      }
-    })
+   
     this.getDiscount(this.offerPrise, this.price)
   }
 
   imageList: any
   newImg: any;
+  getProductDetailsBySlug() {
+    let tepmLocalStorage = localStorage.getItem('currentUser')
+    if (tepmLocalStorage) {
+      this.userId = JSON.parse(tepmLocalStorage).userId;
+    }
+    this.spinnerService.show();
+    this._PDS.getProductDetailBySlug(this.variantSlug, this.userId).subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.productDetails = data.data;
+          this.productId = data.data.productId
+          console.log(this.productDetails)
+          this.spinnerService.hide();
+          if (this.productDetails) {
+            this.productDetails.variant.map((val, i) => {
+              this.variantId=val.variantId;
+              this.variantRating=this.productDetails.variant[this.selectedVariantIndex].overAllRating
+              if (val.variantSlug === this.variantSlug) {
+                this.selectedVariantIndex = i
+                this.variantName=val.variantName;
+                this.variantRating=val.overAllRating;
+                this.variantId=val.variantId;
+                this.getReviewData();
+                this.imageList = { image: val.variantImg }
+                this.newImg = this.imageList.image[0];
+
+                this.updateMetaTagSrv.getSeoContent(data.data.productName).subscribe(
+                  (data: any) => {
+                    if (data.meta.status) {
+                      this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+                    }
+                  }
+                )
+              }
+            });
+          }
+        }
+      }
+    )
+  }
   getProductDetails() {
     let tepmLocalStorage = localStorage.getItem('currentUser')
     if (tepmLocalStorage) {
@@ -123,7 +158,7 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
             this.productDetails.variant.map((val, i) => {
               this.variantId=val.variantId;
               this.variantRating=this.productDetails.variant[this.selectedVariantIndex].overAllRating
-              if (val.variantId === this.selectedVariantId) {
+              if (val.variantSlug === this.variantSlug) {
                 this.selectedVariantIndex = i
                 this.variantName=val.variantName;
                 this.variantRating=val.overAllRating;
@@ -133,17 +168,6 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
                 this.newImg = this.imageList.image[0];
               }
             });
-
-            if (this.selectedVariantId === '') {
-              this.selectedVariantIndex = 0
-              this.variantName=this.productDetails.variant[this.selectedVariantIndex].variantName;
-              this.variantId=this.productDetails.variant[this.selectedVariantIndex].variantId;
-              this.variantRating=this.productDetails.variant[this.selectedVariantIndex].overAllRating
-              this.getReviewData();
-             if( this.newImg = this.productDetails.variant[this.selectedVariantIndex]){
-                this.newImg = this.productDetails.variant[this.selectedVariantIndex].variantImg[0]
-             }
-            }
           }
         }
       }
@@ -170,11 +194,7 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
 
   changeVariant(i, productDetails) {
     this.selectedVariantIndex = i;
-    this.newImg = productDetails.variant[i].variantImg[0];
-    this.variantId=productDetails.variant[i].variantId
-    this.variantName=productDetails.variant[i].variantName;
-    this.variantRating=productDetails.variant[i].overAllRating;
-    this.getReviewData();
+    this.router.navigateByUrl("/product-details/"+productDetails.variant[i].variantSlug);
   }
 
   getDiscount(offerPrice, price) {
@@ -332,11 +352,7 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
           this.getProductDetails();
           this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
         }
-        // else {
-        //   this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
-        // }
       }, error => {
-        this.alertMessage({ type: "danger", title: "Error Occured", value: "Please login first" });
       }
     );
   }
@@ -379,7 +395,6 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
             this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
           }
         }, error => {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: "Please login first" });
         }
       )
     }

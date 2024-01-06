@@ -5,6 +5,8 @@ import { CheckoutService } from '../../checkout/checkout.service';
 import { CartService } from '../cart.service';
 import * as moment from "moment";
 import { Router } from '@angular/router';
+import { MetakeywordsService } from '../../../_services/metakeywords.service';
+import { SEOService } from '../../../_services/seo.service';
 declare var $: any;
 
 @Component({
@@ -33,7 +35,7 @@ export class CartComponent extends RootComponent implements OnInit {
     private _CS: CartService,
     private _US: UserService,
     private _route:Router,
-    private _CHS: CheckoutService) {
+    private _CHS: CheckoutService,private updateMetaTagSrv:MetakeywordsService,private seoService: SEOService) {
     super(_AS)
   }
 
@@ -44,6 +46,14 @@ export class CartComponent extends RootComponent implements OnInit {
       }
     });
     this.getCartItems();
+    this.seoService.updateCanonicalUrl('https://toq.co.in//userprofile/cart')
+    this.updateMetaTagSrv.getSeoContent('Cart Page').subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+        }
+      }
+    )
   }
 
   getCartItems() {
@@ -120,9 +130,7 @@ export class CartComponent extends RootComponent implements OnInit {
     this._CHS.updateQuantity(productId, variantId, quantityPurchased, cartId).subscribe(
       (data: any) => {
         if (data.meta.status) {
-          this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
           this._CS.emittedValue.next(true);
-          // this.updateCartTotal();
         } else {
           this._CS.emittedValue.next(true);
           this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });

@@ -14,135 +14,23 @@
   </div>
 </div>
 <!-- Blogs Area -->
-<section class="blogs-main archives section">
+<section class="blogs-main archives section2">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="section-title mb-0">
-                    <h1 class="mb-4">Blogs </h1>
-                </div>
-            </div>
-        </div>
         <div class="row bloglisting">
-            <div class="col-lg-4 col-md-4 col-12">
+            <div class="col-lg-4 col-md-4 col-12"  *ngFor="let blogs of blogsData ">
                 <div class="card blogitem">
                     <div class="card__img">
                       <div class="img__cover">
-                        <img src="https://images.unsplash.com/photo-1531206266563-27319e334a96?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60" alt="" />
+                        <img src="{{blogs?.blogImg}}"  [routerLink]="['/blogs/',blogs?.blogTitleLink]"  />
                       </div>
                     </div>
-                    <small>Dec 28, 2023</small>
+                    <small>{{blogs?.updatedAt | date}} </small>
                     <div class="card__text flow">
-                        <h4><a href="#">5 Hoodie Styling Ideas For Men To Master Masculine Style</a></h4>
+                        <h4><a [routerLink]="['/blogs/',blogs?.blogTitleLink]" >{{blogs?.blogTitle}}</a></h4>
                     </div>
                   </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-12">
-                <div class="card blogitem">
-                    <div class="card__img">
-                      <div class="img__cover">
-                        <img src="https://images.unsplash.com/photo-1531206266563-27319e334a96?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60" alt="" />
-                      </div>
-                    </div>
-                    <small>Dec 28, 2023</small>
-                    <div class="card__text flow">
-                        <h4><a href="#">5 Hoodie Styling Ideas For Men To Master Masculine Style</a></h4>
-                    </div>
-                  </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12">
-                <div class="card blogitem">
-                    <div class="card__img">
-                      <div class="img__cover">
-                        <img src="https://images.unsplash.com/photo-1531206266563-27319e334a96?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60" alt="" />
-                      </div>
-                    </div>
-                    <small>Dec 28, 2023</small>
-                    <div class="card__text flow">
-                        <h4><a href="#">5 Hoodie Styling Ideas For Men To Master Masculine Style</a></h4>
-                    </div>
-                  </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12">
-                <div class="card blogitem">
-                    <div class="card__img">
-                      <div class="img__cover">
-                        <img src="https://images.unsplash.com/photo-1531206266563-27319e334a96?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60" alt="" />
-                      </div>
-                    </div>
-                    <small>Dec 28, 2023</small>
-                    <div class="card__text flow">
-                        <h4><a href="#">5 Hoodie Styling Ideas For Men To Master Masculine Style</a></h4>
-                    </div>
-                  </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12">
-                <div class="card blogitem">
-                    <div class="card__img">
-                      <div class="img__cover">
-                        <img src="https://images.unsplash.com/photo-1531206266563-27319e334a96?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60" alt="" />
-                      </div>
-                    </div>
-                    <small>Dec 28, 2023</small>
-                    <div class="card__text flow">
-                        <h4><a href="#">5 Hoodie Styling Ideas For Men To Master Masculine Style</a></h4>
-                    </div>
-                  </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12">
-                <div class="card blogitem">
-                    <div class="card__img">
-                      <div class="img__cover">
-                        <img src="https://images.unsplash.com/photo-1531206266563-27319e334a96?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60" alt="" />
-                      </div>
-                    </div>
-                    <small>Dec 28, 2023</small>
-                    <div class="card__text flow">
-                        <h4><a href="#">5 Hoodie Styling Ideas For Men To Master Masculine Style</a></h4>
-                    </div>
-                  </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12">
-                <div class="card blogitem">
-                    <div class="card__img">
-                      <div class="img__cover">
-                        <img src="https://images.unsplash.com/photo-1531206266563-27319e334a96?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60" alt="" />
-                      </div>
-                    </div>
-                    <small>Dec 28, 2023</small>
-                    <div class="card__text flow">
-                        <h4><a href="#">5 Hoodie Styling Ideas For Men To Master Masculine Style</a></h4>
-                    </div>
-                  </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12">
-                <div class="card blogitem">
-                    <div class="card__img">
-                      <div class="img__cover">
-                        <img src="https://images.unsplash.com/photo-1531206266563-27319e334a96?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60" alt="" />
-                      </div>
-                    </div>
-                    <small>Dec 28, 2023</small>
-                    <div class="card__text flow">
-                        <h4><a href="#">5 Hoodie Styling Ideas For Men To Master Masculine Style</a></h4>
-                    </div>
-                  </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12">
-                <div class="card blogitem">
-                    <div class="card__img">
-                      <div class="img__cover">
-                        <img src="https://images.unsplash.com/photo-1531206266563-27319e334a96?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60" alt="" />
-                      </div>
-                    </div>
-                    <small>Dec 28, 2023</small>
-                    <div class="card__text flow">
-                        <h4><a href="#">5 Hoodie Styling Ideas For Men To Master Masculine Style</a></h4>
-                    </div>
-                  </div>
-            </div>
-
-            <nav class="pagination-container">
+            <!-- <nav class="pagination-container">
                 <div class="pagination">
                         <a class="pagination-newer" href="#">PREV</a>
                         <span class="pagination-inner">
@@ -155,7 +43,7 @@
                         </span>
                         <a class="pagination-older" href="#">NEXT</a>
                 </div>
-            </nav>
+            </nav> -->
 
         </div>
        	

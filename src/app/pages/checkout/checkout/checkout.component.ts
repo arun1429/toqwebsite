@@ -10,6 +10,8 @@ import { ProfileService } from '../../profile/profile.service';
 import * as moment from "moment";
 import { RootComponent } from '../../../_shared/components/root/root.component';
 import { environment } from 'src/environments/environment';
+import { MetakeywordsService } from '../../../_services/metakeywords.service';
+import { SEOService } from '../../../_services/seo.service';
 declare var $: any;
 
 @Component({
@@ -83,13 +85,21 @@ export class CheckoutComponent extends RootComponent implements OnInit {
     private _CS: CartService,
     private actRoute: ActivatedRoute,
     private zone: NgZone,
-    private _PFS: ProfileService,
-    private winRef: WidnowRefService
+    private _PFS: ProfileService,private seoService: SEOService,
+    private winRef: WidnowRefService,private updateMetaTagSrv:MetakeywordsService
   ) {
     super(_AS)
   }
 
   ngOnInit(): void {
+    this.seoService.updateCanonicalUrl('https://toq.co.in//userprofile/checkout')
+    this.updateMetaTagSrv.getSeoContent('Checkout').subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+        }
+      }
+    )
     this.geocoder = new google.maps.Geocoder();
     // let currentDate = new Date();
     // this.dateList = [...this.dateList, { date: currentDate.setDate(currentDate.getDate() + 0), isEnable: false }];

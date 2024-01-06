@@ -39,19 +39,19 @@
                                         <figure>
                                             <div class="product_thumb" >
                                                 
-                                                <a class="primary_img" [routerLink]="['/products',category.categoryId]"><img
+                                                <a class="primary_img" [routerLink]="['/products',category.categorySlug]"><img
                                                         src="{{category?.categoryImg}}" alt="">
                                                        
                                                 </a>
                                                 <div class="product_name" style="margin-bottom: 10px;" >
                                                     <h4>
-                                                        <a [routerLink]="['/products',category.categoryId]">
+                                                        <a [routerLink]="['/products',category.categorySlug]">
                                                             {{category?.categoryName}}
                                                         </a>
                                                     </h4>
                                                 </div>
                                                 <div class="quick_button">
-                                                    <a [routerLink]="['/products',category.categoryId]" data-toggle="modal"
+                                                    <a [routerLink]="['/products',category.categorySlug]" data-toggle="modal"
                                                         data-target="#modal_box" title="quick view"> View Products</a>
                                                 </div>
                                             </div>
@@ -88,7 +88,7 @@
                     <article class="single_product">
                         <figure>
                             <div class="product_thumb" style="margin-bottom: 0;">
-                                <a class="primary_img" [routerLink]="['/product-details',product.productId]" [queryParams]="{variantId: product.variantId}">
+                                <a class="primary_img" [routerLink]="['/product-details',product.variantSlug]" >
                                     <div class="itemimgdiv">
                                         <img src="{{product?.variantImg[0]}}" alt="" class="itemsimg">
                                         <span class="saleBtn">Sale</span> 
@@ -97,13 +97,13 @@
                             </div>
                             <div class="product_name">
                                 <h4><a
-                                        [routerLink]="['/product-details',product.productId]" [queryParams]="{variantId: product.variantId}">{{product?.productName}}</a>
+                                        [routerLink]="['/product-details',product.variantSlug]" >{{product?.productName}}</a>
                                 </h4>
                             </div>
                             <div class="price_box" style="padding-left: 5px;">
-                                <span class="current_price">₹{{product?.displayOfferPrice}}</span>&nbsp;
+                                <span class="current_price">₹{{product?.offerPrice}}</span>&nbsp;
                                 <span class="old_price">₹{{product?.price}}</span>
-                                <span  style="font-size: 14px;" >{{getDiscount(product?.displayOfferPrice,product?.price)}}</span> % Off 
+                                <span  style="font-size: 14px;" >{{getDiscount(product?.offerPrice,product?.price)}}</span> % Off 
                             </div>
                         </figure>
                     </article>
@@ -130,7 +130,7 @@
                     <article class="single_product">
                         <figure>
                             <div class="product_thumb" style="margin-bottom: 0;">
-                                <a class="primary_img" [routerLink]="['/product-details',product.productId]" [queryParams]="{variantId: product.variantId}">
+                                <a class="primary_img" [routerLink]="['/product-details',product.variantSlug]" >
                                     <div class="itemimgdiv">
                                         <img src="{{product?.variantImg[0]}}" alt="" class="itemsimg">
                                     </div>
@@ -138,13 +138,13 @@
                             </div>
                             <div class="product_name">
                                 <h4><a
-                                        [routerLink]="['/product-details',product.productId]" [queryParams]="{variantId: product.variantId}">{{product?.productName}}</a>
+                                        [routerLink]="['/product-details',product.variantSlug]" >{{product?.productName}}</a>
                                 </h4>
                             </div>
                             <div class="price_box" style="padding-left: 5px;">
-                                <span class="current_price">₹{{product?.displayOfferPrice}}</span>&nbsp;
+                                <span class="current_price">₹{{product?.offerPrice}}</span>&nbsp;
                                 <span class="old_price">₹{{product?.price}}</span>
-                                <span  style="font-size: 14px;" >{{getDiscount(product?.displayOfferPrice,product?.price)}}</span> % Off 
+                                <span  style="font-size: 14px;" >{{getDiscount(product?.offerPrice,product?.price)}}</span> % Off 
                             </div>
                         </figure>
                     </article>
@@ -170,7 +170,7 @@
                                 <article class="single_product">
                                     <figure>
                                         <div class="product_thumb" style="margin-bottom: 0;">
-                                            <a class="primary_img" [routerLink]="['/product-details',product.productId]" [queryParams]="{variantId: product.variantId}">
+                                            <a class="primary_img" [routerLink]="['/product-details',product.variantSlug]" >
                                                 <div class="itemimgdiv">
                                                     <img src="{{product?.variantImg[0]}}" alt="" class="itemsimg">
                                                 </div>
@@ -178,13 +178,13 @@
                                         </div>
                                         <div class="product_name">
                                             <h4><a
-                                                    [routerLink]="['/product-details',product.productId]" [queryParams]="{variantId: product.variantId}">{{product?.productName}}</a>
+                                                    [routerLink]="['/product-details',product.variantSlug]" >{{product?.productName}}</a>
                                             </h4>
                                         </div>
                                         <div class="price_box" style="padding-left: 5px;">
-                                            <span class="current_price">₹{{product?.displayOfferPrice}}</span>&nbsp;
+                                            <span class="current_price">₹{{product?.offerPrice}}</span>&nbsp;
                                             <span class="old_price">₹{{product?.price}}</span>
-                                            <span  style="font-size: 14px;" >{{getDiscount(product?.displayOfferPrice,product?.price)}}</span> % Off 
+                                            <span  style="font-size: 14px;" >{{getDiscount(product?.offerPrice,product?.price)}}</span> % Off 
                                         </div>
                                     </figure>
                                 </article>

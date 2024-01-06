@@ -60,6 +60,14 @@ const routes: Routes = [
         loadChildren: () => import("../pages/selling-products/selling-products.module").then(m => m.SellingProductsModule)
       },
       {
+        path: "newarrivalproducts",
+        loadChildren: () => import("../pages/newarrival-products/newarrival-products.module").then(m => m.NewarrivalProductsModule)
+      },
+      {
+        path: "specialofferproducts",
+        loadChildren: () => import("../pages/specialoffer-products/specialoffer-products.module").then(m => m.SpecialOfferProductsModule)
+      },
+      {
         path: "about-us",
         loadChildren: () => import("../pages/aboutus/aboutus.module").then(m => m.AboutusModule)
       },

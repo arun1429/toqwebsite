@@ -23,7 +23,10 @@ export class ProductsService {
     const url = `${environment.apiUrl}products/bycategoryandsubcategoryid`;
     return this.http.post(url, catData);
   }
-
+  getProductBySlug(catData: any) {
+    const url = `${environment.apiUrl}products/bycategoryslugandsubcategoryslug`;
+    return this.http.post(url, catData);
+  }
   getProductByGroupIdState(groupId: string,state) {
     const url = `${environment.apiUrl}products/group/${groupId}?state=${state}`;
     return this.http.get(url);

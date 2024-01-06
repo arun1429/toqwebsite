@@ -6,7 +6,8 @@ import { ProductsService } from "../products.service";
 import { Options } from '@angular-slider/ngx-slider';
 import { RootComponent } from '../../../_shared/components/root/root.component';
 import { CheckoutService } from '../../checkout/checkout.service';
-
+import { MetakeywordsService } from '../../../_services/metakeywords.service';
+import { SEOService } from '../../../_services/seo.service';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -17,6 +18,7 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
   price: any;
   groupId: string;
   categoryId: string;
+  categorySlug:string;
   products: any = [];
   categories: any = [];
   selectedIndex: number = -1;
@@ -41,7 +43,7 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
     public _AS: AlertService,
     private _PS: ProductsService,
     private routes: ActivatedRoute,
-    private _CS: CartService,
+    private _CS: CartService,private seoService: SEOService,private updateMetaTagSrv:MetakeywordsService,
     private _CHS: CheckoutService,
     private router: Router) {
     super(_AS);
@@ -50,13 +52,22 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
   ngOnInit(): void {
     this.routes.params.subscribe(
       data => {
-        this.categoryId = data.categoryId;
-       this.getProductByCategoryIdHome(data.categoryId)
+        this.categorySlug = data.categorySlug;
+       this.getProductBySlug(data.categorySlug)
         this.getAllCategories();
+        this.seoService.updateCanonicalUrl(data.categorySlug)
       }
     ) 
     this.getStates();
     this.getDiscount(this.offerPrise,this.price)
+    this.updateMetaTagSrv.getSeoContent('Product Page').subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+        }
+      }
+    )
+   
   }
 
   selectCity(event){
@@ -67,7 +78,7 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
           this.products = data.data;
           this.getMaxPrice();
         } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          this.products =[]
         }
       }
     )
@@ -122,7 +133,7 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
           this.products = data.data;
           this.getMaxPrice();
         } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          this.products = []
         }
       }
     )
@@ -139,26 +150,27 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
           this.selectedIndex = indexValue;
           this.getMaxPrice();
         } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          this.products = []
         }
       }
     )
   }
-  getProductByCategoryIdHome(categoryId: string) {
+  getProductBySlug(categorySlug: string) {
     let obj = {
-      id: categoryId
+      id: categorySlug
     }
-    this._PS.getProductBycatIdSubCatId(obj).subscribe(
+    this._PS.getProductBySlug(obj).subscribe(
       (data: any) => {
         if (data.meta.status) {
           this.products = data.data;
           this.getMaxPrice();
           if(this.products.size !=0){
+            this.categoryId = this.products[0].categoryId
             this.groupId = this.products[0].groupId
             this.getAllCategories()
           }
         } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          this.products =[]
         }
       }
     )

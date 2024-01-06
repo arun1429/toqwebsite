@@ -4,7 +4,8 @@ import { AlertService } from 'src/app/_services';
 import { RootComponent } from '../../../_shared/components/root/root.component';
 import { CartService } from '../../cart/cart.service';
 import { NewarrivalProductsService } from "../newarrival-products.service";
-
+import { MetakeywordsService } from '../../../_services/metakeywords.service';
+import { SEOService } from '../../../_services/seo.service';
 @Component({
   selector: 'app-newarrival-products',
   templateUrl: './newarrival-products.component.html',
@@ -22,7 +23,7 @@ export class NewarrivalProductsComponent extends RootComponent implements OnInit
   constructor(
     private routes: ActivatedRoute,
     public _AS: AlertService,
-    private _SPS: NewarrivalProductsService,
+    private _SPS: NewarrivalProductsService,private seoService: SEOService,private updateMetaTagSrv:MetakeywordsService,
     private _CS: CartService,
     private router: Router) {
     super(_AS);
@@ -32,6 +33,14 @@ export class NewarrivalProductsComponent extends RootComponent implements OnInit
     this.shopName = "TOQ"
     this.shopName  = localStorage.getItem("shopName")
     this.getAllProducts(this.shopName);
+    this.updateMetaTagSrv.getSeoContent('New Arrivals').subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+        }
+      }
+    )
+    this.seoService.updateCanonicalUrl('https://toq.co.in/newarrivalproducts')
   }
 
   getAllProducts(shopName) {
@@ -39,9 +48,8 @@ export class NewarrivalProductsComponent extends RootComponent implements OnInit
       (data: any) => {
         if (data.meta.status) {
           this.products = data.data;
-          this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
         } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          this.products = []
         }
       }
     )

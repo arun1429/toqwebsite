@@ -14,68 +14,83 @@
     </div>
 </div>
 <!-- Blogs Area -->
-<section class="blogs-main archives single section">
+<section class="blogs-main archives single section2">
     <div class="container">
      
         <div class="row">
             <div class="col-lg-12 col-12">
                 <div class="row">
                     <div class="col-12">
-                       
-
-                        <!--NEW SINGLE BLOG-->
-
+                    
                         <div class="container blogdtl">
                             <article class="entry single-entry entry-fullwidth">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="entry-body">
                                            <div class="text-center">
-                                                <small>Dec 28, 2023</small>    
-                                                <h1 class="mb-2">5 Hoodie Styling Ideas For Men To Master Masculine Style</h1>
+                                                <small>{{blogsData?.updatedAt | date}}</small>    
+                                                <h1 class="mb-2">{{blogsData?.blogTitle}}</h1>
                                            </div>
         
                                             <div class="entry-content editor-content">
-                                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.</p>
-        
-                                                <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a <a href="#">ultrices sagittis</a>, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>
-        
-                                                <p>Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu pulvinar risus, vitae facilisis libero dolor a purus. Sed vel lacus. Mauris nibh felis, adipiscing varius, adipiscing in, lacinia vel, tellus. Suspendisse ac urna. Etiam pellentesque mauris ut lectus. Nunc tellus ante, mattis eget, gravida vitae, ultricies ac, leo. Integer leo pede, ornare a, lacinia eu, vulputate vel, nisl.</p>
+                                                <p innerHTML="{{blogsData?.blogDetails}}"></p>
+                                                <div class="pb-1"></div>
+
+                                                <p innerHTML="{{blogsData?.blogHead1}}"></p>
+                                                <div class="pb-1"></div>
+                                                <img src="{{blogsData?.blogImg1}}" alt="" />
         
                                                 <div class="pb-1"></div>
         
-                                                <img src="https://images.unsplash.com/photo-1531206266563-27319e334a96?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60" alt="" />
+                                                <p innerHTML="{{blogsData?.blogDetails1}}"></p>
+                                                <div class="pb-1"></div>
+
+                                                <p innerHTML="{{blogsData?.blogHead2}}"></p>
+                                                <div class="pb-1"></div>
+                                                <img src="{{blogsData?.blogImg2}}" alt="" />
         
                                                 <div class="pb-1"></div>
         
-                                                <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent <a href="#">elementum hendrerit</a> tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>
-        
-                                                <blockquote>
-                                                    <p>“ Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Vivamus vestibulum ntulla nec ante. ”</p>
-                                                </blockquote>
-        
-                                                <h2>Donec nec justo eget felis facilisis fermentum.</h2>
-        
-                                                <p>Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu pulvinar risus, vitae facilisis libero dolor a purus. Sed vel lacus. </p>
-        
-                                                <p>Mauris nibh felis, adipiscing varius, adipiscing in, lacinia vel, tellus. Suspendisse ac urna. Etiam pellentesque mauris ut lectus. Nunc tellus ante, mattis eget, gravida vitae, ultricies ac, leo. Integer leo pede, ornare a, lacinia eu, vulputate vel, nisl.</p>
+                                                <p innerHTML="{{blogsData?.blogDetails2}}"></p>
+                                                <div class="pb-1"></div>
+
+                                                <p innerHTML="{{blogsData?.blogHead3}}"></p>
+                                                <div class="pb-1"></div>
+                                                <img src="{{blogsData?.blogImg3}}" alt="" />
         
                                                 <div class="pb-1"></div>
         
-                                                <img src="https://images.unsplash.com/photo-1531206266563-27319e334a96?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60" alt="" />
+                                                <p innerHTML="{{blogsData?.blogDetails3}}"></p>
+                                                <div class="pb-1"></div>
+
+                                                <p innerHTML="{{blogsData?.blogHead4}}"></p>
+                                                <div class="pb-1"></div>
+                                                <img src="{{blogsData?.blogImg4}}" alt="" />
         
                                                 <div class="pb-1"></div>
         
-                                                <p>Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu pulvinar risus, vitae facilisis libero dolor a purus. Sed vel lacus. Mauris nibh felis, adipiscing varius, adipiscing in, lacinia vel, tellus. Suspendisse ac urna. Etiam pellentesque mauris ut lectus. Nunc tellus ante, mattis eget, gravida vitae, ultricies ac, leo. Integer leo pede, ornare a, lacinia eu, vulputate vel, nisl.</p>
-                                            </div>
+                                                <p innerHTML="{{blogsData?.blogDetails4}}"></p>
+                                                <div class="pb-1"></div>
+
+                                                <p innerHTML="{{blogsData?.blogHead5}}"></p>
+                                                <div class="pb-1"></div>
+                                                <img src="{{blogsData?.blogImg5}}" alt="" />
         
-                                            <div class="entry-footer row no-gutters">
+                                                <div class="pb-1"></div>
+        
+                                                <p innerHTML="{{blogsData?.blogDetails5}}"></p>
+                                                <div class="pb-1"></div>
+
+                                              
+                                                </div>
+        
+                                            <!-- <div class="entry-footer row no-gutters">
                                                 <div class="col">
                                                     <div class="entry-tags">
                                                         <span>Tags:</span> <a href="#">photography</a> <a href="#">style</a>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
         
@@ -86,7 +101,7 @@
                             </article>
         
                            
-                         
+<!--                          
                             <div class="reply">
                                 <div class="heading">
                                     <h3 class="title">Leave A Reply</h3>
@@ -116,7 +131,7 @@
                                         <i class="icon-long-arrow-right"></i>
                                     </button>
                                 </form>
-                            </div>
+                            </div> -->
                         </div>
                         <!--END NEW SINGLE BLOG-->
 
