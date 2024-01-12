@@ -27,13 +27,13 @@
                         <ul>
                             <li *ngFor="let category of categories; let i = index;">
                                 <a
-                                    (click)="getProductByCategoryId(category.categoryId, i)">{{category?.categoryName}}</a>
+                                    (click)="getProductByCategoryId(category.categorySlug, i)">{{category?.categoryName}}</a>
                                 <span class="dropIndex" *ngIf="selectedIndex != i" (click)="checkSelectedIndex(i)"><i
                                         class="ion-android-arrow-dropright" style="font-size: 20px;"></i></span>
                                 <span class="dropIndex" *ngIf="selectedIndex == i" (click)="checkSelectedIndex(-1)"><i
                                         class="ion-android-arrow-dropdown" style="font-size: 20px;"></i></span>
                                 <ul *ngIf="selectedIndex == i">
-                                    <li *ngFor="let subCategory of category.subCategory" ><a *ngIf="subCategory.status==='ACTIVE'" (click)="getProductByCategoryId(subCategory.subCategoryId, i)">{{subCategory?.subCategoryName}}</a>
+                                    <li *ngFor="let subCategory of category.subCategory" ><a *ngIf="subCategory.status==='ACTIVE'" (click)="getProductByCategoryId(subCategory.subCategorySlug, i)">{{subCategory?.subCategoryName}}</a>
                                     </li>
                                 </ul>
                             </li>
@@ -52,7 +52,7 @@
                         <h3>Filter by price</h3>
                         <form action="#">
                             <div>
-                                <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options">
+                                <ngx-slider  [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options">
                                 </ngx-slider>
                             </div>
                         </form>
@@ -62,10 +62,8 @@
             </div>
             <div class="col-lg-9 col-md-12">
                 <div class="product-grid">
-                    <ng-container *ngFor="let product of products | filter: stock:minPrice:maxPrice | sorting: sortingElement: sortingType | paginate:{ itemsPerPage: 12, currentPage: currentPageNumber }; trackBy:trackByProductId">
-                        
+                    <ng-container *ngFor="let product of products | filter: minPrice:maxPrice | sorting: sortingElement: sortingType | paginate:{ itemsPerPage: 12, currentPage: currentPageNumber }; trackBy:trackByProductId">
                         <div class="product-grid-item"  *ngIf="product.stock!==0">
-                    
                         <article class="single_product" >
                             <figure>
                                 <div class="product_thumb">
@@ -87,9 +85,8 @@
                                     </div>
                                     <div class="price_box">
                                         <span class="current_price">₹{{product?.offerPrice}}</span>&nbsp;
-                                        <span class="old_price">₹{{product?.price}}</span>&nbsp;
-                                        <span  style="font-size: 14px;" >{{getDiscount(product?.offerPrice,product?.price)}}</span> % Off
-                                        <span class="pcs" *ngIf="(product?.pcs >= 1)">({{product?.pcs}} Pcs)</span>
+                                        <span class="old_price">₹{{product?.price}}</span>
+                                        <span  style="font-size: 14px;" >{{getDiscount(product?.offerPrice,product?.price)}}%Off </span>
                                     </div>
                                 </div>
                             </figure>

@@ -23,8 +23,8 @@ export class RegisterComponent extends RootComponent implements OnInit {
   ) {
     super(_AS);
     this.registerFormGroup = this._FB.group({
-      userName: ['', Validators.required],
-      userEmailId: ['', Validators.required],
+      userName: ['', ''],
+      userEmailId: ['', ''],
       mobileNo: ['', Validators.required],
       password: ['', Validators.required],
       fullName: ['', Validators.required]

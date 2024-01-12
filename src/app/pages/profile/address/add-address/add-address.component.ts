@@ -31,7 +31,7 @@ export class AddAddressComponent extends RootComponent implements OnInit {
 
   ngOnInit(): void {
 
-  //  this.getStates();
+   this.getStates();
 
     this.geocoder = new google.maps.Geocoder();
     this.addressForm = this.fb.group({

@@ -14,12 +14,12 @@
                             </p>
                            
                             <p>
-                                <a href="javascript:void(0)">
-                                    {{contactDetails?.mobileNo?contactDetails?.mobileNo:'--'}}
+                                <a href="https://api.whatsapp.com/send?phone={{contactDetails?.mobileNo}}&text=Hi">
+                                    WhatsApp Us
                                 </a>
                             </p>
                             <p>
-                                <a href="javascript:void(0)"> info@toq.co.in
+                                <a href="javascript:void(0)"> {{contactDetails?.vendorEmailId?contactDetails?.vendorEmailId:'--'}}
                                 </a>
                             </p>
                             <p>{{contactDetails?.shopAddress?contactDetails.shopAddress.address:'--'}}</p>

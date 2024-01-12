@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ProfileService } from '../../profile/profile.service';
 import * as moment from "moment";
+import { NgxSpinnerService } from "ngx-spinner";
 import { RootComponent } from '../../../_shared/components/root/root.component';
 import { environment } from 'src/environments/environment';
 import { MetakeywordsService } from '../../../_services/metakeywords.service';
@@ -33,13 +34,9 @@ export class CheckoutComponent extends RootComponent implements OnInit {
   deliveryCharges: Number = 0;
   convenienceFee: Number = 0;
   totalDiscount: Number = 0;
-  GSTFee: Number = 0;
-  cgst: Number = 0;
-  igst: Number = 0;
-  sgst: Number = 0
   cartSum: Number = 0;
   productSelectedQty: any;
-  paymentMethod: any;
+  paymentMethod: "cod";
   walletAmount: number = 0;
   remainingWalletAmount: Number;
   requiredWalletAmount: Number;
@@ -85,6 +82,7 @@ export class CheckoutComponent extends RootComponent implements OnInit {
     private _CS: CartService,
     private actRoute: ActivatedRoute,
     private zone: NgZone,
+    private spinnerService: NgxSpinnerService,
     private _PFS: ProfileService,private seoService: SEOService,
     private winRef: WidnowRefService,private updateMetaTagSrv:MetakeywordsService
   ) {
@@ -193,11 +191,7 @@ export class CheckoutComponent extends RootComponent implements OnInit {
           this.calculations(data.data);
           this.deliveryCharges = data.deliveryCharge;
           this.convenienceFee = data.convenienceFee;
-          this.GSTFee = data.gst
-          this.cgst = data.cgst;
-          this.igst = data.igst;
-          this.sgst = data.sgst
-          this.total = data.grandTotal + this.cgst + this.igst + this.sgst;
+          this.total = data.grandTotal;
           this.cartSum = data.subTotal;
           this.checkWalletAmount(this.total);
           this.cart = data.data;
@@ -218,9 +212,6 @@ export class CheckoutComponent extends RootComponent implements OnInit {
           this.totalDiscount = 0;
           this.appliedPromocode = undefined;
           this.vendorId = undefined;
-          this.cgst = 0;
-          this.igst = 0;
-          this.sgst = 0
         }
       }
     )
@@ -327,25 +318,17 @@ export class CheckoutComponent extends RootComponent implements OnInit {
 
   getValidateCart() {
     this.notDeliverableItems = [];
-    this._CHS.cartValidate(this.shipingAddressId).subscribe(
+    this._CHS.cartValidate(this.shipingAddressId,this.paymentMethod).subscribe(
       (data: any) => {
         if (data.meta.status) {
-          // this.cgst=data['cgst']
-          // this.igst=data['igst']
-          // this.sgst=data['sgst']
           this.calculations(data.data);
           this.deliveryCharges = data.deliveryCharge;
           this.convenienceFee = data.convenienceFee;
-          this.GSTFee = data.gst
-          this.cgst = data.cgst;
-          this.igst = data.igst;
-          this.sgst = data.sgst;
-          this.total = data.grandTotal + this.cgst + this.igst + this.sgst;
+          this.total = data.grandTotal ;
           this.cartSum = data.subTotal;
           this.checkWalletAmount(this.total);
           this.cart = data.data;
           this.totalDiscount = data.discount;
-          // this.discountName=data.discountName;
           this.discountName = data.promoCodeName.discountName;
           this.appliedPromocode = data.promoCodeName;
           data.data.map((_) => {
@@ -372,6 +355,7 @@ export class CheckoutComponent extends RootComponent implements OnInit {
   collapse(id) {
     if (id === 3) {
       this.currentId = id;
+      this.paymentMethod = "cod"
       this.getValidateCart();
     }
     else {
@@ -429,9 +413,11 @@ export class CheckoutComponent extends RootComponent implements OnInit {
   }
 
   addNewAddressOnClick() {
-    this.addressForm.reset();
-    this.addNewAddress = !this.addNewAddress;
-    this.newAddressStatus = true;
+    // this.addressForm.reset();
+    // this.addNewAddress = !this.addNewAddress;
+    // this.newAddressStatus = true;
+    this.router.navigateByUrl("/profile/address");
+    
   }
 
   deleteAddress(addressId) {
@@ -451,6 +437,7 @@ export class CheckoutComponent extends RootComponent implements OnInit {
 
   checkPaymentMethod(paymentMethod) {
     let payment_id;
+    this.paymentMethod = paymentMethod
     paymentMethod === 'online' ? this.initPay(this.total, paymentMethod) : this.placeOrder(paymentMethod, payment_id);
   }
 
@@ -525,9 +512,11 @@ export class CheckoutComponent extends RootComponent implements OnInit {
   chooseLocation(event) {
 
     if (event.target.checked) {
+      this.spinnerService.show();
       navigator.geolocation.getCurrentPosition(pos => {
         this.currentlng = pos.coords.longitude;
         this.currentlat = pos.coords.latitude;
+        this.spinnerService.hide();
         this.locateMe()
       });
     } else {
@@ -607,10 +596,12 @@ export class CheckoutComponent extends RootComponent implements OnInit {
               this.addressForm.patchValue({ state: this.deliveryState })
               let findState = this.states.find(t => t.state === this.deliveryState)
               this.cities = findState.districts
+              this.spinnerService.hide();
             }
             if (l === 'locality') {
               this.deliveryCity = el.long_name
               this.addressForm.patchValue({ city: this.deliveryCity })
+              this.spinnerService.hide();
             }
           })
         })
@@ -707,10 +698,6 @@ export class CheckoutComponent extends RootComponent implements OnInit {
       return false
     }
   }
-  getTotalAmount(total, igst, cgst, sgst) {
-    let totalSum = total + igst + cgst + sgst
-    return totalSum.toFixed(2)
-  }
   // dateNumber: number = 1;
   // timeNumber: number = 1;
   // changeDate(dateValue, dateNumber) {
@@ -742,15 +729,4 @@ export class CheckoutComponent extends RootComponent implements OnInit {
   //   this.timeNumber = timeNumber;
   //   this.selectedTime = timeValue.time;
   // }
-  getGSTText(igst, cgst, sgst) {
-
-    let text = ''
-    if (igst !== 0 || cgst !== 0 || sgst !== 0) {
-      text = "(Including GST)"
-    }
-    else {
-      text = "(Excluding GST)"
-    }
-    return text
-  }
 }

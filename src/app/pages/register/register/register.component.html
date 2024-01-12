@@ -22,24 +22,24 @@
                     <h2>Register</h2>
                     <form [formGroup]="registerFormGroup">
                         <p>
-                            <label>User Name <span>*</span></label>
+                            <label>User Name <span style="color: red;">*</span></label>
                             <input type="text" formControlName="userName"  placeholder="Please Enter User Name">
                         </p>
                         <p>
-                            <label>Full Name <span>*</span></label>
+                            <label>Full Name <span style="color: red;">*</span></label>
                             <input type="text" formControlName="fullName"  placeholder="Please Enter Full Name">
                         </p>
                         <p>
-                            <label>User Email Id <span>*</span></label>
+                            <label>User Email Id (Optional)</label>
                             <input type="email" formControlName="userEmailId"  placeholder="Please Enter User Email Id">
                         </p>
                         <p>
-                            <label>Mobile Number<span>*</span></label>&nbsp;
+                            <label>Mobile Number<span style="color: red;">*</span></label>&nbsp;
                             <span class="setFornt">(Please check and enter)</span>
                             <input type="number" formControlName="mobileNo"  placeholder="Please Enter Mobile Number">
                         </p>
                         <p>
-                            <label>Password<span>*</span></label>&nbsp;
+                            <label>Password<span style="color: red;">*</span></label>&nbsp;
                             <span class="setFornt">(Please check and enter)</span>
                             <input type="password" formControlName="password"  placeholder="Please Enter Password">
                         </p>

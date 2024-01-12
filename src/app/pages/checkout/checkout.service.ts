@@ -59,8 +59,8 @@ export class CheckoutService {
     return this.http.post(url, body)
   }
 
-  cartValidate(addressId: string) {
-    const url = `${environment.apiUrl}cart/validate/list?addressId=${addressId}`;
+  cartValidate(addressId: string,paymentMethod : string) {
+    const url = `${environment.apiUrl}cart/validate/list?addressId=${addressId}&paymentMethod=${paymentMethod}`;
     return this.http.get(url);
   }
 

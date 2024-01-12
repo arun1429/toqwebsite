@@ -95,7 +95,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="text-bold block">Choose Variant</label>
-                                    <select class="form-control shadow-none" [(ngModel)]="selectedVariantIndex"
+                                    <select class="form-control shadow-none" [(ngModel)]="selectedVariantIndex" style="background-color: black; color: #fff;"
                                         (ngModelChange)="changeVariant($event,productDetails)">
                                         <option *ngFor="let variant of productDetails?.variant; let i=index"
                                             [value]="i">{{variant?.variantName}}</option>
@@ -197,7 +197,7 @@
 
                         <div class="tab-pane fade" id="reviews" role="tabpanel">
                             <div class="reviews_wrapper">
-                                <h2 *ngIf="productDetails?.totalReviews!==0">{{productDetails?.totalReviews}} review</h2>
+                                <h3 *ngIf="productDetails?.totalReviews!==0">{{productDetails?.totalReviews}} review</h3>
                                 <div class="reviews_comment_box" *ngFor="let review of reviews">
                                     <div class="comment_thmb">
                                     </div>
@@ -218,7 +218,7 @@
                                 </div>
 
                                 <div class="comment_title">
-                                    <h2>Add a review </h2>
+                                    <h3>Add a review </h3>
                                     <p>Your email address will not be published. Required fields are marked </p>
                                 </div>
                                 <div class="product_rating_inactive mb-10">
@@ -263,6 +263,59 @@
         </div>
     </div>
 </div>
+<div class="shipping_area mb-50 mt-50 ">
+    <div class="container">
+        <div class="firstshipping row">
+            <div class="col-lg-3 col-md-6">
+                <div class="single_shipping">
+                    <div class="shipping_icone">
+                        <img src="assets/img/shipping1.png" alt="">
+                    </div>
+                    <div class="shipping_content">
+                        <h4>Shipping</h4>
+                        <p>Pan India delivery</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="single_shipping">
+                    <div class="shipping_icone">
+                        <img src="assets/img/shipping2.png" alt="">
+                    </div>
+                    <div class="shipping_content">
+                        <h4>Online Support 24/7</h4>
+                        <p>Support online 24 hours a day</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="firstshipping row"  >
+            <div class="col-lg-3 col-md-6">
+                <div class="single_shipping">
+                    <div class="shipping_icone">
+                        <img src="assets/img/shipping3.png" alt="">
+                    </div>
+                    <div class="shipping_content">
+                        <h4>Easy Returns</h4>
+                        <p>Easy returns n money back guaranteed*                     </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="single_shipping">
+                    <div class="shipping_icone">
+                        <img src="assets/img/shipping4.png" alt="">
+                    </div>
+                    <div class="shipping_content">
+                        <h4>100% Payment Secure</h4>
+                        <p>We ensure secure payment with PEV</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--product info end-->
 
 <!-- Start Quote Modal -->

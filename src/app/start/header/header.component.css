@@ -217,7 +217,7 @@
 /*End Main Menu*/
 
 .hdRight{display: flex;}
-.iconsbox{ display: flex; margin-top:5px;}
+.iconsbox{ display: flex; margin-top:5px; }
 .iconsbox ul{ display: flex; margin-bottom: 0;}
 .iconsbox ul li{
   cursor: pointer;
@@ -651,7 +651,7 @@ a.title-submenu{font-weight:bold; color:rgba(0,0,0,.5); }
     .header{margin-bottom: 40px;}
     .hdsearch{ display: flex;}
     .navbar-toggle{    left: inherit!important; right: 30px!important; top: -20px;}
-    .iconsbox{ right: 40px!important; top: 11px;}
+    .iconsbox{ right: 10px!important; top: 11px;}
     .header .dropdown-toggle:after{ top: 16px;}
 
     .header .nav li .dropdown-menu{ margin-top: 7px!important;}

@@ -217,7 +217,7 @@ ul.dateTime li.active {
     height: 40px;
     border-radius: 5px;
     border: 1px solid #000000;
-    background-color: #82ce1f  !important;
+    background-color: #dd1567  !important;
     text-align: center;
     cursor: pointer;
     color: #fff;
@@ -385,7 +385,16 @@ ul.dateTime li.active {
     .fbox-c{
       justify-content: center;
     }
+    .coupon_inner startbutton {
+      margin-left:1px
+    }
+    .coupon_inner {
+      padding: 10px 20px 5px;
   }
+  .coupon_inner input {
+    margin-bottom: 10px;
+  }
+}
   .dateTime{
       list-style: none;
     display: flex;
@@ -413,16 +422,18 @@ ul.dateTime li.active {
     border: 1px solid #ebebeb;
     height: 42px;
     background: none;
-    padding: 0 20px;
-    margin-right: 20px;
+    padding: 0 10px;
     margin-left: -21px;
     font-size: 12px;
-    width: 130px;
+    width: 150px;
     color: #363f4d;
 }
 
 .coupon_inner button{
-  padding: 10px 20px 25px;
-  width: 100px;
+  padding: 10px 10px 10px;
+  width: 70px;
   
+}
+.coupon_inner startbutton {
+  margin-left:-50px
 }

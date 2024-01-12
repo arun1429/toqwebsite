@@ -9,3 +9,10 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+@media only screen and (max-width: 767px) {
+}
+@media only screen and (max-width: 480px) {
+  .addtopspace {
+      margin-top: 20px;
+  }
+}

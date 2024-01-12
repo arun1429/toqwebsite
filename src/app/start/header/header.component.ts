@@ -44,7 +44,7 @@ export class HeaderComponent extends RootComponent implements OnInit {
   ngOnInit(): void {
     this.shopName = "TOQ"
     this.shopName  = localStorage.getItem("shopName")
-    this.getAllGroups();
+    this.getAllGroups("TOQ");
     this._CS.emitCardData().subscribe(x => {
       if (x) {
         this.getCartItems();
@@ -176,8 +176,8 @@ export class HeaderComponent extends RootComponent implements OnInit {
     });
   }
 
-  getAllGroups() {
-    this._SS.getAllGroups(this.shopName).subscribe(
+  getAllGroups(shopName) {
+    this._SS.getAllGroups(shopName).subscribe(
       (data: any) => {
         if (data.meta.status) {
           this.groupsData = data.data;

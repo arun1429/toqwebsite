@@ -5,9 +5,6 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-
-// Shared Module
 import { SharedModule } from "../_shared/shared.module";
 
 const routes: Routes = [

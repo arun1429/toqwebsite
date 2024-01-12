@@ -5,6 +5,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { ProductsComponent } from './products/products.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {MatSliderModule} from '@angular/material/slider';
 
 const routes: Routes = [{
   path: ":categorySlug",
@@ -18,7 +19,8 @@ const routes: Routes = [{
     PipesModule,
     NgxSliderModule,
     RouterModule.forChild(routes),
-    NgxPaginationModule
+    NgxPaginationModule,
+   MatSliderModule,
   ]
 })
 export class ProductsModule { }

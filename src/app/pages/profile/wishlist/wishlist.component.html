@@ -27,7 +27,7 @@
                                     <!-- Rs.{{ p.offerPrice?.toFixed(2) || 0 }} -->
                                     <span class="current_price">₹{{p?.offerPrice.toFixed(2) || 0}}</span>&nbsp;
                                     <span class="old_price" style="color: gray;   text-decoration: line-through;" >₹{{p?.price.toFixed(2) || 0}}</span>&nbsp;
-                                    <span  style="font-size: 14px; color: gray" >{{getDiscount(p?.offerPrice,p?.price)}}  % Off </span>
+                                    <span  style="font-size: 14px; color: gray" >{{getDiscount(p?.offerPrice,p?.price)}}%Off </span>
                                 </div>
                                 <div class="group-h fbox-c m-t">
                                     <button class="block remove" (click)="removeFromWishList(p._id)">

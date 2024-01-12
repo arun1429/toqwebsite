@@ -323,21 +323,21 @@
                                         <div class="group-v">
                                             <div class='fbox group-h'>
                                                 <input type="radio" id="cod" [value]="'cod'" name='payment'
-                                                    [(ngModel)]="paymentMethod" />
+                                                    [(ngModel)]="paymentMethod"  (change)="getValidateCart()" />
                                                 <label class="payment-option" for="cod">
                                                     COD
                                                 </label>
                                             </div>
                                             <div class='fbox group-h'>
                                                 <input type="radio" id="wallet" [value]="'wallet'" name='payment'
-                                                    [(ngModel)]="paymentMethod" />
+                                                    [(ngModel)]="paymentMethod" (change)="getValidateCart()"/>
                                                 <label class="payment-option" for="wallet">
                                                     Wallet
                                                 </label>
                                             </div>
                                             <div class='fbox group-h'>
                                                 <input type="radio" id="online" [value]="'online'" name='payment'
-                                                    [(ngModel)]="paymentMethod" />
+                                                    [(ngModel)]="paymentMethod"   (change)="getValidateCart()"/>
                                                 <label class="payment-option" for="online">
                                                     Online
                                                 </label>
@@ -349,8 +349,7 @@
                                         <br> <button type="button" [disabled]="!paymentMethod" class="saveButton"
                                             (click)="checkPaymentMethod(paymentMethod)">
                                             order place
-                                            <!-- Rs. {{getTotalAmount(total,igst,cgst,sgst)}} -->
-                                        </button> &nbsp;
+                                               </button> &nbsp;
 
                                     </div>
                                 </div>
@@ -359,21 +358,17 @@
                     </div>
                     <div class="group-v">
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <div class="coupon_inner">
-                                    <!-- <p>
-                                        <a class="btn btn-link"  role="button"
-                                            (click)="showCouponModal()"></a>
-                                    </p> -->
                                     <input placeholder="Coupon code" name="discountName" [(ngModel)]="discountName"
                                         type="text">
 
                                 </div>
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <div class="coupon_inner">
                                     <button type="submit" (click)="applyPromocode()"
-                                        style="margin-left:-50px">Apply</button>&nbsp;
+                                        class="startbutton">Apply</button>&nbsp;
                                     <button type="submit" (click)="showCouponModal()">See All</button>
                                 </div>
                             </div>
@@ -387,18 +382,6 @@
                                 <div class="lg o-60">Price ({{ cart.length }} items)</div>
                                 <div class="lg o-60">&#8377; {{ cartSum?.toFixed(2) }}</div>
                             </div>
-                            <div *ngIf="cgst>0" class="fbox-sb">
-                                <div class="lg o-60">CGST</div>
-                                <div class="lg o-60"> &#8377; {{ cgst.toFixed(2) }}</div>
-                            </div>
-                            <div *ngIf="sgst>0" class="fbox-sb">
-                                <div class="lg o-60">SGST</div>
-                                <div class="lg o-60"> &#8377; {{ sgst.toFixed(2) }}</div>
-                            </div>
-                            <div *ngIf="igst>0" class="fbox-sb">
-                                <div class="lg o-60">IGST</div>
-                                <div class="lg o-60"> &#8377; {{ igst.toFixed(2) }}</div>
-                            </div>
                             <div class="fbox-sb">
                                 <div class="lg o-60">Delivery</div>
                                 <div class="lg o-60">+ &#8377; {{ deliveryCharges }}</div>
@@ -411,7 +394,7 @@
                             </div>
                             <div class="fbox-sb total-payable">
                                 <div>
-                                    <div class="lg o-85 bold">Total Payable {{getGSTText(igst,cgst,sgst)}}</div>
+                                    <div class="lg o-85 bold">Total Payable (Including GST)</div>
                                     <small class="xs text-primary clickable"
                                         *ngIf="appliedPromocode && appliedPromocode.discountName"
                                         style="display: block;">Promo
@@ -496,9 +479,9 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" (click)="hideValidateModal()">Close</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -535,9 +518,12 @@
                 </div>
                 <p *ngIf="!promocodes"> No Promocode Found </p>
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
+<ngx-spinner bdColor="rgba(17, 16, 16, 0.781)" size="default" type="ball-spin-clockwise">
+    <p style="color: white">Please Wait. </p>
+</ngx-spinner>

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CheckoutRoutingModule } from './checkout-routing.module';
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { CheckoutComponent } from './index';
-
+import { NgxSpinnerModule } from "ngx-spinner"; 
 
 @NgModule({
   declarations: [CheckoutComponent],
@@ -12,6 +12,7 @@ import { CheckoutComponent } from './index';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    NgxSpinnerModule,
     CheckoutRoutingModule
   ]
 })

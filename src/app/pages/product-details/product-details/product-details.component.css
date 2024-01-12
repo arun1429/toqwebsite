@@ -14,6 +14,7 @@
 @media screen and (max-width: 600px) {
 .sliderBanDesk{display: none!important;}
 .sliderBanMobile{display: block!important;}
+.text-bold{ font-weight: bold;margin-top: 15px;}
 }
 .svgActive{
     color:#f9ba48;
@@ -55,6 +56,7 @@
   max-width: 86%;
   height: auto;
 }
+
 ::ng-deep .ngxImageZoomContainer{
   width:100%!important;
   height:100%!important;

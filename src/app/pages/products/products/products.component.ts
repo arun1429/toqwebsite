@@ -11,7 +11,8 @@ import { SEOService } from '../../../_services/seo.service';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  styleUrls: ['./products.component.css'],
+
 })
 export class ProductsComponent extends RootComponent implements OnInit, AfterViewInit {
   offerPrise: any;
@@ -24,13 +25,15 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
   selectedIndex: number = -1;
   sortingType: boolean;
   sortingElement: string;
-  stock: number = 0;
+  //stock: number = 0;
   minPrice: number = 0;
   states:any=[]
-  maxPrice: number = 0;
+  maxPrice: number = 3000;
   options: Options = {
     floor: 0,
-    ceil: 0
+    step: 100,
+    minRange: 500,
+    ceil: 3000
   };
   filterCity=''
   currentPageNumber = 1;
@@ -59,7 +62,6 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
       }
     ) 
     this.getStates();
-    this.getDiscount(this.offerPrise,this.price)
     this.updateMetaTagSrv.getSeoContent('Product Page').subscribe(
       (data: any) => {
         if (data.meta.status) {
@@ -95,7 +97,7 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
   }
 
   ngAfterViewInit() {
-    this.outOfStock();
+    //this.outOfStock();
     this.cdr.detectChanges();
   }
 
@@ -108,13 +110,13 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
     this.sortingElement = key;
   }
 
-  outOfStock() {
-    if (this.stock !== 0) {
-      this.stock = 0;
-    } else {
-      this.stock = 1;
-    }
-  }
+  // outOfStock() {
+  //   if (this.stock !== 0) {
+  //     this.stock = 0;
+  //   } else {
+  //     this.stock = 1;
+  //   }
+  // }
 
   getAllCategories() {
     this._PS.getAllCategoriesByGroupId(this.groupId).subscribe(
@@ -139,21 +141,22 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
     )
   }
 
-  getProductByCategoryId(categoryId: string, indexValue?: number) {
-    let obj = {
-      id: categoryId
-    }
-    this._PS.getProductBycatIdSubCatId(obj).subscribe(
-      (data: any) => {
-        if (data.meta.status) {
-          this.products = data.data;
-          this.selectedIndex = indexValue;
-          this.getMaxPrice();
-        } else {
-          this.products = []
-        }
-      }
-    )
+  getProductByCategoryId(subCategorySlug: string, indexValue?: number) {
+    // let obj = {
+    //   id: categoryId
+    // }
+    // this._PS.getProductBycatIdSubCatId(obj).subscribe(
+    //   (data: any) => {
+    //     if (data.meta.status) {
+    //       this.products = data.data;
+    //       this.selectedIndex = indexValue;
+    //       this.getMaxPrice();
+    //     } else {
+    //       this.products = []
+    //     }
+    //   }
+    // )
+    this.router.navigateByUrl("/products/"+subCategorySlug);
   }
   getProductBySlug(categorySlug: string) {
     let obj = {
@@ -181,40 +184,44 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
     this.products.map(data => {
       priceArray.push(data.offerPrice);
     });
+    priceArray.sort();
     this.zone.run(() => {
       this.options = {
         floor: 0,
-        ceil: 0
+        step: 100,
+        minRange: 500,
+        ceil: 3000
       }
       this.minPrice = 0;
-      this.maxPrice = 0;
+      this.maxPrice =3000;
       this.options = {
-        floor: Math.min(...priceArray),
-        ceil: Math.max(...priceArray)
+        floor: 0,
+        step: 100,
+        minRange: 500,
+        ceil: 3000
       }
-      this.minPrice = Math.min(...priceArray)
-      this.maxPrice = Math.max(...priceArray);
+      console.log(priceArray)
+      //this.minPrice = Math.min(...priceArray)
+      //this.minPrice = 0
+      this.maxPrice = 3000
       this.cdr.detectChanges();
     })
   }
 
   getDiscount(offerPrice,price){
-    
     if(offerPrice !== price){
       this.statusOff=false
-    let percentage=(offerPrice/price)*100
-    
-    let p= (100-percentage).toFixed(0)
-    if(Number(p)!==0){
-     
-      this.discountStatus=true
-    }
-    else{
-      this.discountStatus=false
-    }
-    return p
+      let percentage=(offerPrice/price)*100
+      let p= (100-percentage).toFixed(0)
+      if(Number(p)!==0){
+        this.discountStatus=true
+      }
+      else{
+        this.discountStatus=false
+      }
+      return p
   }else{
-    this.statusOff=true
+      this.statusOff=true
   }
 }
 
