@@ -14,6 +14,10 @@
                         formControlName="mobileNo" inputmode="numeric"
                         oninput="javascript: this.value = this.value.slice(0, this.maxLength)" maxlength="10" />
                 </div>
+                <div class="checkboxstyle">
+                    <input  type="checkbox" (click)="chooseLocation($event)" id="chooseLocation">
+                     <label for="chooseLocation">Choose Current Location</label>
+                </div>
                 <div class="form-group span2">
                     <label class="block">Address (Area and Street)</label>
                     <textarea class="form-val block" rows="5" cols="60" placeholder="Enter Address"
@@ -50,7 +54,7 @@
                     <label class=" block">Country</label>
                     <select class="form-val block" formControlName="country">
                         <option value="" disabled>Please Select Country</option>
-                        <option value="india">India</option>
+                        <option value="India">India</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -96,4 +100,7 @@
             </div>
         </form>
     </div>
+    <ngx-spinner bdColor="rgba(17, 16, 16, 0.781)" size="default" type="ball-spin-clockwise">
+        <p style="color: white">Please Wait. </p>
+    </ngx-spinner>
 </section>

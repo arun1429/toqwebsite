@@ -38,7 +38,7 @@ export class ForgotPasswordComponent extends RootComponent implements OnInit {
     this.updateMetaTagSrv.getSeoContent('Forgot Password').subscribe(
       (data: any) => {
         if (data.meta.status) {
-          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords,"https://toq.co.in/forgot-password"+data.categorySlug,data.data.imageUrl)
         }
       }
     )

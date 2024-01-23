@@ -13,6 +13,7 @@ import { AddressListComponent } from './address/address-list/address-list.compon
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NotificationComponent } from './notification/notification.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [AccountComponent, AddressComponent, OrderHistoryComponent, SideNavComponent, WalletComponent, WishlistComponent, OrderDetailComponent, AddAddressComponent, AddressListComponent, NotificationComponent],
@@ -23,7 +24,8 @@ import { NotificationComponent } from './notification/notification.component';
     NgxPaginationModule,
     ProfileRoutingModule,
     NgxDropzoneModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxSpinnerModule,
   ]
 })
 export class ProfileModule { }

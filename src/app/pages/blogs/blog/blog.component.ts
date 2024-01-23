@@ -19,11 +19,12 @@ export class BlogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    localStorage.setItem("currentPageNumber","1")
     this.getBlogs();
     this.updateMetaTagSrv.getSeoContent('Blog Page').subscribe(
       (data: any) => {
         if (data.meta.status) {
-          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords,"https://toq.co.in/blogs",data.data.imageUrl)
         }
       }
     )

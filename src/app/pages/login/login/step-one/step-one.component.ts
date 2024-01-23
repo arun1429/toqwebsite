@@ -121,6 +121,7 @@ export class StepOneComponent extends RootComponent implements OnInit {
   }
 
   afterLogin(user) {
+    console.log("loginuser")
     this.setLocalStorage(user);
     this._US.updateUser(true, user);
     this.router.navigateByUrl("/");

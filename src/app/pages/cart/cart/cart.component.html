@@ -32,7 +32,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let cart of carts">
+                                    <tr  *ngFor="let cart of carts">
                                         <td class="product_remove"><a href="javascript:void(0)"
                                                 (click)="removeFromCart(cart._id)"><i class="fa fa-trash-o"></i></a>
                                         </td>
@@ -49,15 +49,34 @@
                                         <td class="product_quantity">
                                            <span class="increase_class" (click)="increaseDecreaseQuantity(cart,-1,cart.selectQuantity)">-</span> {{cart?.selectQuantity}} <span (click)="increaseDecreaseQuantity(cart,1,cart.selectQuantity)" class="increase_class">+</span>
                                         </td>
-                                        <td class="product_total">₹{{cart?.totalDiscountedPrice}}</td>
+                                        <td class="product_total">₹{{cart?.totalDiscountedPrice.toFixed(2)}}</td>
+                                    </tr>
+                                    <tr  *ngFor="let cart of lastSavedCart">
+                                        <td class="product_remove"><a href="javascript:void(0)"
+                                                (click)="removeFromCartLocal(cart.variantId)"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                        <td class="product_thumb"><a
+                                                [routerLink]="['/product-details',cart.variantSlug]"><img
+                                                    src="{{cart?.variantImg[0]}}" alt=""></a></td>
+                                        <td class="product_name">
+                                            <a [routerLink]="['/product-details',cart.variantSlug]">
+                                                <strong>{{cart?.productName}}</strong>
+                                                <p>{{cart?.brand}}</p>
+                                            </a>
+                                        </td>
+                                        <td class="product-price">₹{{cart?.offerPrice.toFixed(2)}}</td>
+                                        <td class="product_quantity">
+                                           <span class="increase_class" (click)="increaseDecreaseQuantity(cart,-1,cart.selectQuantity)">-</span> {{cart?.selectQuantity}} <span (click)="increaseDecreaseQuantity(cart,1,cart.selectQuantity)" class="increase_class">+</span>
+                                        </td>
+                                        <td class="product_total">₹{{cart?.totalDiscountedPrice.toFixed(2)}}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="cart_submit" *ngIf="!carts.length">
+                        <div class="cart_submit" *ngIf="carts.length ==0 && lastSavedCart.length ==0">
                             <p class="text-center">No Cart Product Found.</p>
-                            <!-- <button type="submit">update cart</button> -->
                         </div>
+                        
                     </div>
                 </div>
             </div>

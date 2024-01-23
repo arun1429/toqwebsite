@@ -14,7 +14,7 @@ export class DeliveryInformationComponent implements OnInit {
     this.updateMetaTagSrv.getSeoContent('Delivery Info').subscribe(
       (data: any) => {
         if (data.meta.status) {
-          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords,"https://toq.co.in/delivery-information"+data.categorySlug,data.data.imageUrl)
         }
       }
     )

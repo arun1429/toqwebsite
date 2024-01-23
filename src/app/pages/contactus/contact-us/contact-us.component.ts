@@ -15,7 +15,7 @@ export class ContactUsComponent implements OnInit {
     this.updateMetaTagSrv.getSeoContent('Contact Us').subscribe(
       (data: any) => {
         if (data.meta.status) {
-          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords,"https://toq.co.in/contact-us"+data.categorySlug,data.data.imageUrl)
         }
       }
     )

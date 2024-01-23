@@ -553,7 +553,7 @@ a.title-submenu{font-weight:bold; color:rgba(0,0,0,.5); }
     }
     .mobile-arrow:after{ font-size: 28px;}
     .iconsbox ul{ margin: 0;}
-    .iconsbox ul li .hdprofile span{ display: none;}
+    .iconsbox ul li .hdprofile span{ font-size: 10px; line-height: 15px;}
 
     .header .topbar {
       padding: 5px 0;

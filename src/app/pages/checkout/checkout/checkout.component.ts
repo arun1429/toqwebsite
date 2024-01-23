@@ -34,6 +34,7 @@ export class CheckoutComponent extends RootComponent implements OnInit {
   deliveryCharges: Number = 0;
   convenienceFee: Number = 0;
   totalDiscount: Number = 0;
+  freeDelivery :Number=0;
   cartSum: Number = 0;
   productSelectedQty: any;
   paymentMethod: "cod";
@@ -94,7 +95,7 @@ export class CheckoutComponent extends RootComponent implements OnInit {
     this.updateMetaTagSrv.getSeoContent('Checkout').subscribe(
       (data: any) => {
         if (data.meta.status) {
-          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords,"https://toq.co.in/userprofile/checkout",data.data.imageUrl)
         }
       }
     )
@@ -193,10 +194,12 @@ export class CheckoutComponent extends RootComponent implements OnInit {
           this.convenienceFee = data.convenienceFee;
           this.total = data.grandTotal;
           this.cartSum = data.subTotal;
+          localStorage.setItem("totalCartCount" , data.data.length.toString())
           this.checkWalletAmount(this.total);
           this.cart = data.data;
           this.vendorId = data.data[0].vendorId;
           this.totalDiscount = data.discount;
+          this.freeDelivery = data.freeDelivery;
           // this.discountName=data.discountName;
           this.discountName = data.promoCodeName.discountName;
           this.appliedPromocode = data.promoCodeName;
@@ -206,10 +209,12 @@ export class CheckoutComponent extends RootComponent implements OnInit {
           // this.router.navigate(['/']);
           this.cart = [];
           this.deliveryCharges = 0;
+          localStorage.setItem("totalCartCount" , "0")
           this.convenienceFee = 0;
           this.cartSum = 0;
           this.total = 0;
           this.totalDiscount = 0;
+          this.freeDelivery = 0;
           this.appliedPromocode = undefined;
           this.vendorId = undefined;
         }
@@ -224,6 +229,7 @@ export class CheckoutComponent extends RootComponent implements OnInit {
           this.appliedPromocode.discountName = '';
           this.discountName = ''
           this.totalDiscount = 0;
+          this.freeDelivery = 0;
 
           if (this.id === 3) {
             this.getValidateCart();
@@ -522,6 +528,9 @@ export class CheckoutComponent extends RootComponent implements OnInit {
     } else {
       this.addressForm.patchValue({ state: "" });
       this.addressForm.patchValue({ city: "" });
+      this.addressForm.patchValue({ pinCode: "" });
+      this.addressForm.patchValue({ streetAddress: "" });
+      this.addressForm.patchValue({ country: "" });
       this.cities = [];
     }
   }
@@ -584,10 +593,8 @@ export class CheckoutComponent extends RootComponent implements OnInit {
 
   locateMe() {
     this.geocoder.geocode({ 'location': { lat: this.currentlat, lng: this.currentlng } }, (results, status) => {
-      // this.geocoder.geocode({ 'address': "C 6 Sector 7 Noida"}, (results, status) => {
-
       if (status === 'OK') {
-        // console.log( results[0].address_components)
+       console.log( results[0].address_components)
         results[0].address_components.map(el => {
           // console.log(el)
           el.types.map(l => {
@@ -603,30 +610,21 @@ export class CheckoutComponent extends RootComponent implements OnInit {
               this.addressForm.patchValue({ city: this.deliveryCity })
               this.spinnerService.hide();
             }
+            if (l === 'postal_code') {
+              this.addressForm.patchValue({ pinCode: el.long_name})
+              this.spinnerService.hide();
+            }
+            if (l === 'sublocality') {
+              this.addressForm.patchValue({ streetAddress: el.long_name})
+              this.spinnerService.hide();
+            }
+            if (l === 'country') {
+              console.log("long_name : "+el.long_name)
+              this.addressForm.patchValue({ country: el.long_name})
+              this.spinnerService.hide();
+            }
           })
         })
-        // results.forEach(element => {
-        // element.address_components.forEach(item=>{
-        // item.types.forEach(type=>{
-        // if(type==='administrative_area_level_1'){
-        //   console.log(item)
-        //   this.deliveryState=item.long_name
-        // // this.dilvereryPinCode=item.long_name
-        // // this.showPinCodeDiv=false
-        // console.log(this.deliveryState)
-        // this.addressForm.patchValue({state:this.deliveryState})
-        // }
-        // if(type==='locality'){
-        //   console.log(item)
-        //   this.deliveryCity=item.long_name
-        //   this.addressForm.patchValue({city:this.deliveryCity})
-        //   console.log( this.addressForm.value)
-        // // this.dilvereryPinCode=item.long_name
-        // // this.showPinCodeDiv=false
-        // }
-        // })
-        // })
-        // });
       }
     });
   }

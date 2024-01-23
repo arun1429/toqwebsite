@@ -148,7 +148,7 @@
                                         </section>
                                     </ng-container>
                                     <ng-container *ngIf="addNewAddress === true"><br>
-                                        <div>
+                                        <div class="checkboxstyle">
                                             <input type="checkbox" (click)="chooseLocation($event)" id="chooseLocation">
                                             &nbsp; <label for="chooseLocation">Choose Current Location</label>
                                         </div>
@@ -209,7 +209,7 @@
                                                     <label class=" block">Country</label>
                                                     <select class="form-val block" formControlName="country">
                                                         <option value="" disabled>Please Select Country</option>
-                                                        <option value="india">India</option>
+                                                        <option value="India">India</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -357,82 +357,86 @@
                         </div>
                     </div>
                     <div class="group-v">
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div  style="position: sticky;top: 10px;">
+                            <div class="col-md-12" style="padding-left: 1px; padding-right: 1px;">
                                 <div class="coupon_inner">
                                     <input placeholder="Coupon code" name="discountName" [(ngModel)]="discountName"
                                         type="text">
 
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="coupon_inner">
-                                    <button type="submit" (click)="applyPromocode()"
-                                        class="startbutton">Apply</button>&nbsp;
-                                    <button type="submit" (click)="showCouponModal()">See All</button>
+                            <div class="col-md-12" style="margin-bottom: 15px;padding-left: 1px; padding-right: 1px;">
+                                <div class="coupon_inner_button ">
+                                    <button style=" margin-right: 2px;" type="submit" (click)="applyPromocode()">Apply</button>
+                                    <button style=" margin-left: 2px; background-color: #363f4d;"  type="submit" (click)="showCouponModal()">See All</button>
+                                </div>
+                            </div>
+                            <div class="bg-white p-x-md p-y-md" >
+                                <div class="lg1 o-70">
+                                    Price Details
+                                </div>
+    
+                                <div class="fbox-sb">
+                                    <div class="lg o-60">Price ({{ cart.length }} items)</div>
+                                    <div class="lg o-60">&#8377; {{ cartSum?.toFixed(2) }}</div>
+                                </div>
+                                <div class="fbox-sb">
+                                    <div class="lg o-60">Delivery</div>
+                                    <div class="lg o-60">+ &#8377; {{ deliveryCharges?.toFixed(2) }}</div>
+                                </div>
+                                <div class="fbox-sb" *ngIf="appliedPromocode && appliedPromocode.discountName">
+                                    <div class="lg o-60">Promo Code</div>
+                                    <div class="lg o-60">
+                                        ( {{appliedPromocode.discountName}} ) <span> - &#8377;</span> {{ totalDiscount?.toFixed(2) }}
+                                    </div>
+                                </div>
+                                <div class="fbox-sb total-payable">
+                                    <div>
+                                        <div class="lg o-85 bold">Total Payable (Including GST)</div>
+                                        <small class="xs text-primary clickable"
+                                            *ngIf="appliedPromocode && appliedPromocode.discountName"
+                                            style="display: block;">Promo
+                                            Applied</small>
+    
+                                        <small class="xs text-error clickable" (click)="removePromocode()"
+                                            *ngIf="appliedPromocode && appliedPromocode.discountName">Remove Promocode to
+                                            apply another</small>
+                                            
+                                    </div>
+                                    <div class="lg o-85 bold">&#8377; {{ total?.toFixed(2)}}</div>
+                                </div>
+    
+                                <div class='fbox-sb'>
+                                    <div class='lg o-85 bold'>Wallet Amount</div>
+                                    <div class='lg o-85 bold'>&#8377; {{walletAmount?.toFixed(2)}}</div>
+                                </div>
+                                <div class='fbox-sb' *ngIf='remainingWalletAmountStatus'>
+                                    <div class='lg o-85 bold'>Remaining Wallet Amount</div>
+                                    <div class='lg o-85 bold'>
+                                        &#8377;{{remainingWalletAmount.toString()==='NaN'?checkWalletAmount(total):remainingWalletAmount}}
+                                    </div>
+                                </div>
+                                <div class='fbox-sb' *ngIf="requiredWalletAmountStatus">
+                                    <div class='lg o-85 bold'>Required Wallet Amount</div>
+                                    <div class='lg o-85 bold'>
+                                        &#8377;{{requiredWalletAmount.toString()==='NaN'?checkWalletAmount(total):requiredWalletAmount.toFixed(2)}}
+                                    </div>
+                                </div>
+                                <hr class="customizeHR" />
+                                <div class="center" style="color: var(--primary-dark)">
+                                    You will save &#8377; {{ totalDiscount?.toFixed(2) }} on this order.
+                                </div>
+                                <div class="center" style="color: #000; font-weight: bold;">
+                                    Free delivery above &#8377; {{ freeDelivery?.toFixed(2) }}
+                                </div>
+                                <div class='justifySpaceBetween' style='justify-content: center!important;'>
+                                    <button type='button' class='saveButton' (click)='addMoney()'>
+                                        Add Money
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-white p-x-md p-y-md" style="position: sticky;top: 100px;">
-                            <div class="lg1 o-70">
-                                Price Details
-                            </div>
-
-                            <div class="fbox-sb">
-                                <div class="lg o-60">Price ({{ cart.length }} items)</div>
-                                <div class="lg o-60">&#8377; {{ cartSum?.toFixed(2) }}</div>
-                            </div>
-                            <div class="fbox-sb">
-                                <div class="lg o-60">Delivery</div>
-                                <div class="lg o-60">+ &#8377; {{ deliveryCharges }}</div>
-                            </div>
-                            <div class="fbox-sb" *ngIf="appliedPromocode && appliedPromocode.discountName">
-                                <div class="lg o-60">Promo Code</div>
-                                <div class="lg o-60">
-                                    ( {{appliedPromocode.discountName}} ) <span> - &#8377;</span> {{ totalDiscount }}
-                                </div>
-                            </div>
-                            <div class="fbox-sb total-payable">
-                                <div>
-                                    <div class="lg o-85 bold">Total Payable (Including GST)</div>
-                                    <small class="xs text-primary clickable"
-                                        *ngIf="appliedPromocode && appliedPromocode.discountName"
-                                        style="display: block;">Promo
-                                        Applied</small>
-
-                                    <small class="xs text-error clickable" (click)="removePromocode()"
-                                        *ngIf="appliedPromocode && appliedPromocode.discountName">Remove Promocode to
-                                        apply another</small>
-                                </div>
-                                <div class="lg o-85 bold">&#8377; {{ total}}</div>
-                            </div>
-
-                            <div class='fbox-sb'>
-                                <div class='lg o-85 bold'>Wallet Amount</div>
-                                <div class='lg o-85 bold'>&#8377; {{walletAmount?.toFixed(2)}}</div>
-                            </div>
-                            <div class='fbox-sb' *ngIf='remainingWalletAmountStatus'>
-                                <div class='lg o-85 bold'>Remaining Wallet Amount</div>
-                                <div class='lg o-85 bold'>
-                                    &#8377;{{remainingWalletAmount.toString()==='NaN'?checkWalletAmount(total):remainingWalletAmount}}
-                                </div>
-                            </div>
-                            <div class='fbox-sb' *ngIf="requiredWalletAmountStatus">
-                                <div class='lg o-85 bold'>Required Wallet Amount</div>
-                                <div class='lg o-85 bold'>
-                                    &#8377;{{requiredWalletAmount.toString()==='NaN'?checkWalletAmount(total):requiredWalletAmount.toFixed(2)}}
-                                </div>
-                            </div>
-                            <hr class="customizeHR" />
-                            <div class="center" style="color: var(--primary-dark)">
-                                You will save &#8377; {{ totalDiscount?.toFixed(2) }} on this order.
-                            </div>
-                            <div class='justifySpaceBetween' style='justify-content: center!important;'>
-                                <button type='button' class='saveButton' (click)='addMoney()'>
-                                    Add Money
-                                </button>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </ng-container>

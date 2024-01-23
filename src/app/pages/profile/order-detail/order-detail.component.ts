@@ -46,7 +46,8 @@ export class OrderDetailComponent extends RootComponent implements OnInit {
 
   exchangeFiles: File[] = []
   refundFiles: File[] = []
-
+  exchangeFilesVideo: File[] = []
+  refundFilesVideo: File[] = []
   constructor(
     private actRoute: ActivatedRoute,
     private _PFS: ProfileService,
@@ -70,6 +71,7 @@ export class OrderDetailComponent extends RootComponent implements OnInit {
     this.exchangeFormGroup = this._FB.group({
       comment: [''],
       image: [''],
+      productVideo: [''],
     })
   }
 
@@ -77,6 +79,7 @@ export class OrderDetailComponent extends RootComponent implements OnInit {
     this.refundFormGroup = this._FB.group({
       comment: [''],
       image: [''],
+      productVideo: [''],
     })
   }
 
@@ -188,7 +191,16 @@ export class OrderDetailComponent extends RootComponent implements OnInit {
     this.exchangeFiles.splice(this.exchangeFiles.indexOf(event), 1);
     this.exchangeFormGroup.patchValue({ productImage: this.exchangeFiles });
   }
+  onSelectExchangeVideo(event) {
+    // this.exchangeFiles = [];
+    this.exchangeFilesVideo.push(...event.addedFiles);
+    this.exchangeFormGroup.patchValue({ productVideo: this.exchangeFilesVideo });
+  }
 
+  onRemoveExchangeVideo(event) {
+    this.exchangeFilesVideo.splice(this.exchangeFilesVideo.indexOf(event), 1);
+    this.exchangeFormGroup.patchValue({ productVideo: this.exchangeFilesVideo });
+  }
 
   onSelectRefund(event) {
     // this.refundFiles = [];
@@ -200,7 +212,16 @@ export class OrderDetailComponent extends RootComponent implements OnInit {
     this.refundFiles.splice(this.refundFiles.indexOf(event), 1);
     this.refundFormGroup.patchValue({ productImage: this.refundFiles });
   }
+  onSelectRefundVideo(event) {
+    // this.refundFiles = [];
+    this.refundFilesVideo.push(...event.addedFiles);
+    this.refundFormGroup.patchValue({ productVideo: this.refundFilesVideo });
+  }
 
+  onRemoveRefundVideo(event) {
+    this.refundFilesVideo.splice(this.refundFilesVideo.indexOf(event), 1);
+    this.refundFormGroup.patchValue({ productVideo: this.refundFilesVideo });
+  }
   selectExchangeReason(list) {
       this.selectedExchangeString=list.name
       this.exchangeReason.map((i,m)=>{
@@ -251,7 +272,16 @@ export class OrderDetailComponent extends RootComponent implements OnInit {
       formData.append("reason", this.selectedExchangeString);
       formData.append("comment", this.exchangeFormGroup.value.comment);
       for (var i = 0; i < this.exchangeFiles.length; i++) {
-        formData.append("productImage", this.exchangeFiles[i]);
+        if(i==0){
+          formData.append("productImage", this.exchangeFiles[i]);
+        }else  if(i==1){
+          formData.append("productImage2", this.exchangeFiles[i]);
+        }else if(i==2){
+          formData.append("productImage3", this.exchangeFiles[i]);
+        }
+      }
+      for (var i = 0; i < this.exchangeFilesVideo.length; i++) {
+        formData.append("productVideo", this.exchangeFilesVideo[i]);
       }
       this._PFS.exchange(formData).subscribe(
         (data: any) => {
@@ -259,6 +289,7 @@ export class OrderDetailComponent extends RootComponent implements OnInit {
             $("#exchangeModal").modal('hide');
             this.exchangeFormGroup.reset()
             this.exchangeFiles = []
+            this.exchangeFilesVideo = []
             this.selectedExchangeReason = []
             this.exchangeReason.map((_)=>{
               $("#exchange" + _.id).removeClass("selectedBoxDiv")
@@ -272,6 +303,7 @@ export class OrderDetailComponent extends RootComponent implements OnInit {
             })
             this.exchangeFormGroup.reset()
             this.exchangeFiles = []
+            this.exchangeFilesVideo = []
             this.selectedExchangeReason = []
             this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
           }
@@ -297,7 +329,16 @@ export class OrderDetailComponent extends RootComponent implements OnInit {
       formData.append("reason", this.selectedRefundString);
       formData.append("comment", this.refundFormGroup.value.comment);
       for (var i = 0; i < this.refundFiles.length; i++) {
-        formData.append("productImage", this.refundFiles[i]);
+        if(i==0){
+          formData.append("productImage", this.refundFiles[i]);
+        }else  if(i==1){
+          formData.append("productImage2", this.refundFiles[i]);
+        }else if(i==2){
+          formData.append("productImage3", this.refundFiles[i]);
+        }
+      }
+      for (var i = 0; i < this.refundFilesVideo.length; i++) {
+        formData.append("productVideo", this.refundFilesVideo[i]);
       }
       this._PFS.refund(formData).subscribe(
         (data: any) => {
@@ -308,6 +349,7 @@ export class OrderDetailComponent extends RootComponent implements OnInit {
             })
             this.refundFormGroup.reset()
             this.refundFiles = []
+            this.refundFilesVideo = []
             this.selectedRefundReason = []
             this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
             this.getOrderDetails();
@@ -318,6 +360,7 @@ export class OrderDetailComponent extends RootComponent implements OnInit {
             })
             this.refundFormGroup.reset()
             this.refundFiles = []
+            this.refundFilesVideo = []
             this.selectedRefundReason = []
             this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
           }

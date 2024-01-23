@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef, NgZone } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, NgZone, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/_services';
 import { CartService } from '../../cart/cart.service';
@@ -8,13 +8,14 @@ import { RootComponent } from '../../../_shared/components/root/root.component';
 import { CheckoutService } from '../../checkout/checkout.service';
 import { MetakeywordsService } from '../../../_services/metakeywords.service';
 import { SEOService } from '../../../_services/seo.service';
+import { GlobalService } from '../../cart/global.service';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 
 })
-export class ProductsComponent extends RootComponent implements OnInit, AfterViewInit {
+export class ProductsComponent extends RootComponent implements OnInit,OnDestroy, AfterViewInit {
   offerPrise: any;
   price: any;
   groupId: string;
@@ -39,11 +40,12 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
   currentPageNumber = 1;
   discountStatus: boolean;
   statusOff: boolean;
-
+  currentUser: any;
   constructor(
     private cdr: ChangeDetectorRef,
     private zone: NgZone,
     public _AS: AlertService,
+    private globalSrv: GlobalService,
     private _PS: ProductsService,
     private routes: ActivatedRoute,
     private _CS: CartService,private seoService: SEOService,private updateMetaTagSrv:MetakeywordsService,
@@ -53,25 +55,34 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
   }
 
   ngOnInit(): void {
+   var currentPage =  localStorage.getItem("currentPageNumber")
+   console.log("currentPage: "+currentPage)
+   if(currentPage != null){
+     this.currentPageNumber = Number(currentPage)
+   }
     this.routes.params.subscribe(
       data => {
         this.categorySlug = data.categorySlug;
        this.getProductBySlug(data.categorySlug)
         this.getAllCategories();
-        this.seoService.updateCanonicalUrl(data.categorySlug)
+        this.seoService.updateCanonicalUrl("https://toq.co.in/"+data.categorySlug)
+        this.updateMetaTagSrv.getSeoContent('Product Page').subscribe(
+          (data: any) => {
+            if (data.meta.status) {
+              this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords,"https://toq.co.in/"+data.categorySlug,data.data.imageUrl)
+            }
+          }
+        )
       }
     ) 
     this.getStates();
-    this.updateMetaTagSrv.getSeoContent('Product Page').subscribe(
-      (data: any) => {
-        if (data.meta.status) {
-          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
-        }
-      }
-    )
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
    
   }
-
+  ngOnDestroy(): void{
+    console.log("ondes :called ")
+    localStorage.setItem("currentPageNumber",this.currentPageNumber.toString())
+  }
   selectCity(event){
     this.filterCity=event.target.value
     this._PS.getProductByGroupIdState(this.groupId,event.target.value).subscribe(
@@ -225,28 +236,106 @@ export class ProductsComponent extends RootComponent implements OnInit, AfterVie
   }
 }
 
-  addToCart(product) {
+async addToCart(product :any) {
+  console.log(" this.currentUser : "+this.currentUser)
+  if(this.currentUser){
+    var totalCartCount =   localStorage.getItem("totalCartCount")
+    if(product.subCategoryId == '65ab57a30af25e301ddb52f8' && totalCartCount == "0"){
+      this.alertMessage({ type: "danger", title: "No item in cart ", value: "Please add any different product to add empty gift box" });
+    }else {
     const cartData = {
       categoryId: product.categoryId,
+      vendorId: product.vendorId,
       productId: product.productId,
       selectQuantity: 1,
-      subCategoryId: product.subCategoryData[0].subCategoryId,
-      vendorId: product.vendorId,
-      variantId: product.variantId
+        subCategoryId: product.subCategoryId,
+        variantId: product.variantId,
+        personalisedMessage: "",
+        cardType :  "",
+        giftTo :  "",
+        giftFrom : "",
     };
     this._CS.addToCart(cartData).subscribe(
       (data: any) => {
         if (data.meta.status) {
+
           this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
         } else {
           this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
         }
       },
       err => {
-        this.router.navigateByUrl("/login");
+        this.router.navigateByUrl("/profile/login");
         this.alertMessage({ type: "danger", title: "Error Occured", value: "Please login first" });
       }
     );
+    }
+  }else {
+    var lastSavedCart = []
+     lastSavedCart =   JSON.parse(localStorage.getItem("lastSavedCart"))
+     console.log(" lastSavedCart : "+JSON.stringify(lastSavedCart))
+     if(lastSavedCart.length !=0){
+      var checkLastIndex = -1;
+      for(let i=0; i<lastSavedCart.length;i++){
+       if(lastSavedCart[i].variantId == product.variantId){
+       checkLastIndex = i
+       break;
+       }
+      }
+      if(checkLastIndex != -1){
+        lastSavedCart[checkLastIndex].selectQuantity =  1
+      }else {
+        lastSavedCart.push({
+          categoryId: product.categoryId,
+          vendorId: product.vendorId,
+          productId: product.productId,
+          variantImg:  product.variantImg,
+          productName: product.productName,
+          brand: product.brand,
+          selectQuantity: 1,
+          subCategoryId: product.subCategoryId,
+          variantId: product.variantId,
+          offerPrice: product.offerPrice,
+          totalDiscountedPrice: Number(product.offerPrice),
+          personalisedMessage: "",
+        cardType :  "",
+        giftTo :  "",
+        giftFrom : "",
+        })
+      }
+      console.log("lastSavedCart.length 1: "+JSON.stringify(lastSavedCart.length))
+      this.globalSrv.theItem = lastSavedCart.length.toString()
+      await localStorage.setItem("lastSavedCart" , JSON.stringify(lastSavedCart))
+  
+    }else {
+      lastSavedCart = []
+      if(product.subCategoryId == '65ab57a30af25e301ddb52f8'){
+        this.alertMessage({ type: "danger", title: "No item in cart ", value: "Please add any different product to add empty gift box" });
+      }else {
+      lastSavedCart.push({
+        categoryId: product.categoryId,
+        vendorId: product.vendorId,
+        productId: product.productId,
+        variantImg:  product.variantImg,
+        productName: product.productName,
+        brand: product.brand,
+        selectQuantity: 1,
+        subCategoryId: product.subCategoryId,
+        variantId: product.variantId,
+        offerPrice: product.offerPrice,
+        totalDiscountedPrice: Number(product.offerPrice),
+        personalisedMessage: "",
+        cardType :  "",
+        giftTo :  "",
+        giftFrom : "",
+      })
+      console.log("lastSavedCart.length 1: "+JSON.stringify(lastSavedCart.length))
+      this.globalSrv.theItem = lastSavedCart.length.toString()
+      await localStorage.setItem("lastSavedCart" , JSON.stringify(lastSavedCart))
+    }
+  }
+    }
+    
   }
 
   trackByProductId(index: number, product: any): string {

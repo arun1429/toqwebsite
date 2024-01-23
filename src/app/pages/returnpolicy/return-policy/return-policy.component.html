@@ -1,15 +1,24 @@
 <div class="breadcrumbs_area mt-45">
-   <div class="container">
-       <div class="row">
-           <div class="col-12">
-               <div class="breadcrumb_content">
-                   <ul>
-                       <li><a routerLink="/">home</a></li>
-                       <li>Return Policy</li>
-                   </ul>
-               </div>
-           </div>
-       </div>
-   </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a routerLink="/">home</a></li>
+                        <li style="margin-left: 15px;">Shipping & Return Policy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>return-policy works!</p>
+<section class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-xs-12">
+            <div class="bodycontent">
+                <h1>Shipping & Return Policy</h1>
+                <p innerHTML="{{allContentDetails?.retrunDetails}}"></p>
+            </div>
+        </div>
+    </div>
+</section>

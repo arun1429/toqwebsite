@@ -5448,7 +5448,10 @@ textarea:-ms-input-placeholder {
 .single_shipping:hover .shipping_icone img {
     transform: rotatey(180deg);
 }
-
+.shipping_main_item {
+    width: 60px;
+    height: 60px;
+}
 .shipping_icone {
     margin-right: 15px;
 }
@@ -7193,7 +7196,7 @@ textarea:-ms-input-placeholder {
     text-transform: capitalize;
     line-height: 20px;
     font-size: 22px;
-    font-weight: 400;
+    font-weight: 700;
     font-family: sans-serif;
     margin-bottom: 22px;
 }
@@ -8483,6 +8486,7 @@ textarea:-ms-input-placeholder {
 .coupon_inner button {
     background: #363f4d;
     border: 0;
+   
     color: #ffffff;
     display: inline-block;
     font-size: 12px;
@@ -8839,7 +8843,11 @@ textarea:-ms-input-placeholder {
 
 .checkout_form label {
     font-weight: 500;
+    position: relative;
+    top: -18px;
+    left: 20px;
 }
+
 
 .checkout_form label span {
     color: #000000;

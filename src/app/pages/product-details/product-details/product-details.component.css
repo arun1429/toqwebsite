@@ -1,6 +1,7 @@
 .product_details .col-md-2.ng-star-inserted{padding: 0;} 
 
-.text-bold{ font-weight: bold;}
+.text-bold{ font-weight: bold;margin-top: 0px;}
+.text-bold2{ font-weight: bold;margin-top: 5px;}
 .saleBtn{ background: #dd1567; color:#fff;  border-radius: 20px; padding: 4px 15px;}
 .form-control {font-size: .9rem;}
 
@@ -15,6 +16,7 @@
 .sliderBanDesk{display: none!important;}
 .sliderBanMobile{display: block!important;}
 .text-bold{ font-weight: bold;margin-top: 15px;}
+.text-bold2{ font-weight: bold;margin-top: 10px;}
 }
 .svgActive{
     color:#f9ba48;
@@ -120,3 +122,46 @@
   margin-left: 10px;
   font-size: 20px;
 }
+.select {
+  width: 100%;
+    padding: 0px 10px 0px;
+    font-size: 13px;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    height: 50px;
+    background: url("/assets/img/icons8-dropdown-20.png") no-repeat right #dd1567;
+    -webkit-appearance: none;
+    background-position-x: 98%;
+}
+.selectcard {
+  width: 100%;
+    padding: 0px 10px 0px;
+    font-size: 13px;
+    border: 1;
+    border-radius: 5px;
+    border-color: #000;
+    color: #000;
+    height: 50px;
+    background: url("/assets/img/icons8-dropdown-black.png") no-repeat right #fff;
+    -webkit-appearance: none;
+    background-position-x: 98%;
+    
+}
+.form-group-child {
+  margin-bottom: 1px
+}
+.form-group-child label {
+  font-weight: 500;
+  text-transform: capitalize;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+.form-group-child input{
+   width: 100%;
+    border: 1px solid #000;
+    background: none;
+    height: 42px;
+    padding: 0 12px;
+    border-radius: 5px;
+} 

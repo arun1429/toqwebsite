@@ -5,6 +5,9 @@ import { AlertService, UserService } from 'src/app/_services';
 import { StartService } from "../start.service";
 import { ProfileService } from '../../pages/profile/profile.service';
 import { RootComponent } from '../../_shared/components/root/root.component';
+import { GlobalService } from 'src/app/pages/cart/global.service';
+import { CartService } from 'src/app/pages/cart/cart.service';
+import { GlobalWishService } from 'src/app/pages/cart/globalwish.service';
 
 
 declare var $: any;
@@ -26,7 +29,9 @@ export class HeaderComponent extends RootComponent implements OnInit {
   totalDiscount: Number = 0;
   deliveryCharges: Number = 0;
   convenienceFee: Number = 0;
-  // cartDataLength: number = 0;
+  cartDataLength: string = "0";
+  wishDataLength: string = "0";
+  currentUser: any;
   wishLists: any = [];
   userName: string = 'Guest';
   isLoggedIn: boolean = false;
@@ -35,13 +40,16 @@ export class HeaderComponent extends RootComponent implements OnInit {
     public _AS: AlertService,
     private _SS: StartService,
     private _US: UserService,
-    private _CS: HomeService,
+    private _CS: CartService,
+    private globalSrv: GlobalService,
+    private globalWishSrv: GlobalWishService,
     private router: Router,
     private _PFS: ProfileService) {
     super(_AS);
   }
 
   ngOnInit(): void {
+    localStorage.setItem("totalCartCount" , "0")
     this.shopName = "TOQ"
     this.shopName  = localStorage.getItem("shopName")
     this.getAllGroups("TOQ");
@@ -50,7 +58,106 @@ export class HeaderComponent extends RootComponent implements OnInit {
         this.getCartItems();
       }
     });
-    this.getCartItems();
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.globalSrv.itemValue.subscribe((nextValue) => {
+          this.cartDataLength =nextValue
+      })
+        this.globalWishSrv.itemValue.subscribe((nextValue) => {
+          this.wishDataLength =nextValue
+        })
+        
+    if(this.currentUser){
+      var lastSavedCart = []
+      if(localStorage.getItem("lastSavedCart") != null ){
+        lastSavedCart =   JSON.parse(localStorage.getItem("lastSavedCart"))
+        this.cartDataLength =lastSavedCart.length.toString()
+        for(let i=0; i<lastSavedCart.length; i++){
+          const cartData = {
+            categoryId: lastSavedCart[i].categoryId,
+            vendorId: lastSavedCart[i].vendorId,
+            productId: lastSavedCart[i].productId,
+            selectQuantity: lastSavedCart[i].selectQuantity,
+            subCategoryId: lastSavedCart[i].subCategoryId,
+            variantId: lastSavedCart[i].variantId,
+            personalisedMessage: lastSavedCart[i].personalisedMessage,
+            cardType : lastSavedCart[i].cardType,
+            giftTo : lastSavedCart[i].giftTo,
+            giftFrom :lastSavedCart[i].giftFrom
+          };
+          this._CS.addToCart(cartData).subscribe(
+            (data: any) => {
+            if(i== (lastSavedCart.length -1)){
+              lastSavedCart = []
+              this.globalSrv.theItem = lastSavedCart.length.toString()
+               localStorage.setItem("lastSavedCart" , JSON.stringify(lastSavedCart))
+              this.getCartItems()
+            }
+            },
+          )
+        }
+      }else {
+      this.getCartItems();
+    }
+    }else {
+      var lastSavedCart = []
+      lastSavedCart =   JSON.parse(localStorage.getItem("lastSavedCart"))
+      if(localStorage.getItem("lastSavedCart") == null ){
+        this.cartDataLength = "0"
+      }else {
+        if(lastSavedCart.length !=0 ){
+          this.cartDataLength =lastSavedCart.length.toString()
+          console.log("lastSavedCart.length : "+JSON.stringify(lastSavedCart.length))
+        }else {
+         this.cartDataLength = "0"
+        }
+      }
+      console.log("lastSavedCart : "+JSON.stringify(lastSavedCart))
+  }
+  if(this.currentUser){
+    var lastSavedWish = []
+    if(localStorage.getItem("lastSavedWish") != null ){
+      lastSavedWish =   JSON.parse(localStorage.getItem("lastSavedWish"))
+      this.wishDataLength =lastSavedWish.length.toString()
+      for(let i=0; i<lastSavedWish.length; i++){
+        const cartData = {
+          categoryId: lastSavedWish[i].categoryId,
+          vendorId: lastSavedWish[i].vendorId,
+          productId: lastSavedWish[i].productId,
+          selectQuantity: lastSavedWish[i].selectQuantity,
+          subCategoryId: lastSavedWish[i].subCategoryId,
+          variantId: lastSavedWish[i].variantId,
+        };
+        this._PFS.addToWishList(cartData).subscribe(
+          (data: any) => {
+          if(i== (lastSavedWish.length -1)){
+            lastSavedWish = []
+            this.globalWishSrv.theItem = lastSavedWish.length.toString()
+             localStorage.setItem("lastSavedWish" , JSON.stringify(lastSavedWish))
+            this.getWishListItems()
+          }
+          },
+        )
+      }
+    }else {
+    this.getWishListItems();
+  }
+  }else {
+    var lastSavedWish = []
+    lastSavedWish =   JSON.parse(localStorage.getItem("lastSavedWish"))
+    if(localStorage.getItem("lastSavedWish") == null ){
+      this.wishDataLength = "0"
+    }else {
+      if(lastSavedWish.length !=0){
+        this.wishDataLength =lastSavedWish.length.toString()
+        console.log("lastSavedWish.length : "+JSON.stringify(lastSavedWish.length))
+      }else {
+       this.wishDataLength = "0"
+      }
+    }
+   
+    console.log("lastSavedWish : "+JSON.stringify(lastSavedWish))
+}
+ 
     this.getWishListItems();
     this._PFS.emitWishListData().subscribe(x => {
       if (x) {
@@ -61,6 +168,37 @@ export class HeaderComponent extends RootComponent implements OnInit {
       if (data) {
         if (data && data.fullName) {
           this.userName = data.fullName;
+          var lastSavedCart = []
+          lastSavedCart =   JSON.parse(localStorage.getItem("lastSavedCart"))
+          if(lastSavedCart.length !=0){
+            this.cartDataLength =lastSavedCart.length.toString()
+            for(let i=0; i<lastSavedCart.length; i++){
+              const cartData = {
+                categoryId: lastSavedCart[i].categoryId,
+                vendorId: lastSavedCart[i].vendorId,
+                productId: lastSavedCart[i].productId,
+                selectQuantity: lastSavedCart[i].selectQuantity,
+                subCategoryId: lastSavedCart[i].subCategoryId,
+                variantId: lastSavedCart[i].variantId,
+                personalisedMessage: lastSavedCart[i].personalisedMessage,
+                cardType : lastSavedCart[i].cardType,
+                giftTo : lastSavedCart[i].giftTo,
+                giftFrom :lastSavedCart[i].giftFrom
+              };
+              this._CS.addToCart(cartData).subscribe(
+                (data: any) => {
+                if(i== (lastSavedCart.length -1)){
+                  lastSavedCart = []
+                  this.globalSrv.theItem = lastSavedCart.length.toString()
+                   localStorage.setItem("lastSavedCart" , JSON.stringify(lastSavedCart))
+                  this.getCartItems()
+                }
+                },
+              )
+            }
+          }else {
+          this.getCartItems();
+        }
         }
       }
     });
@@ -88,7 +226,6 @@ export class HeaderComponent extends RootComponent implements OnInit {
   }
 
   getCartItems() {
-    this.carts = [];
     this._US.getAuth().subscribe(res => {
       if (res) {
         this._CS.getCartProducts().subscribe(
@@ -97,17 +234,17 @@ export class HeaderComponent extends RootComponent implements OnInit {
               this.carts = data.data;
               this.Cgst=data.cgst;
               this.Igst=data.igst;
+              localStorage.setItem("totalCartCount" , data.data.length.toString())
               this.deliveryCharges = data.deliveryCharge;
               this.convenienceFee = data.convenienceFee;
               this.cartSum = data.subTotal;
               this.total = data.grandTotal;
               this.totalDiscount = data.discount;
-              // this.cartTotal(this.carts);
-              // this.cartDataLength = this.carts.length;
             }
             else {
               this.carts = [];
               this.deliveryCharges = 0;
+              localStorage.setItem("totalCartCount" , "0")
               this.convenienceFee = 0;
               this.cartSum = 0;
               this.total = 0;
@@ -131,38 +268,6 @@ export class HeaderComponent extends RootComponent implements OnInit {
       }
     );
   }
-
-  // cartTotal(data) {
-  //   this.total = 0;
-  //   let actualPrice = 0;
-  //   let discountedPrice = 0;
-  //   this.cartSum = 0;
-  //   for (let i = 0; i < data.length; i++) {
-  //     this.cartSum = Number(this.cartSum) + Number(data[i].discountedPrice * data[i].selectQuantity);
-  //     actualPrice = Number(actualPrice) + Number(data[i].price * data[i].selectQuantity);
-  //     discountedPrice = Number(discountedPrice) + Number(data[i].discountedPrice * data[i].selectQuantity);
-  //   }
-  //   this.totalDiscount = Number(actualPrice) - Number(discountedPrice);
-  //   this.total = Number(this.cartSum) + Number(this.deliveryCharges);
-  // }
-
-  // updateCartTotal() {
-  //   let cartSum = 0;
-  //   let total = 0;
-  //   let actualPrice = 0;
-  //   let discountedCost = 0;
-  //   for (let i = 0; i < this.cartDataLength; i++) {
-  //     const discountedPrice = this.carts[i].discountedPrice.toFixed(2);
-  //     cartSum = Number(cartSum) + Number(this.carts[i].selectQuantity) * discountedPrice;
-  //     actualPrice = Number(actualPrice) + Number(this.carts[i].price) * Number(this.carts[i].selectQuantity);
-  //     discountedCost = Number(discountedCost) + Number(this.carts[i].discountedPrice * Number(this.carts[i].selectQuantity));
-  //   }
-  //   this.cartSum = cartSum;
-  //   this.totalDiscount = Number(actualPrice) - Number(discountedCost);
-  //   total = Number(total) + Number(this.cartSum) + Number(this.deliveryCharges);
-  //   this.total = total;
-  // }
-
   categories_title() {
     $(".categories_title").on("click", function () {
       $(this).toggleClass('active');

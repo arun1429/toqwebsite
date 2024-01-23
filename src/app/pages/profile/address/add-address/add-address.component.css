@@ -92,6 +92,18 @@ header{
   font-size: 18px;
   padding-bottom: 10px;
 }
+.checkboxstyle input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  position: relative;
+  top: 2px;
+  margin-right: 10px;
+}
+.checkboxstyle label{
+  position: relative;
+  top: -18px;
+  left: 20px;
+}
 @media only screen and (max-width: 767px){
   .grid{display: block;}
 }

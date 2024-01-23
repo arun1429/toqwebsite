@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AlertService } from "../../../../_services/index";
 import { HomeService } from 'src/app/pages/home/home.service';
 import { RootComponent } from '../../../../_shared/components/root/root.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-add-address',
@@ -19,11 +20,15 @@ export class AddAddressComponent extends RootComponent implements OnInit {
   geocoder: google.maps.Geocoder;
   states: any = [];
   cities: any = [];
-
+  currentlng: any;
+  currentlat: any;
+  deliveryState: any
+  deliveryCity: any
   constructor(
     private zone: NgZone,
     private fb: FormBuilder,
     public _AS: AlertService,
+    private spinnerService: NgxSpinnerService,
     private _CHS: HomeService
   ) {
     super(_AS);
@@ -80,7 +85,63 @@ export class AddAddressComponent extends RootComponent implements OnInit {
       }
     )
   }
+  chooseLocation(event) {
 
+    if (event.target.checked) {
+      this.spinnerService.show();
+      navigator.geolocation.getCurrentPosition(pos => {
+        this.currentlng = pos.coords.longitude;
+        this.currentlat = pos.coords.latitude;
+        this.spinnerService.hide();
+        this.locateMe()
+      });
+    } else {
+      this.addressForm.patchValue({ state: "" });
+      this.addressForm.patchValue({ city: "" });
+      this.addressForm.patchValue({ pinCode: "" });
+      this.addressForm.patchValue({ streetAddress: "" });
+      this.addressForm.patchValue({ country: "" });
+      this.cities = [];
+    }
+  }
+
+  locateMe() {
+    this.geocoder.geocode({ 'location': { lat: this.currentlat, lng: this.currentlng } }, (results, status) => {
+      if (status === 'OK') {
+       console.log( results[0].address_components)
+        results[0].address_components.map(el => {
+          // console.log(el)
+          el.types.map(l => {
+            if (l === "administrative_area_level_1") {
+              this.deliveryState = el.long_name
+              this.addressForm.patchValue({ state: this.deliveryState })
+              let findState = this.states.find(t => t.state === this.deliveryState)
+              this.cities = findState.districts
+              this.spinnerService.hide();
+            }
+            if (l === 'locality') {
+              this.deliveryCity = el.long_name
+              this.addressForm.patchValue({ city: this.deliveryCity })
+              this.spinnerService.hide();
+            }
+            if (l === 'postal_code') {
+              this.addressForm.patchValue({ pinCode: el.long_name})
+              this.spinnerService.hide();
+            }
+            if (l === 'sublocality') {
+              this.addressForm.patchValue({ streetAddress: el.long_name})
+              this.spinnerService.hide();
+            }
+            if (l === 'country') {
+              console.log("long_name : "+el.long_name)
+              this.addressForm.patchValue({ country: el.long_name})
+              this.spinnerService.hide();
+            }
+          })
+        })
+      }
+    });
+  }
   chnageState(e) {
     this.states.map((_) => {
       if (e.target.value === _.state) {

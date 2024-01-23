@@ -35,7 +35,7 @@
             <div class="col-lg-6 col-md-6">
                 <div class="product_d_right">
                     <form>
-                        <h3><a href="#">{{productDetails?.productName}}</a></h3>
+                        <h5><a href="#">{{productDetails?.productName}}</a></h5>
                         <div class="product_desc">
                             <p>{{variantName}} </p>
                         </div>
@@ -57,7 +57,7 @@
                           
                             <!-- <br><br>
                                 <span *ngIf="productDetails?.gst"> GST @{{productDetails?.gst}}% Inclusive Price : ₹{{productDetails?.variant[selectedVariantIndex]?.offerPrice}} </span> -->
-                        </div>     
+                        </div>    
                         <div class="product_variant quantity">
                             <label>quantity</label>
                             <input min="1" max="100" value="{{selectedQuanity}}" type="number"
@@ -72,10 +72,10 @@
                         <div class=" product_d_action">
                             <ul>
                                 <li>
-                                    <span class="cart_icon" *ngIf="productDetails?.wishListStatus!=true" (click)="addToWishList(productDetails)" title="Add to wishlist">
+                                    <span class="cart_icon" *ngIf="isWishListStatus != true" (click)="addToWishList(productDetails)" title="Add to wishlist">
                                         Add to Wishlist <i class="ion-heart"></i>
                                     </span>
-                                    <span class="cart_icon_remove" *ngIf="productDetails?.wishListStatus===true" (click)="addToWishList(productDetails)" title="Remove wishlist">
+                                    <span class="cart_icon_remove" *ngIf="isWishListStatus == true" (click)="addToWishList(productDetails)" title="Remove wishlist">
                                         Remove  Wishlist  <i class="ion-heart"></i>
                                     </span>
                                 </li>
@@ -85,21 +85,54 @@
 
                     <div class="product_d_meta">
                         <div class="row">
-                            <div class="col-md-6">
-                                <span>Model :{{productDetails?.variant[selectedVariantIndex]?.sku?productDetails?.variant[selectedVariantIndex]?.sku:'N/A'}}</span>
-                                <span>Category: <a href="#">{{productDetails?.categoryName}}</a></span>
-                                <span>Sub Category: <a href="#">{{productDetails?.subCategoryName}}</a></span>
+                            <div class="col-md-4">
                                 <span>Brand: <a href="#">{{productDetails?.brand}}</a></span>
                                 <span>Vendor Name: <a href="#">{{productDetails?.vendorName}}</a></span>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <div class="form-group">
                                     <label class="text-bold block">Choose Variant</label>
-                                    <select class="form-control shadow-none" [(ngModel)]="selectedVariantIndex" style="background-color: black; color: #fff;"
+                                    <select class="form-control shadow-none select" [(ngModel)]="selectedVariantIndex" 
                                         (ngModelChange)="changeVariant($event,productDetails)">
-                                        <option *ngFor="let variant of productDetails?.variant; let i=index"
+                                        <option *ngFor="let variant of productDetails?.variant; let i=index"  
                                             [value]="i">{{variant?.variantName}}</option>
                                     </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span>Model: {{productDetails?.variant[selectedVariantIndex]?.sku?productDetails?.variant[selectedVariantIndex]?.sku:'N/A'}}</span>
+                                <span>Category: <a href="#">{{productDetails?.categoryName}}</a></span>
+                                <span>Sub Category: <a href="#">{{productDetails?.subCategoryName}}</a></span>
+                            </div>
+                          
+                        </div>
+                        <div class="row" style="margin-top: 10px;" *ngIf="productDetails?.categoryId == '65aaba800af25e301ddb5094'">
+                            <div class="col-md-12">
+                                <div class="form-group-child">
+                                    <label class="text-bold2 block">Select Card</label>
+                                    <select class="form-control selectcard" [(ngModel)]="selectedIndexCard" 
+                                        (ngModelChange)="changeCartType($event,cartTypeArray)">
+                                        <option *ngFor="let cartTypes of cartTypeArray; let i=index" 
+                                        [value]="i">{{cartTypes?.cardName}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group-child">
+                                    <label class="text-bold2 block">Personalised Message</label>
+                                    <input  value="{{personalisedMessage}}" type="text" placeholder="Personalised Message"
+                                       (change)="changePerMessage($event)">
+                                </div>
+                                <div class="form-group-child">
+                                    <label class="text-bold2 block">TO</label>
+                                    <input  value="{{giftTo}}" type="text" placeholder="To Whom"
+                                   (change)="changeGiftTo($event)">
+                                </div>
+                                <div class="form-group-child">
+                                    <label class="text-bold2 block">From</label>
+                                    <input value="{{giftFrom}}" type="text" placeholder="From Whom"
+                                    (change)="changeGiftFrom($event)">
                                 </div>
                             </div>
                         </div>
@@ -268,7 +301,7 @@
         <div class="firstshipping row">
             <div class="col-lg-3 col-md-6">
                 <div class="single_shipping">
-                    <div class="shipping_icone">
+                    <div class="shipping_icone shipping_main_item">
                         <img src="assets/img/shipping1.png" alt="">
                     </div>
                     <div class="shipping_content">
@@ -279,7 +312,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="single_shipping">
-                    <div class="shipping_icone">
+                    <div class="shipping_icone shipping_main_item">
                         <img src="assets/img/shipping2.png" alt="">
                     </div>
                     <div class="shipping_content">
@@ -292,7 +325,7 @@
         <div class="firstshipping row"  >
             <div class="col-lg-3 col-md-6">
                 <div class="single_shipping">
-                    <div class="shipping_icone">
+                    <div class="shipping_icone shipping_main_item">
                         <img src="assets/img/shipping3.png" alt="">
                     </div>
                     <div class="shipping_content">
@@ -303,7 +336,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="single_shipping">
-                    <div class="shipping_icone">
+                    <div class="shipping_icone shipping_main_item">
                         <img src="assets/img/shipping4.png" alt="">
                     </div>
                     <div class="shipping_content">

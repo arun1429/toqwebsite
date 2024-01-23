@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     this.updateMetaTagSrv.getSeoContent('Login Page').subscribe(
       (data: any) => {
         if (data.meta.status) {
-          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords,"https://toq.co.in/userprofile/login",data.data.imageUrl)
         }
       }
     )

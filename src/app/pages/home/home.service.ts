@@ -8,7 +8,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class HomeService {
 
-  emittedValue = new BehaviorSubject(false);
 
   constructor(private http: HttpClient) { }
 
@@ -47,33 +46,7 @@ export class HomeService {
     const url = `${environment.apiUrl}products/recent?storeId=${storeId}`;
     return this.http.get(url);
   }
-  removeFromCart(cartId: string) {
-    const url = `${environment.apiUrl}cart/delete?cartId=${cartId}`;
-    return this.http.delete(url).pipe(
-      tap(
-        (res: any) => {
-          if (res.meta.status) {
-            this.emittedValue.next(true);
-          }
-        }
-      )
-    );
-  }
-
-  addToCart(cartData) {
-    const url = `${environment.apiUrl}cart/add`;
-    return this.http.post(url, cartData).pipe(
-      tap((res: any) => {
-        if (res.meta.status) {
-          this.emittedValue.next(true);
-        }
-      })
-    );
-  }
-
-  emitCardData(): Observable<boolean> {
-    return this.emittedValue.asObservable();
-  }
+  
 
   getCartProducts() {
     const url = `${environment.apiUrl}cart/list`;

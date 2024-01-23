@@ -17,6 +17,7 @@ declare var $: any;
 export class CartComponent extends RootComponent implements OnInit {
 
   carts: any = [];
+  lastSavedCart :any = []
   cartSum: number = 0;
   total: number = 0;
   totalDiscount: Number = 0;
@@ -28,6 +29,7 @@ export class CartComponent extends RootComponent implements OnInit {
   appliedPromocode: any;
   promocodes: any = [];
   // cartDataLength: number = 0;
+  currentUser: any;
   vendorId: string;
 
   constructor(
@@ -40,20 +42,35 @@ export class CartComponent extends RootComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    localStorage.setItem("currentPageNumber","1")
     this._CS.emitCardData().subscribe(x => {
       if (x) {
         this.getCartItems();
       }
     });
-    this.getCartItems();
     this.seoService.updateCanonicalUrl('https://toq.co.in//userprofile/cart')
     this.updateMetaTagSrv.getSeoContent('Cart Page').subscribe(
       (data: any) => {
         if (data.meta.status) {
-          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+          this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords,"https://toq.co.in/userprofile/cart",data.data.imageUrl)
         }
       }
     )
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if(this.currentUser){
+      this.getCartItems();
+    }else {
+       this.lastSavedCart = []
+       this.lastSavedCart =   JSON.parse(localStorage.getItem("lastSavedCart"))
+       if(this.lastSavedCart.length !=0){
+        for(let i=0; i<this.lastSavedCart.length;i++){
+          this.cartSum = Number(this.cartSum + this.lastSavedCart[i].totalDiscountedPrice)
+        }
+        this.total = this.cartSum
+      }
+        
+  }
+   
   }
 
   getCartItems() {
@@ -65,6 +82,7 @@ export class CartComponent extends RootComponent implements OnInit {
               this.vendorId = data.data[0].vendorId
               this.getAllPromocode(this.vendorId);
               this.carts = data.data;
+              localStorage.setItem("totalCartCount" , data.data.length.toString())
               this.deliveryCharges = data.deliveryCharge;
               this.convenienceFee = data.convenienceFee;
               this.cartSum = data.subTotal;
@@ -79,6 +97,7 @@ export class CartComponent extends RootComponent implements OnInit {
               this.vendorId = undefined;
               this.carts = [];
               this.deliveryCharges = 0;
+              localStorage.setItem("totalCartCount" , "0")
               this.convenienceFee = 0;
               this.cartSum = 0;
               this.total = 0;
@@ -152,7 +171,23 @@ export class CartComponent extends RootComponent implements OnInit {
       }
     );
   }
-
+  removeFromCartLocal(variantId) {
+    var lastSavedCartNew = []
+    if(this.lastSavedCart){
+      for(let i=0; i<this.lastSavedCart.length;i++){
+        if(this.lastSavedCart[i].variantId != variantId){
+          lastSavedCartNew.push(this.lastSavedCart[i])
+        }
+      }
+      this.lastSavedCart = lastSavedCartNew
+      localStorage.setItem("lastSavedCart" , JSON.stringify(lastSavedCartNew))
+      this.cartSum = 0
+     for(let i=0; i<this.lastSavedCart.length;i++){
+       this.cartSum = Number(this.cartSum + this.lastSavedCart[i].totalDiscountedPrice)
+     }
+     this.total = this.cartSum
+    }
+  }
   applyPromocode() {
     if (this.discountName) {
       this._CS.applyPromocode(this.discountName).subscribe(
@@ -191,12 +226,6 @@ export class CartComponent extends RootComponent implements OnInit {
 
   increaseDecreaseQuantity(cart,quantity,selectedQuantity){
     let q=Number(selectedQuantity)+(Number(quantity))
-    //  let obj={
-    //   productId: cart.productId,
-    //   variantId: cart.variantId,
-    //   selectQuantity: quantity,
-    //   cartId: cart._id
-    //  }
      this._CHS.updateQuantity(cart.productId,cart.variantId,q,cart._id).subscribe(res=>{
        if(res['meta']['status']){
         this._CS.emittedValue.next(true);

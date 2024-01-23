@@ -73,7 +73,7 @@
                         <tr>
                             <td>{{txnData.orderID}}</td>
                             <td>{{txnData.paymentMethod}}</td>
-                            <td>{{txnData.amount}}</td>
+                            <td>{{txnData.amount.toFixed(2)}}</td>
                             <td>INR</td>
                             <td>{{txnData.txnType==='Order placed'?"Debit":"Credit"}}</td>
                             <td>{{txnData.txnType}}</td>

@@ -9,6 +9,10 @@ import { HomeService } from '../../home/home.service';
 import { ProductDetailsService } from "../product-details.service";
 import { MetakeywordsService } from '../../../_services/metakeywords.service';
 import { SEOService } from '../../../_services/seo.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { GlobalService } from '../../cart/global.service';
+import { CartService } from '../../cart/cart.service';
+import { GlobalWishService } from '../../cart/globalwish.service';
 declare var $: any;
 
 @Component({
@@ -17,13 +21,13 @@ declare var $: any;
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent extends RootComponent implements OnInit {
-
   productDetails: any;
   productId: string;
   variantSlug: string;
   ratingsByUser: number = 0;
   discountStatus = true;
   statusOff = true
+  isWishListStatus: boolean = false
   ratingArray = [
     {
       rating: 1,
@@ -46,9 +50,60 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
       isActive: false
     }
   ];
+  cartTypeArray = [
+    {
+      cardType: "Best Wishes",
+      cardName: "Best Wishes"
+    },
+    {
+      cardType: "Merry Christmas",
+      cardName: "Merry Christmas"
+    },
+    {
+      cardType: "Happy New Year",
+      cardName: "Happy New Year"
+    },
+    {
+      cardType: "Happy Birthday",
+      cardName: "Happy Birthday"
+    },
+    {
+      cardType: "Love You",
+      cardName: "Love You"
+    },
+    {
+      cardType: "Happy Anniversary",
+      cardName: "Happy Anniversary"
+    },
+    {
+      cardType: "Congratulations",
+      cardName: "Congratulations"
+    },
+    {
+      cardType: "Sorry",
+      cardName: "Sorry"
+    },
+    {
+      cardType: "Thankyou",
+      cardName: "Thankyou"
+    },
+    {
+      cardType: "Wedding Wishes",
+      cardName: "Wedding Wishes"
+    },
+    {
+      cardType: "Bridesmaids Proposal",
+      cardName: "Bridesmaids Proposal"
+    },
+  ];
   reviewForm: FormGroup;
   reviews: any = [];
   selectedQuanity: number = 1;
+  selectedIndexCard: number = 0;
+  personalisedMessage: String = "";
+  cardType: String = "";
+  giftTo: String= "";
+  giftFrom: String = "";
   selectedVariantIndex: number = 0;
   quoteFormGroup: FormGroup;
   currentUser: any;
@@ -68,7 +123,9 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
     private _PDS: ProductDetailsService,
     private _FB: FormBuilder,
     private _PFS: ProfileService,
-    private _HS: HomeService,private seoService: SEOService,private updateMetaTagSrv:MetakeywordsService,
+    private globalSrv: GlobalService,
+    private globalWishSrv: GlobalWishService,
+    private _CS: CartService,private seoService: SEOService,private updateMetaTagSrv:MetakeywordsService,
     private spinnerService: NgxSpinnerService,
     private router: Router) {
     super(_AS);
@@ -78,6 +135,7 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
       userEmailId: ['', [Validators.required, Validators.email]]
     })
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    console.log(" this.currentUser : "+ this.currentUser)
     this.quoteFormGroup = this._FB.group({
       quantity: ['', Validators.required],
       fullName: [this.currentUser && this.currentUser.fullName ? this.currentUser.fullName : '', Validators.required],
@@ -96,7 +154,6 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
         }
       }
     )
-   
     this.getDiscount(this.offerPrise, this.price)
   }
 
@@ -113,6 +170,10 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
         if (data.meta.status) {
           this.productDetails = data.data;
           this.productId = data.data.productId
+          this.isWishListStatus=  data.data.wishListStatus
+          if(data.data.categoryId == "65aaba800af25e301ddb5094"){
+            this.cardType = "Best Wishes";
+          }
           console.log(this.productDetails)
           this.spinnerService.hide();
           if (this.productDetails) {
@@ -131,7 +192,7 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
                 this.updateMetaTagSrv.getSeoContent(data.data.productName).subscribe(
                   (data: any) => {
                     if (data.meta.status) {
-                      this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+                      this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords,"https://toq.co.in/product-details/"+this.variantSlug,data.data.imageUrl)
                     }
                   }
                 )
@@ -152,6 +213,10 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
       (data: any) => {
         if (data.meta.status) {
           this.productDetails = data.data;
+          this.isWishListStatus=  data.data.wishListStatus
+          if(data.data.categoryId == "65aaba800af25e301ddb5094"){
+            this.cardType = "Best Wishes";
+          }
           console.log(this.productDetails)
           this.spinnerService.hide();
           if (this.productDetails) {
@@ -196,7 +261,10 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
     this.selectedVariantIndex = i;
     this.router.navigateByUrl("/product-details/"+productDetails.variant[i].variantSlug);
   }
-
+  changeCartType(i,cartDetails) {
+    this.selectedIndexCard = i
+    this.cardType = cartDetails[i].cardType;
+  }
   getDiscount(offerPrice, price) {
 
     if (offerPrice !== price) {
@@ -286,8 +354,21 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
   increaseDecreaseProductNumber(event) {
     this.selectedQuanity = Number(event.target.value);
   }
-
-  buyNow(product) {
+  changePerMessage(event) {
+    this.personalisedMessage = event.target.value;
+  }
+  changeGiftTo(event) {
+    this.giftTo = event.target.value;
+  }
+  changeGiftFrom(event) {
+    this.giftFrom = event.target.value;
+  }
+  buyNow(product : any) {
+    if(this.currentUser){
+      var totalCartCount =   localStorage.getItem("totalCartCount")
+      if(product.subCategoryId == '65ab57a30af25e301ddb52f8' && totalCartCount == "0"){
+        this.alertMessage({ type: "danger", title: "No item in cart ", value: "Please add any different product to add empty gift box" });
+      }else {
     const cartData = {
       categoryId: product.categoryId,
       vendorId: product.vendorId,
@@ -295,9 +376,13 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
       selectQuantity: this.selectedQuanity,
       subCategoryId: product.subCategoryId,
       variantId: product.variant[this.selectedVariantIndex].variantId,
-      isBuyNow: true
+      isBuyNow: true,
+      personalisedMessage: this.personalisedMessage,
+      cardType :this.cardType,
+      giftTo : this.giftTo,
+      giftFrom :this.giftFrom
     };
-    this._HS.addToCart(cartData).subscribe(
+    this._CS.addToCart(cartData).subscribe(
       (data: any) => {
         if (data.meta.status) {
           this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
@@ -311,50 +396,178 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
         this.alertMessage({ type: "danger", title: "Error Occured", value: "Please login first" });
       }
     );
-  }
-
-  addToCart(product) {
-    const cartData = {
-      categoryId: product.categoryId,
-      vendorId: product.vendorId,
-      productId: product.productId,
-      selectQuantity: this.selectedQuanity,
-      subCategoryId: product.subCategoryId,
-      variantId: product.variant[this.selectedVariantIndex].variantId
-    };
-    this._HS.addToCart(cartData).subscribe(
-      (data: any) => {
-        if (data.meta.status) {
-          this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
-        } else {
-          this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
-        }
-      },
-      err => {
-        this.router.navigateByUrl("/profile/login");
+      }
+    }else {
+      this.router.navigateByUrl("/userprofile/login");
         this.alertMessage({ type: "danger", title: "Error Occured", value: "Please login first" });
-      }
-    );
+    }
   }
 
-  addToWishList(product) {
-    const body = {
-      categoryId: product.categoryId,
-      productId: product.productId,
-      selectQuantity: 1,
-      subCategoryId: product.subCategoryId,
-      vendorId: product.vendorId,
-      variantId: product.variant[this.selectedVariantIndex].variantId
-    };
-    this._PFS.addToWishList(body).subscribe(
-      (data: any) => {
-        if (data.meta.status) {
-          this.getProductDetails();
-          this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
+  async addToCart(product :any) {
+    console.log(" this.currentUser : "+this.currentUser)
+    if(this.currentUser){
+      var totalCartCount =   localStorage.getItem("totalCartCount")
+      if(product.subCategoryId == '65ab57a30af25e301ddb52f8' && totalCartCount == "0"){
+        this.alertMessage({ type: "danger", title: "No item in cart ", value: "Please add any different product to add empty gift box" });
+      }else {
+
+      const cartData = {
+        categoryId: product.categoryId,
+        vendorId: product.vendorId,
+        productId: product.productId,
+        selectQuantity: this.selectedQuanity,
+        subCategoryId: product.subCategoryId,
+        variantId: product.variant[this.selectedVariantIndex].variantId,
+        personalisedMessage: this.personalisedMessage,
+        cardType :this.cardType,
+        giftTo : this.giftTo,
+        giftFrom :this.giftFrom
+      };
+      this._CS.addToCart(cartData).subscribe(
+        (data: any) => {
+          if (data.meta.status) {
+            this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
+          } else {
+            this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
+          }
+        },
+        err => {
+          this.router.navigateByUrl("/profile/login");
+          this.alertMessage({ type: "danger", title: "Error Occured", value: "Please login first" });
         }
-      }, error => {
+      );
       }
-    );
+    }else {
+      var lastSavedCart = []
+       lastSavedCart =   JSON.parse(localStorage.getItem("lastSavedCart"))
+      if(lastSavedCart.length !=0){
+        var checkLastIndex = -1;
+        for(let i=0; i<lastSavedCart.length;i++){
+         if(lastSavedCart[i].variantId == product.variant[this.selectedVariantIndex].variantId){
+         checkLastIndex = i
+         break;
+         }
+        }
+        if(checkLastIndex != -1){
+          lastSavedCart[checkLastIndex].selectQuantity =  this.selectedQuanity
+        }else {
+          lastSavedCart.push({
+            categoryId: product.categoryId,
+            vendorId: product.vendorId,
+            productId: product.productId,
+            variantImg:  product.variant[this.selectedVariantIndex].variantImg,
+            productName: product.productName,
+            brand: product.brand,
+            selectQuantity: this.selectedQuanity,
+            subCategoryId: product.subCategoryId,
+            variantId: product.variant[this.selectedVariantIndex].variantId,
+            offerPrice: product.variant[this.selectedVariantIndex].offerPrice,
+            totalDiscountedPrice: Number(product.variant[this.selectedVariantIndex].offerPrice * this.selectedQuanity),
+            personalisedMessage: this.personalisedMessage,
+            cardType :this.cardType,
+            giftTo : this.giftTo,
+            giftFrom :this.giftFrom,
+            
+          })
+        }
+        console.log("lastSavedCart.length 1: "+JSON.stringify(lastSavedCart.length))
+        this.globalSrv.theItem = lastSavedCart.length.toString()
+        await localStorage.setItem("lastSavedCart" , JSON.stringify(lastSavedCart))
+    
+      }else {
+        lastSavedCart = []
+        if(product.subCategoryId == '65ab57a30af25e301ddb52f8'){
+          this.alertMessage({ type: "danger", title: "No item in cart ", value: "Please add any different product to add empty gift box" });
+        }else {
+        lastSavedCart.push({
+          categoryId: product.categoryId,
+            vendorId: product.vendorId,
+            productId: product.productId,
+            variantImg:  product.variant[this.selectedVariantIndex].variantImg,
+            productName: product.productName,
+            brand: product.brand,
+            selectQuantity: this.selectedQuanity,
+            subCategoryId: product.subCategoryId,
+            variantId: product.variant[this.selectedVariantIndex].variantId,
+            offerPrice: product.variant[this.selectedVariantIndex].offerPrice,
+            totalDiscountedPrice: Number(product.variant[this.selectedVariantIndex].offerPrice * this.selectedQuanity),
+        })
+        console.log("lastSavedCart.length 1: "+JSON.stringify(lastSavedCart.length))
+        this.globalSrv.theItem = lastSavedCart.length.toString()
+        await localStorage.setItem("lastSavedCart" , JSON.stringify(lastSavedCart))
+      }
+    }
+      }
+      
+    }
+   
+    async addToWishList(product :any) {
+    console.log(" this.currentUser : "+this.currentUser)
+    if(this.currentUser){
+      const body = {
+        categoryId: product.categoryId,
+        productId: product.productId,
+        selectQuantity: 1,
+        subCategoryId: product.subCategoryId,
+        vendorId: product.vendorId,
+        variantId: product.variant[this.selectedVariantIndex].variantId
+      };
+      this._PFS.addToWishList(body).subscribe(
+        (data: any) => {
+          if (data.meta.status) {
+            this.getProductDetails();
+            this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
+          }
+        }, error => {
+        }
+      );
+    }else {
+      var lastSavedWish = []
+      lastSavedWish =   JSON.parse(localStorage.getItem("lastSavedWish"))
+      if(lastSavedWish == null  || lastSavedWish.length == 0){
+        lastSavedWish = []
+        lastSavedWish.push({
+          categoryId: product.categoryId,
+          productId: product.productId,
+          selectQuantity: 1,
+          subCategoryId: product.subCategoryId,
+          vendorId: product.vendorId,
+          variantId: product.variant[this.selectedVariantIndex].variantId
+        })
+        console.log("lastSavedWish.length 1: "+JSON.stringify(lastSavedWish.length))
+        this.globalWishSrv.theItem = lastSavedWish.length.toString()
+        this.isWishListStatus =true
+        await localStorage.setItem("lastSavedWish" , JSON.stringify(lastSavedWish))
+      }else {
+        var checkLastIndex = -1;
+        for(let i=0; i<lastSavedWish.length;i++){
+         if(lastSavedWish[i].variantId == product.variant[this.selectedVariantIndex].variantId){
+         checkLastIndex = i
+         break;
+         }
+        }
+        console.log("checkLastIndex : "+checkLastIndex)
+        if(checkLastIndex == -1){
+          lastSavedWish.push({
+            categoryId: product.categoryId,
+        productId: product.productId,
+        selectQuantity: 1,
+        subCategoryId: product.subCategoryId,
+        vendorId: product.vendorId,
+        variantId: product.variant[this.selectedVariantIndex].variantId
+          })
+          this.isWishListStatus =true
+        }else{
+          this.isWishListStatus =false
+          lastSavedWish.splice(checkLastIndex, 1)
+        }
+        console.log("lastSavedWish.length 1: "+JSON.stringify(lastSavedWish.length))
+        this.globalWishSrv.theItem = lastSavedWish.length.toString()
+        await localStorage.setItem("lastSavedWish" , JSON.stringify(lastSavedWish))
+       
+      }
+      }
+      
   }
 
   scrollDiv(ele: string) {

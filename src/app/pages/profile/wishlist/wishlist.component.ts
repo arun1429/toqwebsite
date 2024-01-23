@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { ProfileService } from '../profile.service';
 import { HomeService } from '../../home/home.service';
 import { RootComponent } from '../../../_shared/components/root/root.component';
+import { CartService } from '../../cart/cart.service';
 
 @Component({
   selector: 'app-wishlist',
@@ -22,7 +23,7 @@ export class WishlistComponent extends RootComponent implements OnInit {
     private router: Router,
     private _PFS: ProfileService,
     
-    private _CS: HomeService
+    private _CS: CartService
   ) {
     super(_AS);
   }
@@ -62,6 +63,10 @@ export class WishlistComponent extends RootComponent implements OnInit {
   }
 
   moveToCart(e) {
+    var totalCartCount =   localStorage.getItem("totalCartCount")
+    if(e.subCategoryId == '65ab57a30af25e301ddb52f8' && totalCartCount == "0"){
+      this.alertMessage({ type: "danger", title: "No item in cart ", value: "Please add any different product to add empty gift box" });
+    }else {
     const body = {
       categoryId: e.categoryId,
       productId: e.productId,
@@ -84,6 +89,7 @@ export class WishlistComponent extends RootComponent implements OnInit {
         this.router.navigate(['/userprofile/login']);
       }
     );
+    }
   }
   getDiscount(offerPrice,price){
     

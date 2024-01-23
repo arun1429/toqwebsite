@@ -28,7 +28,7 @@ export class BlogDetailComponent implements OnInit {
       this.updateMetaTagSrv.getSeoContent(data.blogId).subscribe(
         (data: any) => {
           if (data.meta.status) {
-            this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords)
+            this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords,"https://toq.co.in/blogs/"+data.blogId,data.data.imageUrl)
           }
         }
       )
