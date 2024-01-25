@@ -413,7 +413,7 @@
                                 <div class='fbox-sb' *ngIf='remainingWalletAmountStatus'>
                                     <div class='lg o-85 bold'>Remaining Wallet Amount</div>
                                     <div class='lg o-85 bold'>
-                                        &#8377;{{remainingWalletAmount.toString()==='NaN'?checkWalletAmount(total):remainingWalletAmount}}
+                                        &#8377;{{remainingWalletAmount.toString()==='NaN'?checkWalletAmount(total):remainingWalletAmount.toFixed(2)}}
                                     </div>
                                 </div>
                                 <div class='fbox-sb' *ngIf="requiredWalletAmountStatus">

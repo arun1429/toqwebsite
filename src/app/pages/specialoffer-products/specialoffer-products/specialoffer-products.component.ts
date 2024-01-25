@@ -96,7 +96,7 @@ export class SpecialOfferProductsComponent extends RootComponent implements OnIn
       var lastSavedCart = []
        lastSavedCart =   JSON.parse(localStorage.getItem("lastSavedCart"))
        console.log(" lastSavedCart : "+JSON.stringify(lastSavedCart))
-       if(lastSavedCart.length !=0){
+       if(lastSavedCart != null  && lastSavedCart.length != 0){
         var checkLastIndex = -1;
         for(let i=0; i<lastSavedCart.length;i++){
          if(lastSavedCart[i].variantId == product.variantId){

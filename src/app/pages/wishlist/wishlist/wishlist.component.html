@@ -1,7 +1,21 @@
-<section class="container p-t-md">
-    <h1>Wish List</h1>
-    <ng-container>
-        <ng-container *ngIf="products.length !== 0; else noData">
+<div class="breadcrumbs_area mt-45">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="index.html">home</a></li>
+                        <li>Wishlist</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="shopping_cart_area" style="margin-bottom: 20px;">
+    <div class="container">
+        <ng-container *ngIf="products.length !== 0;">
             <div class="grid">
                 <ng-container *ngFor="let p of products">
                     <div class="card ">
@@ -29,8 +43,8 @@
                                     <span class="old_price" style="color: gray;   text-decoration: line-through;" >₹{{p?.price.toFixed(2) || 0}}</span>&nbsp;
                                     <span  style="font-size: 14px; color: gray" >{{getDiscount(p?.offerPrice,p?.price)}}%Off </span>
                                 </div>
-                                <div class="group-h fbox-c m-t">
-                                    <button class="block remove" (click)="removeFromWishList(p._id)">
+                                <div class="group-h fbox-c m-t align-items: center;" >
+                                    <button class="block remove"  (click)="removeFromWishList(p._id)">
                                         Remove
                                     </button>
                                     <button class="block move-cart" (click)="moveToCart(p)">
@@ -43,14 +57,15 @@
                 </ng-container>
             </div>
         </ng-container>
-    </ng-container>
-</section>
+        <div class="blankslate3 center" style="text-align: center; margin-bottom: 50px;"  *ngIf="products.length == 0">
+            No Items In Your Wish List
+        </div>
+    </div>
+</div>
 
 <ng-template #loader>
     <app-loader></app-loader>
 </ng-template>
 <ng-template #noData>
-    <div class="blankslate center">
-        No Items In Your Wish List
-    </div>
+   
 </ng-template>

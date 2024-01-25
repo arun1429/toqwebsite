@@ -440,7 +440,7 @@ export class ProductDetailsComponent extends RootComponent implements OnInit {
     }else {
       var lastSavedCart = []
        lastSavedCart =   JSON.parse(localStorage.getItem("lastSavedCart"))
-      if(lastSavedCart.length !=0){
+       if(lastSavedCart != null  && lastSavedCart.length != 0){
         var checkLastIndex = -1;
         for(let i=0; i<lastSavedCart.length;i++){
          if(lastSavedCart[i].variantId == product.variant[this.selectedVariantIndex].variantId){

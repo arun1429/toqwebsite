@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {
   AccountComponent, AddressComponent, OrderHistoryComponent, SideNavComponent,
-  WalletComponent, WishlistComponent, OrderDetailComponent
+  WalletComponent,  OrderDetailComponent
 } from './index';
 import { NotificationComponent } from './notification/notification.component';
 const routes: Routes = [
@@ -13,10 +13,6 @@ const routes: Routes = [
       {
         path: 'order-history',
         component: OrderHistoryComponent,
-      },
-      {
-        path: 'wishlist',
-        component: WishlistComponent
       },
       {
         path: 'notifications',

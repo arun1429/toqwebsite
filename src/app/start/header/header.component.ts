@@ -104,7 +104,7 @@ export class HeaderComponent extends RootComponent implements OnInit {
       if(localStorage.getItem("lastSavedCart") == null ){
         this.cartDataLength = "0"
       }else {
-        if(lastSavedCart.length !=0 ){
+        if(lastSavedCart != null  && lastSavedCart.length != 0){
           this.cartDataLength =lastSavedCart.length.toString()
           console.log("lastSavedCart.length : "+JSON.stringify(lastSavedCart.length))
         }else {
@@ -170,7 +170,7 @@ export class HeaderComponent extends RootComponent implements OnInit {
           this.userName = data.fullName;
           var lastSavedCart = []
           lastSavedCart =   JSON.parse(localStorage.getItem("lastSavedCart"))
-          if(lastSavedCart.length !=0){
+          if(lastSavedCart != null  && lastSavedCart.length != 0){
             this.cartDataLength =lastSavedCart.length.toString()
             for(let i=0; i<lastSavedCart.length; i++){
               const cartData = {

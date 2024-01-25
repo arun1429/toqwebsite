@@ -104,7 +104,8 @@ export class AddAddressComponent extends RootComponent implements OnInit {
       this.cities = [];
     }
   }
-
+  sublocality = ""
+  plus_code = ""
   locateMe() {
     this.geocoder.geocode({ 'location': { lat: this.currentlat, lng: this.currentlng } }, (results, status) => {
       if (status === 'OK') {
@@ -128,15 +129,19 @@ export class AddAddressComponent extends RootComponent implements OnInit {
               this.addressForm.patchValue({ pinCode: el.long_name})
               this.spinnerService.hide();
             }
+           
+            if (l === 'plus_code') {
+              this.plus_code  = el.long_name
+            }
             if (l === 'sublocality') {
-              this.addressForm.patchValue({ streetAddress: el.long_name})
-              this.spinnerService.hide();
+              this.sublocality  = el.long_name
+             
             }
             if (l === 'country') {
-              console.log("long_name : "+el.long_name)
               this.addressForm.patchValue({ country: el.long_name})
               this.spinnerService.hide();
             }
+            this.addressForm.patchValue({ streetAddress: this.plus_code+" "+this.sublocality})
           })
         })
       }

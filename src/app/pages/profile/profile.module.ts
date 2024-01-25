@@ -6,7 +6,7 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { NgxPaginationModule } from 'ngx-pagination';
 import {
   AccountComponent, AddressComponent, OrderHistoryComponent,
-  SideNavComponent, WalletComponent, WishlistComponent, OrderDetailComponent
+  SideNavComponent, WalletComponent, OrderDetailComponent
 } from './index';
 import { AddAddressComponent } from './address/add-address/add-address.component';
 import { AddressListComponent } from './address/address-list/address-list.component';
@@ -16,7 +16,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
-  declarations: [AccountComponent, AddressComponent, OrderHistoryComponent, SideNavComponent, WalletComponent, WishlistComponent, OrderDetailComponent, AddAddressComponent, AddressListComponent, NotificationComponent],
+  declarations: [AccountComponent, AddressComponent, OrderHistoryComponent, SideNavComponent, WalletComponent, OrderDetailComponent, AddAddressComponent, AddressListComponent, NotificationComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -313,7 +313,7 @@ export class CheckoutComponent extends RootComponent implements OnInit {
     this._CS.removeFromCart(productSubId).subscribe(
       (data: any) => {
         if (data.meta.status) {
-          this.getValidateCart();
+          this.getCartData()
           this.alertMessage({ type: "success", title: "Success", value: data.meta.msg });
         } else {
           this.alertMessage({ type: "danger", title: "Error Occured", value: data.meta.msg });
@@ -590,8 +590,10 @@ export class CheckoutComponent extends RootComponent implements OnInit {
       this.alertMessage({ type: "info", title: "Already Applied", value: 'This promocode already applied' });
     }
   }
-
+   sublocality = ""
+ plus_code = ""
   locateMe() {
+   
     this.geocoder.geocode({ 'location': { lat: this.currentlat, lng: this.currentlng } }, (results, status) => {
       if (status === 'OK') {
        console.log( results[0].address_components)
@@ -614,15 +616,20 @@ export class CheckoutComponent extends RootComponent implements OnInit {
               this.addressForm.patchValue({ pinCode: el.long_name})
               this.spinnerService.hide();
             }
+         
+            if (l === 'plus_code') {
+              this.plus_code  = el.long_name
+            }
             if (l === 'sublocality') {
-              this.addressForm.patchValue({ streetAddress: el.long_name})
-              this.spinnerService.hide();
+              this.sublocality  = el.long_name
+             
             }
             if (l === 'country') {
               console.log("long_name : "+el.long_name)
               this.addressForm.patchValue({ country: el.long_name})
               this.spinnerService.hide();
             }
+            this.addressForm.patchValue({ streetAddress: this.plus_code+" "+this.sublocality})
           })
         })
       }

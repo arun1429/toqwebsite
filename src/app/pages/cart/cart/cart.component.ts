@@ -7,6 +7,7 @@ import * as moment from "moment";
 import { Router } from '@angular/router';
 import { MetakeywordsService } from '../../../_services/metakeywords.service';
 import { SEOService } from '../../../_services/seo.service';
+import { GlobalService } from '../global.service';
 declare var $: any;
 
 @Component({
@@ -36,6 +37,7 @@ export class CartComponent extends RootComponent implements OnInit {
     public _AS: AlertService,
     private _CS: CartService,
     private _US: UserService,
+    private globalSrv: GlobalService,
     private _route:Router,
     private _CHS: CheckoutService,private updateMetaTagSrv:MetakeywordsService,private seoService: SEOService) {
     super(_AS)
@@ -171,7 +173,7 @@ export class CartComponent extends RootComponent implements OnInit {
       }
     );
   }
-  removeFromCartLocal(variantId) {
+ async removeFromCartLocal(variantId) {
     var lastSavedCartNew = []
     if(this.lastSavedCart){
       for(let i=0; i<this.lastSavedCart.length;i++){
@@ -180,7 +182,8 @@ export class CartComponent extends RootComponent implements OnInit {
         }
       }
       this.lastSavedCart = lastSavedCartNew
-      localStorage.setItem("lastSavedCart" , JSON.stringify(lastSavedCartNew))
+      this.globalSrv.theItem = lastSavedCartNew.length.toString()
+        await localStorage.setItem("lastSavedCart" , JSON.stringify(lastSavedCartNew))
       this.cartSum = 0
      for(let i=0; i<this.lastSavedCart.length;i++){
        this.cartSum = Number(this.cartSum + this.lastSavedCart[i].totalDiscountedPrice)

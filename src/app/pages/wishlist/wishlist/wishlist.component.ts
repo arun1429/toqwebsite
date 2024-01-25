@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService } from "../../../_services/index";
 import { Router } from "@angular/router";
-import { ProfileService } from '../profile.service';
-import { HomeService } from '../../home/home.service';
 import { RootComponent } from '../../../_shared/components/root/root.component';
 import { CartService } from '../../cart/cart.service';
+import { ProfileService } from '../../profile/profile.service';
 
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
   styleUrls: ['./wishlist.component.css']
 })
-export class WishlistComponent extends RootComponent implements OnInit {
+export class WishListComponent extends RootComponent implements OnInit {
 
   products: any = [];
   statusOff:boolean;
