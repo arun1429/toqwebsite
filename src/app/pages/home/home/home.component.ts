@@ -15,6 +15,7 @@ import { CartService } from '../../cart/cart.service';
 })
 export class HomeComponent extends RootComponent implements OnInit, AfterViewInit {
   shopName: string;
+  currentContent: any;
   products: any = [];
   categories: any = [];
   stock: number = 0;
@@ -133,6 +134,7 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
     this.getVendorBestProducts();
     this.getVendorLatestProducts();
     this.getVendorSalesProducts();
+    this.getWebContent()
     this.updateMetaTagSrv.getSeoContent('Home').subscribe(
       (data: any) => {
         if (data.meta.status) {
@@ -157,6 +159,18 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
       }
     )
   }
+  getWebContent() {
+    this._PS.getWebContent("Home").subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.currentContent = data.data;
+        } else {
+          this.currentContent = ""
+        }
+      }
+    )
+  }
+  
   getVendorAmbass() {
     this._PS.getVendorBrandAmbassador(this.shopName).subscribe(
       (data: any) => {
@@ -346,5 +360,18 @@ export class HomeComponent extends RootComponent implements OnInit, AfterViewIni
   trackByProductId(index: number, product: any): string {
     return product.productId;
 }
-
+redirectToPages(callFor : string) {
+  localStorage.setItem("currentPageNumber","1")
+  if(callFor == 'Special'){
+    this.router.navigateByUrl("/specialofferproducts");
+  }else if(callFor == 'Selling'){
+    this.router.navigateByUrl("/bestsellingproducts");
+  }else if(callFor == 'New'){
+    this.router.navigateByUrl("/newarrivalproducts");
+  }
+}
+redirectToProductPage(categorySlug : string) {
+  localStorage.setItem("currentPageNumber","1")
+    this.router.navigateByUrl("/products/"+categorySlug);
+}
 }

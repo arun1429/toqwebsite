@@ -198,6 +198,7 @@ ul.dateTime li.active {
   }
   .blankslate3 p:hover{
     background: #000000;
+    color: #fff;
   }
   
   .saveButton {

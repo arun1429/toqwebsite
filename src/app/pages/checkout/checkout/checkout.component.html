@@ -429,6 +429,10 @@
                                 <div class="center" style="color: #000; font-weight: bold;">
                                     Free delivery above &#8377; {{ freeDelivery?.toFixed(2) }}
                                 </div>
+                                <div *ngIf='walletBenefitMessage != null' class="center" style="color: #000; font-weight: bold;">
+                                    {{ walletBenefitMessage }}
+                                </div>
+                                
                                 <div class='justifySpaceBetween' style='justify-content: center!important;'>
                                     <button type='button' class='saveButton' (click)='addMoney()'>
                                         Add Money
@@ -508,15 +512,26 @@
                         [ngClass]="{'active': appliedPromocode && appliedPromocode.discountId===promocode.discountId?true:false}"
                         *ngFor="let promocode of promocodes">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Coupon Name: {{promocode?.discountName}}</h5>
-                            <small *ngIf="promocode?.days">Expire after {{promocode?.days}} days.</small>
-                            <small *ngIf="!promocode?.days">Expire tonight.</small>
+                            <h5 class="mb-1">{{promocode?.discountName}}</h5>
                         </div>
-                        <p class="mb-1"> <span *ngIf="promocode.discountIn==='ABSOLUTE'">Rs.</span>
-                            {{promocode?.discountNumber}} <span *ngIf="promocode.discountIn==='PERCENTAGE'">%</span>
+                        <p class="mb-1" *ngIf="promocode?.discountIn==='ABSOLUTE'">
+                            {{promocode?.discountNumber | currency:"INR":"symbol"}} off on entire order
                         </p>
+                        <p class="mb-1" *ngIf="promocode?.discountIn==='PERCENTAGE'">
+                            {{promocode?.discountNumber}}% on entire order
+                        </p>
+                        <p class="mb-1" *ngIf="promocode?.minimumCartType==='CART AMOUNT'">
+                            Minimum purchase of {{promocode?.minimumCartValue | currency:"INR":"symbol"}}
+                        </p>
+                        <p class="mb-1" *ngIf="promocode?.minimumCartType==='CART ITEM'">
+                            Minimum purchase of {{promocode?.minimumCartValue}} items
+                        </p>
+                        <p class="mb-1" >
+                            Can’t combine with other discounts
+                        </p>
+                        
                         <small>
-                            Valid From: {{promocode?.validFrom | date}} - Valid Upto: {{promocode?.validUpto | date}}
+                            Valid Upto: {{promocode?.validUpto | date}}
                         </small>
                     </a>
                 </div>

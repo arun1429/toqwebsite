@@ -9,8 +9,11 @@
                 <div class='font-size-32 whiteColor'>
                     Available Balance
                 </div>
-                <div *ngIf="walletAmount" class='font-size-32 whiteColor' style="margin-top: 10px;">
-                    &#8377;{{walletAmount?.toFixed(2)}}
+                <div *ngIf="walletAmount !=0 " class='font-size-32 whiteColor' style="margin-top: 20px;">
+                    &#8377;{{walletAmount.toFixed(2)}}
+                </div>
+                <div *ngIf="walletAmount ==0 " class='font-size-32 whiteColor' style="margin-top: 20px;">
+                    &#8377;0
                 </div>
             </div>
         </div>

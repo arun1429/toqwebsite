@@ -25,6 +25,7 @@ export class RegisterComponent extends RootComponent implements OnInit {
     this.registerFormGroup = this._FB.group({
       userName: ['', ''],
       userEmailId: ['', ''],
+      shopName: ['TOQ', ''],
       mobileNo: ['', Validators.required],
       password: ['', Validators.required],
       fullName: ['', Validators.required]

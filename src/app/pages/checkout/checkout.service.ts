@@ -43,11 +43,6 @@ export class CheckoutService {
     return this.http.get(url);
   }
 
-  getPromoCodes() {
-    const url = `${environment.apiUrl}banner/getpromocode`;
-    return this.http.get(url);
-  }
-
   updateQuantity(productId, variantId, quantity, cartId) {
     const body = {
       productId: productId,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,OnDestroy} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/_services';
 import { RootComponent } from '../../../_shared/components/root/root.component';
@@ -12,10 +12,10 @@ import { GlobalService } from '../../cart/global.service';
   templateUrl: './selling-products.component.html',
   styleUrls: ['./selling-products.component.css']
 })
-export class SellingProductsComponent extends RootComponent implements OnInit {
+export class SellingProductsComponent extends RootComponent implements OnInit,OnDestroy {
 
   products: any = [];
-  currentPageNumber: 1;
+  currentPageNumber =  1;
   discountStatus:boolean
   offerPrise:any;
   price:any
@@ -32,6 +32,11 @@ export class SellingProductsComponent extends RootComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var currentPage =  localStorage.getItem("currentPageNumber")
+   console.log("currentPage: "+currentPage)
+   if(currentPage != null){
+     this.currentPageNumber = Number(currentPage)
+   }
     this.shopName = "TOQ"
     this.shopName  = localStorage.getItem("shopName")
     this.getAllProducts(this.shopName);
@@ -45,7 +50,10 @@ export class SellingProductsComponent extends RootComponent implements OnInit {
     this.seoService.updateCanonicalUrl('https://toq.co.in/bestsellingproducts')
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
-
+ 
+  ngOnDestroy(): void{
+    localStorage.setItem("currentPageNumber",this.currentPageNumber.toString())
+  }
   getAllProducts(shopName) {
     this._SPS.getVendorBestProducts(shopName).subscribe(
       (data: any) => {

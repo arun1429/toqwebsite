@@ -63,11 +63,6 @@ export class HomeService {
     return this.http.delete(url);
   }
 
-  getAllPromocode(vendorId: string) {
-    const url = `${environment.apiUrl}banner/getpromocode?vendorId=${vendorId}`;
-    return this.http.get(url);
-  }
-
   addAddress(body) {
     const url = `${environment.apiUrl}address/add`;
     return this.http.post(url, body);
@@ -100,11 +95,10 @@ export class HomeService {
     return this.http.get(url);
   }
 
-  getPromoCodes() {
-    const url = `${environment.apiUrl}banner/getpromocode`;
+  getWebContent(page) {
+    const url = `${environment.apiUrl}webcontent/details?page=${page}`;
     return this.http.get(url);
   }
-
   updateQuantity(productId, variantId, quantity, cartId) {
     const body = {
       productId: productId,

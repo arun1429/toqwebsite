@@ -206,7 +206,10 @@ export class HeaderComponent extends RootComponent implements OnInit {
       this.isLoggedIn = data;
     });
   }
-
+ async redirectToProductPage(categorySlug : string) {
+  await  localStorage.setItem("currentPageNumber","1")
+      this.router.navigateByUrl("/products/"+categorySlug);
+  }
   getWishListItems() {
     this._US.getAuth().subscribe(res => {
       if (res) {
@@ -229,7 +232,9 @@ export class HeaderComponent extends RootComponent implements OnInit {
     this._US.getAuth().subscribe(res => {
       if (res) {
         this._CS.getCartProducts().subscribe(
+          
           (data: any) => {
+            console.log("data : "+JSON.stringify(data))
             if (data.meta.status) {
               this.carts = data.data;
               this.Cgst=data.cgst;
@@ -249,6 +254,10 @@ export class HeaderComponent extends RootComponent implements OnInit {
               this.cartSum = 0;
               this.total = 0;
               this.totalDiscount = 0;
+              console.log("data.meta.msg : "+data.meta.msg)
+              if(data.meta.msg == "Session Expired."){
+                this.logout()
+              }
             }
           }
         )

@@ -18,6 +18,7 @@ import { GlobalService } from '../../cart/global.service';
 export class ProductsComponent extends RootComponent implements OnInit,OnDestroy, AfterViewInit {
   offerPrise: any;
   price: any;
+  currentContent: any;
   groupId: string;
   categoryId: string;
   categorySlug:string;
@@ -66,7 +67,8 @@ export class ProductsComponent extends RootComponent implements OnInit,OnDestroy
        this.getProductBySlug(data.categorySlug)
         this.getAllCategories();
         this.seoService.updateCanonicalUrl("https://toq.co.in/"+data.categorySlug)
-        this.updateMetaTagSrv.getSeoContent('Product Page').subscribe(
+        this.getWebContent(data.categorySlug)
+        this.updateMetaTagSrv.getSeoContent(data.categorySlug).subscribe(
           (data: any) => {
             if (data.meta.status) {
               this.updateMetaTagSrv.updateMetaKeywords(data.data.title,data.data.description,data.data.keywords,"https://toq.co.in/"+data.categorySlug,data.data.imageUrl)
@@ -79,8 +81,19 @@ export class ProductsComponent extends RootComponent implements OnInit,OnDestroy
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
    
   }
+  getWebContent(newPage) {
+    this._PS.getWebContent(newPage).subscribe(
+      (data: any) => {
+        if (data.meta.status) {
+          this.currentContent = data.data;
+        } else {
+          this.currentContent = ""
+        }
+      }
+    )
+  }
+  
   ngOnDestroy(): void{
-    console.log("ondes :called ")
     localStorage.setItem("currentPageNumber",this.currentPageNumber.toString())
   }
   selectCity(event){
@@ -167,6 +180,8 @@ export class ProductsComponent extends RootComponent implements OnInit,OnDestroy
     //     }
     //   }
     // )
+    localStorage.setItem("currentPageNumber","1")
+    this.currentPageNumber =1
     this.router.navigateByUrl("/products/"+subCategorySlug);
   }
   getProductBySlug(categorySlug: string) {

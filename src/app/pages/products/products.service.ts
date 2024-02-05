@@ -31,5 +31,8 @@ export class ProductsService {
     const url = `${environment.apiUrl}products/group/${groupId}?state=${state}`;
     return this.http.get(url);
   }
-
+  getWebContent(page) {
+    const url = `${environment.apiUrl}webcontent/details?page=${page}`;
+    return this.http.get(url);
+  }
 }

@@ -217,7 +217,7 @@
                                             *ngFor="let attribute of productDetails?.variant[selectedVariantIndex]?.attributes">
                                             <td class="first_child">
                                                 {{attribute?.name}}</td>
-                                            <td>{{attribute?.value}} <span *ngIf="attribute.unit!=' '">({{attribute?.unit}})</span></td>
+                                            <td>{{attribute?.value}} <span *ngIf="attribute.unit!=' '">{{attribute?.unit}}</span></td>
                                         </tr>
                                         </tbody>
                                     </table>

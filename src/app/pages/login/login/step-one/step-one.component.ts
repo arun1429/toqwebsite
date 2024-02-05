@@ -14,6 +14,7 @@ interface User {
   token: string;
   fullName: string;
   profilePic: string;
+  shopName:string;
   userEmailId: string;
 }
 
@@ -53,6 +54,7 @@ export class StepOneComponent extends RootComponent implements OnInit {
         oauth_uid:res.id,
         userEmailId:res.email,
         mobileNumber:"",
+        shopName : "TOQ",
         deviceToken:""
       }
       this._LGS.socialLogin(obj).subscribe(res=>{
@@ -63,6 +65,7 @@ export class StepOneComponent extends RootComponent implements OnInit {
             loginType: res['data'].loginType,
             userId: res['data'].userId,
             token: res['token'],
+            shopName : "TOQ",
             userEmailId:res['data'].userEmailId,
             profilePic: res['data'].profilePic ? res['data'].profilePic : 'https://res.cloudinary.com/appindia/image/upload/v1567572166/uploads/profile_d7wqbt.svg'
           };
@@ -107,6 +110,7 @@ export class StepOneComponent extends RootComponent implements OnInit {
               loginType: data.data.loginType,
               userId: data.data.userId,
               token: data.token,
+              shopName : "TOQ",
               userEmailId: data.data.userEmailId,
               profilePic: data.data.profilePic ? data.data.profilePic : 'https://res.cloudinary.com/appindia/image/upload/v1567572166/uploads/profile_d7wqbt.svg'
             };

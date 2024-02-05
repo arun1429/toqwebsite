@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  rzpKey: 'rzp_live_g3b0aj6IMVYim9',
-  // rzpKey: 'rzp_test_J2KJUVacMkgbHE', // rzp_test_J2KJUVacMkgbHE & rzp_test_hUubI1L3mlExbN
+  rzpKey: 'rzp_live_C00dc1yGtXHsxP',
+ //  rzpKey: 'rzp_test_hy489jHBj7zs4o',
  // apiUrl: 'https://api.toqnkart.com/api/user/'
   apiUrl: 'http://localhost:6020/api/user/'
 };

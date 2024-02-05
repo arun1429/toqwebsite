@@ -31,6 +31,7 @@ export class CheckoutComponent extends RootComponent implements OnInit {
   billingAddressId: any;
   addNewAddress: boolean = false;
   selectedAdd: boolean = true;
+  walletBenefitMessage = null
   deliveryCharges: Number = 0;
   convenienceFee: Number = 0;
   totalDiscount: Number = 0;
@@ -204,6 +205,7 @@ export class CheckoutComponent extends RootComponent implements OnInit {
           this.discountName = data.promoCodeName.discountName;
           this.appliedPromocode = data.promoCodeName;
           this.getAllPromocode(this.vendorId);
+          this.walletBenefitMessage = data.walletBenefitMessage
         }
         else {
           // this.router.navigate(['/']);
@@ -216,6 +218,7 @@ export class CheckoutComponent extends RootComponent implements OnInit {
           this.totalDiscount = 0;
           this.freeDelivery = 0;
           this.appliedPromocode = undefined;
+          this.walletBenefitMessage =  null
           this.vendorId = undefined;
         }
       }
@@ -290,6 +293,8 @@ export class CheckoutComponent extends RootComponent implements OnInit {
       if (res['meta']['status']) {
         this._CS.emittedValue.next(true);
         this.ngOnInit()
+      }else {
+        this.alertMessage({ type: "danger", title: "Error Occured", value: res['meta']['msg'] });
       }
     })
   }
@@ -470,9 +475,11 @@ export class CheckoutComponent extends RootComponent implements OnInit {
 
   initPay(money, paymentMethod) {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    var newValue = (Number(money.toFixed(2)) * Number(100)).toFixed(2)
+    console.log(newValue)
     let options: any = {
       key: environment.rzpKey,
-      amount: Number(money.toFixed(0)) * Number(100),
+      amount: newValue,
       currency: "INR",
       buttontext: "Pay",
       name: "Toq",
@@ -590,8 +597,10 @@ export class CheckoutComponent extends RootComponent implements OnInit {
       this.alertMessage({ type: "info", title: "Already Applied", value: 'This promocode already applied' });
     }
   }
-   sublocality = ""
- plus_code = ""
+  plus_code = ""
+  sublocality_level_3 = ""
+  sublocality_level_2 = ""
+  sublocality_level_1 = ""
   locateMe() {
    
     this.geocoder.geocode({ 'location': { lat: this.currentlat, lng: this.currentlng } }, (results, status) => {
@@ -607,29 +616,34 @@ export class CheckoutComponent extends RootComponent implements OnInit {
               this.cities = findState.districts
               this.spinnerService.hide();
             }
-            if (l === 'locality') {
+            if (l === 'locality' || l =='administrative_area_level_3') {
               this.deliveryCity = el.long_name
               this.addressForm.patchValue({ city: this.deliveryCity })
               this.spinnerService.hide();
             }
+            
             if (l === 'postal_code') {
               this.addressForm.patchValue({ pinCode: el.long_name})
               this.spinnerService.hide();
             }
-         
-            if (l === 'plus_code') {
+           
+            if (l === 'plus_code' || l === 'premise')  {
               this.plus_code  = el.long_name
             }
-            if (l === 'sublocality') {
-              this.sublocality  = el.long_name
-             
+            if (l === 'sublocality_level_3') {
+              this.sublocality_level_3  = el.long_name
+            }
+            if (l === 'sublocality_level_2') {
+              this.sublocality_level_2  = el.long_name
+            }
+            if (l === 'sublocality_level_1') {
+              this.sublocality_level_1  = el.long_name
             }
             if (l === 'country') {
-              console.log("long_name : "+el.long_name)
               this.addressForm.patchValue({ country: el.long_name})
               this.spinnerService.hide();
             }
-            this.addressForm.patchValue({ streetAddress: this.plus_code+" "+this.sublocality})
+            this.addressForm.patchValue({ streetAddress: this.plus_code + " "+this.sublocality_level_3+ " "+this.sublocality_level_2 + " "+this.sublocality_level_1})
           })
         })
       }

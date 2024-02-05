@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,OnDestroy} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/_services';
 import { RootComponent } from '../../../_shared/components/root/root.component';
@@ -12,11 +12,11 @@ import { GlobalService } from '../../cart/global.service';
   templateUrl: './search-products.component.html',
   styleUrls: ['./search-products.component.css']
 })
-export class SearchProductsComponent extends RootComponent implements OnInit {
+export class SearchProductsComponent extends RootComponent implements OnInit ,OnDestroy{
 
   products: any = [];
   searchKey: string;
-  currentPageNumber: 1;
+  currentPageNumber =  1;
   discountStatus:boolean
   offerPrise:any;
   price:any
@@ -32,6 +32,11 @@ export class SearchProductsComponent extends RootComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var currentPage =  localStorage.getItem("currentPageNumber")
+   console.log("currentPage: "+currentPage)
+   if(currentPage != null){
+     this.currentPageNumber = Number(currentPage)
+   }
     this.routes.queryParams.subscribe(
       data => {
         if (data && data.search && data.search.length > 0) {
@@ -51,7 +56,9 @@ export class SearchProductsComponent extends RootComponent implements OnInit {
     )
     this.seoService.updateCanonicalUrl('https://toq.co.in/userprofile/search')
   }
-
+  ngOnDestroy(): void{
+    localStorage.setItem("currentPageNumber",this.currentPageNumber.toString())
+  }
   getAllSearchProducts() {
     this._SPS.searchProduct(this.searchKey).subscribe(
       (data: any) => {

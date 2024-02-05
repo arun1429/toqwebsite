@@ -28,8 +28,6 @@ export class CartComponent extends RootComponent implements OnInit {
   Igst:Number=0;
   discountName: string;
   appliedPromocode: any;
-  promocodes: any = [];
-  // cartDataLength: number = 0;
   currentUser: any;
   vendorId: string;
 
@@ -82,7 +80,6 @@ export class CartComponent extends RootComponent implements OnInit {
           (data: any) => {
             if (data.meta.status) {
               this.vendorId = data.data[0].vendorId
-              this.getAllPromocode(this.vendorId);
               this.carts = data.data;
               localStorage.setItem("totalCartCount" , data.data.length.toString())
               this.deliveryCharges = data.deliveryCharge;
@@ -92,7 +89,6 @@ export class CartComponent extends RootComponent implements OnInit {
               this.Cgst=data.cgst;
               this.Igst=data.igst
               this.totalDiscount = data.discount;
-              this.appliedPromocode = data.promoCodeName;
             }
             else {
            //   this._route.navigate(['/']);
@@ -104,7 +100,6 @@ export class CartComponent extends RootComponent implements OnInit {
               this.cartSum = 0;
               this.total = 0;
               this.totalDiscount = 0;
-              this.appliedPromocode = undefined;
               this.Cgst=0;
               this.Igst=0;
             }
@@ -113,34 +108,6 @@ export class CartComponent extends RootComponent implements OnInit {
       }
     })
   }
-
-  getAllPromocode(vendorId: string) {
-    this._CS.getAllPromocode(vendorId).subscribe(
-      (data: any) => {
-        if (data.meta.status) {
-          this.promocodes = data.data;
-          console.log('----',this.promocodes);
-          this.promocodes.map((_) => {
-            let upToDate = moment(_.validUpto);
-            let today = moment()
-            let days = upToDate.diff(today, 'days');
-            _.days = days;
-          })
-        }
-      }
-    )
-  }
-
-  selectCoupon(promocode: any) {
-    if (this.appliedPromocode && this.appliedPromocode.discountId !== promocode.discountId) {
-      this.discountName = promocode.discountName;
-      this.hideCouponModal();
-    }
-    else {
-      this.alertMessage({ type: "info", title: "Already Applied", value: 'This promocode already applied' });
-    }
-  }
-
   increaseDecreaseProductNumber(event, id, variantId, cartId) {
     let selectedQuanity = Number(event.target.value);
     this.checkProductQuantity(id, variantId, selectedQuanity, cartId);

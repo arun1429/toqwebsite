@@ -104,8 +104,10 @@ export class AddAddressComponent extends RootComponent implements OnInit {
       this.cities = [];
     }
   }
-  sublocality = ""
   plus_code = ""
+  sublocality_level_3 = ""
+  sublocality_level_2 = ""
+  sublocality_level_1 = ""
   locateMe() {
     this.geocoder.geocode({ 'location': { lat: this.currentlat, lng: this.currentlng } }, (results, status) => {
       if (status === 'OK') {
@@ -120,28 +122,34 @@ export class AddAddressComponent extends RootComponent implements OnInit {
               this.cities = findState.districts
               this.spinnerService.hide();
             }
-            if (l === 'locality') {
+            if (l === 'locality' || l =='administrative_area_level_3') {
               this.deliveryCity = el.long_name
               this.addressForm.patchValue({ city: this.deliveryCity })
               this.spinnerService.hide();
             }
+            
             if (l === 'postal_code') {
               this.addressForm.patchValue({ pinCode: el.long_name})
               this.spinnerService.hide();
             }
            
-            if (l === 'plus_code') {
+            if (l === 'plus_code' || l === 'premise')  {
               this.plus_code  = el.long_name
             }
-            if (l === 'sublocality') {
-              this.sublocality  = el.long_name
-             
+            if (l === 'sublocality_level_3') {
+              this.sublocality_level_3  = el.long_name
+            }
+            if (l === 'sublocality_level_2') {
+              this.sublocality_level_2  = el.long_name
+            }
+            if (l === 'sublocality_level_1') {
+              this.sublocality_level_1  = el.long_name
             }
             if (l === 'country') {
               this.addressForm.patchValue({ country: el.long_name})
               this.spinnerService.hide();
             }
-            this.addressForm.patchValue({ streetAddress: this.plus_code+" "+this.sublocality})
+            this.addressForm.patchValue({ streetAddress: this.plus_code + " "+this.sublocality_level_3+ " "+this.sublocality_level_2 + " "+this.sublocality_level_1})
           })
         })
       }

@@ -77,19 +77,19 @@
                                         <figure>
                                             <div class="product_thumb" >
                                                 
-                                                <a class="primary_img" [routerLink]="['/products',category.categorySlug]"><img
+                                                <a class="primary_img" (click)="redirectToProductPage(category.categorySlug)" ><img
                                                         src="{{category?.categoryImg}}" alt="">
                                                        
                                                 </a>
                                                 <div class="product_name" style="margin-bottom: 10px;" >
                                                     <h4>
-                                                        <a [routerLink]="['/products',category.categorySlug]">
+                                                        <a  (click)="redirectToProductPage(category.categorySlug)" >
                                                             {{category?.categoryName}}
                                                         </a>
                                                     </h4>
                                                 </div>
                                                 <div class="quick_button">
-                                                    <a [routerLink]="['/products',category.categorySlug]" data-toggle="modal"
+                                                    <a (click)="redirectToProductPage(category.categorySlug)" data-toggle="modal"
                                                         data-target="#modal_box" title="quick view"> View Products</a>
                                                 </div>
                                             </div>
@@ -115,7 +115,7 @@
                 <div class="product_header">
                     <div class="section_title">
                         <h2>Special offer products</h2>
-                        <a [routerLink]="['/specialofferproducts']" >View All</a>
+                        <a (click)="redirectToPages('Special')" >View All</a>
                     </div>
                 </div>
             </div>
@@ -157,7 +157,7 @@
                 <div class="product_header">
                     <div class="section_title">
                         <h2>Best Selling Products</h2>
-                        <a [routerLink]="['/bestsellingproducts']" >View All</a>
+                        <a (click)="redirectToPages('Selling')"  >View All</a>
                     </div>
                 </div>
             </div>
@@ -200,7 +200,7 @@
                 <div class="product_three_left">
                     <div class="section_title">
                         <h2>New Arrivals</h2>
-                        <a [routerLink]="['/newarrivalproducts']" >View All</a>
+                        <a (click)="redirectToPages('New')"  >View All</a>
                     </div>
                     <owl-carousel-o [options]="productCarouselOption" class="product_carousel prodSlider" data-interval="false">
                         <ng-container *ngFor="let product of latestProducts">
@@ -236,7 +236,21 @@
     </div>
 </div>
 <!--product area end-->
-
+<div class="product_area product_bg mb-45">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="product_three_left">
+                    <div class="section_title" >
+                        <div innerHtml="{{currentContent?.description}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>
 <!--SOCIAL-->
 <div class="product_area product_bg mb-45 socialMedia" *ngIf="brandAmbass.length != 0">
     <div class="container">
