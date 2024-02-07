@@ -12,7 +12,8 @@ import { SEOService } from '../../../_services/seo.service';
   styleUrls: ['./forgotpassword.component.css']
 })
 export class ForgotPasswordComponent extends RootComponent implements OnInit {
-
+  fieldTextType: boolean;
+  fieldTextType2: boolean;
   forgotpasswordFormGroup: FormGroup;
   verifyFormGroup: FormGroup;
   step: number = 1;
@@ -44,7 +45,12 @@ export class ForgotPasswordComponent extends RootComponent implements OnInit {
     )
     this.seoService.updateCanonicalUrl('https://toq.co.in/forgot-password')
   }
-
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
+  }
+  toggleFieldTextType2() {
+    this.fieldTextType2 = !this.fieldTextType2;
+  }
   sendOtp() {
     if (this.forgotpasswordFormGroup.valid) {
       this._RS.sendOtp(this.forgotpasswordFormGroup.value).subscribe(

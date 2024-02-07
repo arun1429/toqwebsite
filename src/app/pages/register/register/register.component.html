@@ -41,7 +41,13 @@
                         <p>
                             <label>Password<span style="color: red;">*</span></label>&nbsp;
                             <span class="setFornt">(Please check and enter)</span>
-                            <input type="password" formControlName="password"  placeholder="Please Enter Password">
+                            <input [type]="fieldTextType ? 'text' : 'password'" formControlName="password"  placeholder="Please Enter Password">   <span class="p-viewer">
+                                <i class="fa" aria-hidden="true" [ngClass]="{
+                                    'fa-eye-slash': !fieldTextType,
+                                    'fa-eye': fieldTextType
+                                  }"
+                                  (click)="toggleFieldTextType()"></i>
+                            </span>
                         </p>
                         <div class="login_submit">
                             <button type="submit" [disabled]="!registerFormGroup.valid" (click)="register()">Register</button>

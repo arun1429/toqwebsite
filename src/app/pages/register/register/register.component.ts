@@ -12,6 +12,7 @@ import { SEOService } from '../../../_services/seo.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent extends RootComponent implements OnInit {
+  fieldTextType: boolean;
 
   registerFormGroup: FormGroup;
 
@@ -35,7 +36,9 @@ export class RegisterComponent extends RootComponent implements OnInit {
   ngOnInit(): void {
     
   }
-
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
+  }
   register() {
     if (this.registerFormGroup.valid) {
       this._RS.register(this.registerFormGroup.value).subscribe(

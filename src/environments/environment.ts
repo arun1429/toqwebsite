@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   rzpKey: 'rzp_live_C00dc1yGtXHsxP',
  //  rzpKey: 'rzp_test_hy489jHBj7zs4o',
- // apiUrl: 'https://api.toqnkart.com/api/user/'
+// apiUrl: 'https://api.toqnkart.com/api/user/'
   apiUrl: 'http://localhost:6020/api/user/'
 };
 

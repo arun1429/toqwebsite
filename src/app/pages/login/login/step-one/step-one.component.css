@@ -4,6 +4,12 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+.p-viewer {
+	z-index: 9999;
+	position: absolute;
+	top: 54%;
+	right: 50px;
+}
 
 /* Firefox */
 input[type=number] {

@@ -62,6 +62,7 @@
 <body>
 
   <app-root></app-root>
+  
   <!-- JS
   ============================================ -->
   <!-- Plugins JS -->
@@ -77,6 +78,16 @@
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
    <!-- <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> -->
-</body>
+   <script>
+    $(document).ready(function() {
+        $("body").on("contextmenu", function(e) {
+            return false;
+          })
+          $("body").bind('cut copy', function(e) {
+              e.preventDefault();
+            });
+      });
+  </script>
+  </body>
 
 </html>

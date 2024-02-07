@@ -24,7 +24,7 @@ interface User {
   styleUrls: ['./step-one.component.css']
 })
 export class StepOneComponent extends RootComponent implements OnInit {
-
+  fieldTextType: boolean;
   loginForm: FormGroup;
   @Output() step1Data = new EventEmitter();
 
@@ -75,7 +75,7 @@ export class StepOneComponent extends RootComponent implements OnInit {
     })
   }
 
-
+   
   afterLogin1(user) {
     this.setLocalStorage1(user);
     this._US.updateUser(true, user);
@@ -86,7 +86,9 @@ export class StepOneComponent extends RootComponent implements OnInit {
     localStorage.setItem("currentUser", JSON.stringify(user));
   }
 
-
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
+  }
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
   }

@@ -37,6 +37,7 @@ export class CheckoutComponent extends RootComponent implements OnInit {
   totalDiscount: Number = 0;
   freeDelivery :Number=0;
   cartSum: Number = 0;
+  totalAvl: Number = 0;
   productSelectedQty: any;
   paymentMethod: "cod";
   walletAmount: number = 0;
@@ -557,11 +558,20 @@ export class CheckoutComponent extends RootComponent implements OnInit {
         if (data.meta.status) {
           this.promocodes = data.data;
           // console.log('----',this.promocodes);
+          this.totalAvl = 0
           this.promocodes.map((_) => {
-            let upToDate = moment(_.validUpto);
-            let today = moment()
-            let days = upToDate.diff(today, 'days');
-            _.days = days;
+             if(_.minimumCartType == 'CART AMOUNT' && this.cartSum < _.minimumCartValue ){
+              _.isEnable = "less cart amount";
+              _.valuechanges = Number(_.minimumCartValue) - Number(this.cartSum )
+             }else if(_.minimumCartType == 'CART ITEM' && this.cart.length < _.minimumCartValue ){
+              _.isEnable = "less no of items";
+              _.valuechanges =  Number(_.minimumCartValue) - Number(this.cart.length )
+             }else {
+              _.isEnable = "true";
+              _.valuechanges = 0
+              this.totalAvl = Number(this.totalAvl)+1
+             }
+            
           })
         }
       }
